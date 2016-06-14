@@ -1,0 +1,305 @@
+
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+
+<!-- Top Navbar-->
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="left"><a href="#" class="back link"> <i class="icon icon-back"></i><span>Back</span></a></div>
+    <div class="center sliding">Form</div>
+    <div class="right">
+      <!-- Right link contains only icon - additional "icon-only" class--><a href="#" class="link icon-only open-panel"> <i class="icon icon-bars"></i></a>
+    </div>
+  </div>
+</div>
+<div class="pages navbar-fixed">
+  <!-- Page, data-page contains page name-->
+  <div data-page="lessonForm" class="page">
+    <!-- Top Navbar-->
+      <div class="navbar">
+        <div class="navbar-inner">   
+          <div class="left">
+            <a href="index.html" class="link">
+              <i class="icon icon-back back"></i>
+            </a>
+          </div> 
+          <div class="center">Create a Lesson</div>
+          
+        </div>
+      </div>
+    <!-- Scrollable page content-->
+    <div class="page-content">
+      <div class="row sectionHeader">
+        <div class="content-block-title">General Information</div>
+      </div>
+
+      <!-- Adding a form -->
+              <div class="list-block">
+                <ul>
+                  <div class="row">
+
+                    <!-- General info that needs to be updated -->
+                    <div class="col-100 tablet-50">
+
+                      <div class="row">
+                        <div class="col-100 tablet-50">
+                          <!-- SUBJECT -->
+                          <li>
+                            <div class="item-content">
+                              
+                              <div class="item-inner">
+                                <div class="item-title label">Subject</div>
+                                <div class="item-input">
+                                  <select class="subjIn">
+                                    <option>English</option>
+                                    <option>Math</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+
+                        </div>
+
+
+                        <div class="col-100 tablet-50">
+                          <!-- GRADE -->
+                          <li>
+                              <div class="item-content">
+                                
+                                <div class="item-inner">
+                                  <div class="item-title label">Grade</div>
+                                  <div class="item-input">
+                                    <select class="gradeIn">
+                                      <option>1</option>
+                                      <option>2</option>
+                                      <option>3</option>
+                                      <option>4</option>
+                                      <option>5</option>
+                                      <option>6</option>
+                                      <option>7</option>
+                                      <option>8</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                          </li>
+
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-100 tablet-50">
+                          <!-- SUBJECT -->
+                          <li>
+                            <div class="item-content">
+                              
+                              <div class="item-inner">
+                                <div class="item-title label">Quarter</div>
+                                <div class="item-input">
+                                  <select>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+
+                        </div>
+
+
+                        <div class="col-100 tablet-50">
+                          <!-- GRADE -->
+                          <li>
+                              <div class="item-content">
+                                
+                                <div class="item-inner">
+                                  <div class="item-title label">Section</div>
+                                  <div class="item-input">
+                                    <input type="text" placeholder="N/A">
+                                   
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                          </li>
+
+                        </div>
+                        
+
+
+                      </div>
+
+                    </div>
+
+                    <div class="col-100 tablet-50">
+
+                      <!-- Information that's already stored -->
+                      <li>
+                        <div class="item-content">
+                          
+                          <div class="item-inner">
+                            
+                            <div class="item-input">
+                                <input type="text" placeholder="Koror Elementary, JFK, etc.">
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li>
+                        <div class="item-content">
+                          
+                          <div class="item-inner">
+                            
+                            <div class="item-input">
+                                <input type="text" placeholder="My name">
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+
+                      <li>
+                          <div class="item-content">
+                            <div class="item-inner">
+                               <div class="item-title label">Start date</div>
+                              <div class="item-input">
+                                <input type="date" placeholder="Birth day" value="2016-09-01">
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                            <div class="item-content">
+                              <div class="item-inner">
+                                 <div class="item-title label">End date</div>
+                                <div class="item-input">
+                                  <input type="date" placeholder="Birth day" value="2016-09-01">
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+
+                     
+                        
+
+
+                    </div>
+
+
+                  </div>
+
+
+
+                  
+
+                  
+              </div>
+                <div class="content-block-title">Lesson Information</div>
+                <div class="list-block">
+                  <ul>
+                  <!-- STANDARDS  -->
+                    <li class="standardSelect disabled" >
+                      <a href="#" class="item-link smart-select">
+                      <!-- "multiple" attribute for multiple select-->
+                      <select id="standards" name="standards" multiple>
+                        
+                       
+                      </select>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Standards</div>
+                        </div>
+                      </div></a>
+                  </li>
+
+
+                  <!-- OBJECTIVES -->
+                  <li class="objectiveSelect disabled">
+                    <a href="#" class="item-link smart-select">
+                    <!-- "multiple" attribute for multiple select-->
+                    <select id="objectives" name="objectives" multiple >
+                      <!-- options grouped within "optgroup" tag-->
+                      
+                      
+                     
+                    </select>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Objectives</div>
+                      </div>
+                    </div></a>
+                  </li>
+                 
+                </ul>
+              </div>
+                
+      
+      <div class="content-block-title">Other Considerations</div>
+      <div class="list-block">
+        <ul>
+          <!-- Performance Indicators  -->
+          <li class="disabled" >
+            <a href="#" class="item-link smart-select">
+            <!-- "multiple" attribute for multiple select-->
+            <select name="Performance Indicators" multiple>
+              
+             
+            </select>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label">Performance Indicators</div>
+              </div>
+            </div></a>
+        </li>
+
+        <!-- Resources  -->
+          <li class="disabled" >
+            <a href="#" class="item-link smart-select">
+            <!-- "multiple" attribute for multiple select-->
+            <select name="Performance Indicators" multiple>
+              
+             
+            </select>
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label">Resources</div>
+              </div>
+            </div></a>
+        </li>
+
+        </ul>
+        </div>
+
+
+      <div class="content-block-title">My notes, thoughts, and ideas</div>
+      <div class="list-block">
+        <ul>
+          <!-- Additional "align-top" class for correct textarea alignment -->
+          <li class="align-top">
+            <div class="item-content">
+              <div class="item-inner">
+                <div class="item-title label">Tap below to type</div>
+                <div class="item-input">
+                    <textarea></textarea>
+                </div>
+              </div>
+            </div>
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <div class="row">
+          <div class="col-50"><a href="index.html" class="button button-big button-fill color-red back">Cancel</a></div>
+          <div class="col-50">
+            <input type="submit" value="Submit" class="button button-big button-fill color-green"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

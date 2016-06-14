@@ -1,0 +1,20 @@
+.sectionHeader{
+	background-color: #e3e3e3;
+	/*height*/
+}
+
+.toolbar{
+	bottom:0;
+}
+
+h2{
+	color: white;
+}
+
+/*.navbar, .subnavbar, .toolbar{
+	background: #1976D2;
+}*/
+
+.profileHeader{
+	background-color: #1976D2;
+}

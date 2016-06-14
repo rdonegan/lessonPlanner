@@ -1,0 +1,98 @@
+
+	[
+		
+		{
+			"st":"Students read a wide range of informational print and non-print texts by a wide variety of writers, including Pacific authors, to acquire new information, to respond to the needs and demands of society and the workplace, to understand how meaning is expressed in these texts, and to learn about themselves, Palau, and the world.",
+			"grades" : [1,2,3,4,5,6,7,8],
+			"obj": [
+					[1, "With prompting and support, identify key ideas and details in a text.", "With prompting and support, make connections between ideas presented in texts.","With prompting and support, identify features of a book."],
+					[2, "Identify key ideas and details in a text.", "Identify connections between two individuals, events, ideas, or pieces of information in texts.", "Know and use various text features to locate information in a text."],
+					[3, "Demonstrate understanding of the main idea and key details in a text.", "Identify and respond to connections between ideas in a text.", "Know and use various text features to locate information in a text efficiently."],
+					[4, "Identify the main topic of a multi-paragraph text and the focus of a single paragraph and show understanding of key details in the text.", "Describe the connection between items in a series, (e.g., historical events or technical steps in a procedure).", "New: Use text features and search tools to locate information relevant to a given topic."],
+					[5, ""],
+					[6, ""],
+					[7, ""],
+					[8, ""]
+					]
+
+		},
+		
+		
+		{
+			"st":"Students read and analyze a wide range of literature (oral, print, visual), including literary works by Pacific authors, in many genres to build an understanding of the many dimensions (i.e., philosophical, ethical, aesthetic) of the human experience.", 
+			"grades":[1,2,3,4,5,6,7,8],
+			"obj": [
+					[1, "With prompting and support, identify key ideas and details.", "With prompting and support recognize what a literary text is.", "With prompting and support, respond to stories and poems they read."],
+					[2, "Recognize literary elements used in stories, poems, songs, and short scripts.", "Show understanding that literature is different from informational text.", "Respond to stories and poems that they read."],
+					[3, "Describe literary elements used in short stories, songs, and poetry including legends, myths, and folk and fairy tales.", "Use graphic organizers to represent story elements.", "Compare and contrast their own feelings and behaviors with those of the characters in stories from the Pacific and other places in the world." ],
+					[4, "Identify and describe specific elements of literary texts (setting, character development, conflict, theme, illustrations), and show understanding of meaning.", "Trace and describe the overall structure of a story or narrative (i.e. introduction provides setting and introduces characters; body develops the plot; ending concludes action and reveals main idea).", "Compare and contrast the literary elements used in Palauan stories with stories from other places (setting, illustrations, character development, conflict, theme)."],
+					[5, ""],
+					[6, ""],
+					[7, ""],
+					[8, ""]
+					]
+		},
+
+		
+		{
+			"st":"Students use a wide variety of foundational skills that provide the basis for learning to read, and connect skills for academic study being developed in Palauan and in English.", 
+			"grades":[1,2,3,4]
+			"obj": [
+					[1, "With support, demonstrate understanding of the organization and basic features of print.", "With support, demonstrate understanding of spoken words, syllables, and sounds (phonemes).", "With prompting and support, apply basic phonics and word analysis skills in decoding words.", "With prompting and support, read emergent-reader texts with purpose and understanding."],
+					[2, "Demonstrate understanding of the organization and basic features of print.", "Demonstrate understanding of spoken words, syllables, and sounds (phonemes).", "Know and apply grade-level phonics and word analysis skills in decoding words, including sounding out words and saying them out loud.", "Read early reader texts with sufficient accuracy and fluency to support basic comprehension." ],
+					[3,"Know and apply grade-level phonics and word analysis skills in decoding words.", "Read grade-appropriate texts with sufficient accuracy and fluency to support", "",""],
+					[4, "Know and apply grade-level phonics and word analysis skills in decoding words.", "Read grade-appropriate with sufficient accuracy and fluency to support comprehension.","",""]
+
+
+					]
+		},
+		{
+			"st":"Students acquire and use vocabulary to create, discuss, and critique texts.", 
+			"grades":[1,2,3,4]
+		},
+		{
+			"st":"Students listen and speak for socio-cultural and instructional purposes in a variety of settings, adjusting their use of spoken language to communicate clearly and present knowledge and ideas that serve different purposes and involve a variety of audiences.", 
+			"grades":[1,2,3,4,5,8]
+		},
+		{
+			"st":"Students apply knowledge of language conventions (i.e., grammar, punctuation, and spelling) and sentence structure, when writing or speaking to create, discuss, and critique texts.", 
+			"grades":[1,2,3,4]
+		},
+		{
+			"st":"Students use writing (print and graphic) to communicate with a variety of audiences for different purposes, adapting the form and content of their writing in order to express opinions, demonstrate understanding of the information they are learning, and convey real and imagined experiences and events.", 
+			"grades":[1,2,3,4]
+		},
+		{
+			"st":"Students use a variety of primary (i.e., maps, artifacts, visual materials, music, sound recordings, oral history, interviews) and secondary resources (e.g., libraries, databases, computer networks, video) to build knowledge on a subject through research projects and to respond analytically to literary and informational sources.", 
+			"grades":[1,2,3,4,5,6,7,8]
+		},
+		{
+			"st":"Students develop an understanding of and respect for diversity in language use and patterns (e.g. Palauan) as they make use of their first language to develop competency in English.", 
+			"grades":[1,2,3,4]
+		},
+		{
+			"st":"Students participate as knowledgeable, reflective, creative, and critical members of a variety of literacy communities.", 
+			"grades":[1,2,3,4,5,6,7,8]
+		},
+
+		{
+			"st":"Apply a wide range of comprehension strategies and skills (i.e., prior knowledge, summarization, knowledge of word meaning and other texts, non-verbal cues, textual features) to understand, interpret, evaluate, and appreciate a variety of texts (i.e., literary, expository and non-print). They connect skills being developed in Palauan with reading skills in English.", 
+			"grades":[5,6,7,8]
+		},
+		{
+			"st":"Apply knowledge of language conventions (i.e., grammar, punctuation, and spelling) sentence structure, and vocabulary when writing or speaking to create, discuss, and critique texts.", 
+			"grades":[5,6,7,8]
+		},
+		{
+			"st":"Use of writing (print and graphic) to communicate with a variety of audiences for different purposes, adapting the form and content of their writing in order to express opinions, demonstrate understanding of the information they are learning, and convey real and imagined experiences and events.", 
+			"grades":[5,6,7,8]
+		},
+		{
+			"st":"Develop an understanding of and respect for diversity in language use and patterns (i.e., Palauan) as they make use of their first language to develop competency in English. ", 
+			"grades":[5,6,7,8]
+		},
+		{
+			"st":"Students listen and speak for socio-cultural and instructional purposes in a variety of settings, adjusting their use of spoken language to communicate clearly and present knowledge and ideas that serve different purposes and involve a variety of audiences. ", 
+			"grades":[6,7]
+		}
+	]
