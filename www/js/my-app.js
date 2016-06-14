@@ -10,6 +10,9 @@ var $$ = Dom7;
 //Initialize Form database
 var formdb;
 
+//Initialize database for all saved lesson plans
+var lpdb;
+
 
 
 // Cordova is ready
@@ -24,8 +27,10 @@ var formdb;
   document.addEventListener("deviceready", onDeviceReady, false);
 
 
-// Add standards to the html
-function appendStandards(subject, grade){
+
+//Everytime subject or grade fields are updated, reload contents of Standards select options
+function updateStandardField(subject, grade){
+
     var dup = [] // To check if duplicate strands have been added
 
     formdb.transaction(function(tx) {
@@ -42,32 +47,6 @@ function appendStandards(subject, grade){
                
             })
         })
-}
-
-// Add objectives to the html
-function appendObjectives(subject, grade, standards){
-    
-   
-}
-
-
-
-
-//Everytime subject or grade fields are updated, reload contents of Standards select options
-function updateStandardField(subject, grade){
-
-    var dup = [] // To check if duplicate strands have been added
-
-    if (subject.toLowerCase() === "english"){
-
-        appendStandards("english", grade); 
-    }
-
-    else if (subject.toLowerCase()=== "math"){
-
-        appendStandards("math", grade);
-       
-    }
           
 };
 
