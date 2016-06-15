@@ -119,7 +119,7 @@ function showTable(){
         alert("total rows: " +results.rows.length)
            var len = results.rows.length, i;
            for (i = 0; i < len; i++){
-              $("#dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+" section: "+results.rows.item(i).section);
+              $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+" section: "+results.rows.item(i).section);
            }
         }, null);
       });
