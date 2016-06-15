@@ -18,7 +18,7 @@ var lpdb;
 // Cordova is ready
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "test.db", location: 'default', createFromLocation: 1});
-    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, successcb, errorcb);
+    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);
    
   };
 
@@ -30,7 +30,7 @@ var lpdb;
 function successcb(){
     // alert('opened successfully');
     lpdb.transaction(function(transaction) {
-    transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, performance text, resources text, notes text)', [],
+    transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text)', [],
         function(tx, result) {
             alert("Table created successfully");
         }, 
@@ -42,6 +42,44 @@ function successcb(){
 
 function errorcb(){
     alert('trouble opening lesson plan db');
+}
+
+// function openLPdb(){
+//     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'});
+// }
+
+function insertLPDB(data){
+
+    // it's inserting, but only if it's in the form of a string and not null
+   
+    var teachername = "'" + data.teachername + "'"
+    var school = "'"+ data.school + "'"
+    var startdate = "'" + data.startdate + "'"
+    var enddate = "'" + data.enddate + "'"
+    var grade = "'" + data.grade + "'"
+    var quarter = "'" + data.quarter + "'"
+    var section = "'" + data.section + "'"
+    var subject = "'"+ data.subject + "'"
+    var standards = data.standards.toString()
+    var objectives = data.objectives.toString()
+    var indicators = data.indicators.toString()
+    var resources = data.resources.toString()
+    var notes = "'" + data.notes + "'"
+
+
+    lpdb.transaction(function(tx){
+        alert(subject)
+        // var executeQuery = "INSERT INTO lessonplans (teachername, school, stardate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
+        // transaction.executeSql(executeQuery, [teacername, school, stardate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes],
+            tx.executeSql("INSERT INTO lessonplans (subject, section) VALUES (?,?)", [subject, section],
+            function(tx, result){
+                alert('inserted')
+            },
+            function(error){
+                alert('error occurred')
+            })
+    })
 }
 
 
@@ -206,7 +244,7 @@ myApp.onPageInit('lessonForm', function(page){
         if(storedData) {
             // alert(JSON.stringify(storedData));
             // openLPdb();
-            // updateLPdb(storedData);
+            insertLPDB(storedData);
           }
           else {
             alert('There is no stored data for this form yet. Try to change any field')
