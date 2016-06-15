@@ -32,7 +32,7 @@ function successcb(){
     lpdb.transaction(function(transaction) {
     transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text)', [],
         function(tx, result) {
-            alert("Table created successfully");
+            // alert("Table created successfully");
         }, 
         function(error) {
               alert("Error occurred while creating the table.");
