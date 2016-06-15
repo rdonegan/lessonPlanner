@@ -19,6 +19,7 @@ var lpdb;
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "test.db", location: 'default', createFromLocation: 1});
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);
+
    
   };
 
@@ -33,6 +34,7 @@ function successcb(){
     transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text)', [],
         function(tx, result) {
             // alert("Table created successfully");
+            showTable();
         }, 
         function(error) {
               alert("Error occurred while creating the table.");
@@ -51,15 +53,16 @@ function errorcb(){
 function insertLPDB(data){
 
     // it's inserting, but only if it's in the form of a string and not null
+    //for some reason, it only inserts works if you change the grade
    
     var teachername = "'" + data.teachername + "'"
-    var school = "'"+ data.school + "'"
+    var school = data.school //|| "''"
     var startdate = "'" + data.startdate + "'"
     var enddate = "'" + data.enddate + "'"
     var grade = "'" + data.grade + "'"
     var quarter = "'" + data.quarter + "'"
-    var section = "'" + data.section + "'"
-    var subject = "'"+ data.subject + "'"
+    var section = data.section
+    var subject = data.subject
     var standards = data.standards.toString()
     var objectives = data.objectives.toString()
     var indicators = data.indicators.toString()
@@ -68,12 +71,13 @@ function insertLPDB(data){
 
 
     lpdb.transaction(function(tx){
-        alert(subject)
+        alert("here's the section: " + section + " and we're in the insert phase")
         // var executeQuery = "INSERT INTO lessonplans (teachername, school, stardate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
         // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
         // transaction.executeSql(executeQuery, [teacername, school, stardate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes],
-            tx.executeSql("INSERT INTO lessonplans (subject, section) VALUES (?,?)", [subject, section],
+            tx.executeSql("INSERT INTO lessonplans (subject, section) VALUES (?, ?)", [subject, section],
             function(tx, result){
+                myApp.formDeleteData('lessonForm')
                 alert('inserted')
             },
             function(error){
@@ -105,6 +109,21 @@ function updateStandardField(subject, grade){
         })
           
 };
+
+
+function showTable(){
+    // alert("showing table")
+    $(".dailyLessons").html("")
+    lpdb.transaction(function(tx) {
+      tx.executeSql('SELECT * FROM lessonplans', [], function (tx, results) {
+        alert("total rows: " +results.rows.length)
+           var len = results.rows.length, i;
+           for (i = 0; i < len; i++){
+              $("#dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+" section: "+results.rows.item(i).section);
+           }
+        }, null);
+      });
+}
 
 
 function updateObjectiveField(subject, grade, standards){
@@ -188,6 +207,7 @@ function readCSV(subject){
 var mainView = myApp.addView('.view-main', {
     // Because we use fixed-through navbar we can enable dynamic navbar
     dynamicNavbar: true
+    
 });
 
 // Callbacks to run specific code for specific pages, for example for About page:
@@ -241,10 +261,16 @@ myApp.onPageInit('lessonForm', function(page){
     // save data when SUBMIT clicked
     $$('.get-storage-data').on('click', function(){
         var storedData = myApp.formGetData('lessonForm')
+        
+        alert(JSON.stringify(storedData));
+
         if(storedData) {
             // alert(JSON.stringify(storedData));
             // openLPdb();
             insertLPDB(storedData);
+
+            
+
           }
           else {
             alert('There is no stored data for this form yet. Try to change any field')
@@ -253,6 +279,9 @@ myApp.onPageInit('lessonForm', function(page){
 
 
 });
+
+
+
 
 // Generate dynamic page
 var dynamicPageIndex = 0;
