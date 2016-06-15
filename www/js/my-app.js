@@ -18,13 +18,31 @@ var lpdb;
 // Cordova is ready
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "test.db", location: 'default', createFromLocation: 1});
+    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, successcb, errorcb);
    
   };
 
 
-
   // Wait for Cordova to load
   document.addEventListener("deviceready", onDeviceReady, false);
+
+
+function successcb(){
+    // alert('opened successfully');
+    lpdb.transaction(function(transaction) {
+    transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, performance text, resources text, notes text)', [],
+        function(tx, result) {
+            alert("Table created successfully");
+        }, 
+        function(error) {
+              alert("Error occurred while creating the table.");
+        });
+    });
+}
+
+function errorcb(){
+    alert('trouble opening lesson plan db');
+}
 
 
 
@@ -101,12 +119,9 @@ function getSelectedStandards(){
         selectedStandards.push($(this).val())
     })
         
-        return selectedStandards;
-
-        
+        return selectedStandards;      
 }
     
-
 
 // Read CSV and return object array
 function readCSV(subject){
@@ -129,7 +144,6 @@ function readCSV(subject){
     }
 })
 }
-
 
 
 // Add view
@@ -190,7 +204,9 @@ myApp.onPageInit('lessonForm', function(page){
     $$('.get-storage-data').on('click', function(){
         var storedData = myApp.formGetData('lessonForm')
         if(storedData) {
-            alert(JSON.stringify(storedData));
+            // alert(JSON.stringify(storedData));
+            // openLPdb();
+            // updateLPdb(storedData);
           }
           else {
             alert('There is no stored data for this form yet. Try to change any field')
