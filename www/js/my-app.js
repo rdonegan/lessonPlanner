@@ -46,36 +46,34 @@ function errorcb(){
     alert('trouble opening lesson plan db');
 }
 
-// function openLPdb(){
-//     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'});
-// }
+
 
 function insertLPDB(data){
 
     // it's inserting, but only if it's in the form of a string and not null
     //for some reason, it only inserts works if you change the grade
    
-    var teachername = "'" + data.teachername + "'"
-    var school = data.school //|| "''"
-    var startdate = "'" + data.startdate + "'"
-    var enddate = "'" + data.enddate + "'"
-    var grade = "'" + data.grade + "'"
-    var quarter = "'" + data.quarter + "'"
+    var teachername = data.teachername
+    var school = data.school 
+    var startdate = data.startdate 
+    var enddate = data.enddate 
+    var grade = data.grade
+    var quarter = data.quarter
     var section = data.section
     var subject = data.subject
     var standards = data.standards.toString()
     var objectives = data.objectives.toString()
     var indicators = data.indicators.toString()
     var resources = data.resources.toString()
-    var notes = "'" + data.notes + "'"
+    var notes = data.notes
 
 
     lpdb.transaction(function(tx){
-        alert("here's the section: " + section + " and we're in the insert phase")
-        // var executeQuery = "INSERT INTO lessonplans (teachername, school, stardate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        // alert("standards: " + standards + " subject: " + subject)
+        var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
         // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
-        // transaction.executeSql(executeQuery, [teacername, school, stardate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes],
-            tx.executeSql("INSERT INTO lessonplans (subject, section) VALUES (?, ?)", [subject, section],
+        tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes],
+            // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
                 myApp.formDeleteData('lessonForm')
                 alert('inserted')
@@ -119,8 +117,10 @@ function showTable(){
         alert("total rows: " +results.rows.length)
            var len = results.rows.length, i;
            for (i = 0; i < len; i++){
-              $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+" section: "+results.rows.item(i).section);
+              $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+ " standards: " + results.rows.item(i).standards + " objectives: " + results.rows.item(i).objectives + " section: "+ results.rows.item(i).section); //+ "standards: " + result.rows.item(i).standards + " OBJECTIVES: " + result.rows.item(i).objectives);
+            // $(".dailyLessons").append(results.rows.item(i).subject)
            }
+
         }, null);
       });
 }
@@ -262,7 +262,7 @@ myApp.onPageInit('lessonForm', function(page){
     $$('.get-storage-data').on('click', function(){
         var storedData = myApp.formGetData('lessonForm')
         
-        alert(JSON.stringify(storedData));
+        // alert(JSON.stringify(storedData));
 
         if(storedData) {
             // alert(JSON.stringify(storedData));
