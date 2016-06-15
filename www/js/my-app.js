@@ -280,6 +280,33 @@ myApp.onPageInit('lessonForm', function(page){
 
 });
 
+myApp.onPageInit('plansList', function (page) {
+    var items = [];
+    for (var i = 0; i < 100; i++) {
+        items.push({
+            title: 'Item ' + i,
+            subtitle: 'Subtitle ' + i
+        });
+    }
+
+    var virtualList= myApp.virtualList('.list-block', {
+        items: items,
+        template: '<li>' +
+                    '<a href="#" class="item-link item-content">' +
+                      '<div class="item-inner">' +
+                        '<div class="item-title-row">' +
+                          '<div class="item-title">{{title}}</div>' +
+                        '</div>' +
+                        '<div class="item-subtitle">{{subtitle}}</div>' +
+                      '</div>' +
+                    '</a>' +
+                  '</li>',
+        // Item height
+        height: 150
+
+    });
+});
+
 
 
 
