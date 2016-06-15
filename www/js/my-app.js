@@ -186,6 +186,17 @@ myApp.onPageInit('lessonForm', function(page){
 
     })
 
+    // save data when SUBMIT clicked
+    $$('.get-storage-data').on('click', function(){
+        var storedData = myApp.formGetData('lessonForm')
+        if(storedData) {
+            alert(JSON.stringify(storedData));
+          }
+          else {
+            alert('There is no stored data for this form yet. Try to change any field')
+          }
+    })
+
 
 });
 
