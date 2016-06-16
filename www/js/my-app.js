@@ -29,7 +29,7 @@ var lpdb;
 
 
 function successcb(){
-    // alert('opened successfully');
+    
     lpdb.transaction(function(transaction) {
     transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text)', [],
         function(tx, result) {
@@ -76,12 +76,39 @@ function insertLPDB(data){
             // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
                 myApp.formDeleteData('lessonForm')
-                alert('inserted')
+                
             },
             function(error){
                 alert('error occurred')
             })
     })
+}
+
+//gets all lesson plan data and returns as array of objects
+function getAllLessons(){
+    var lessons;
+
+    lessons = lpdb.transaction(function(tx){
+        tx.executeSql("SELECT * FROM lessonplans", [], function(tx, results) {
+
+            var len = results.rows.length, i;
+            for(i=0; i < len; i++){
+                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes }
+                lessons.push(row)
+
+                return lessons;
+
+
+            }
+
+            alert(lessons[0].subject)
+
+
+            // cb(lessons);
+        }, null)
+    })
+
+    alert("outer lessons: " + lessons[0].subject)
 }
 
 
@@ -110,11 +137,11 @@ function updateStandardField(subject, grade){
 
 
 function showTable(){
-    // alert("showing table")
+    
     $(".dailyLessons").html("")
     lpdb.transaction(function(tx) {
       tx.executeSql('SELECT * FROM lessonplans', [], function (tx, results) {
-        alert("total rows: " +results.rows.length)
+       
            var len = results.rows.length, i;
            for (i = 0; i < len; i++){
               $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+ " standards: " + results.rows.item(i).standards + " objectives: " + results.rows.item(i).objectives + " section: "+ results.rows.item(i).section); //+ "standards: " + result.rows.item(i).standards + " OBJECTIVES: " + result.rows.item(i).objectives);
@@ -281,30 +308,57 @@ myApp.onPageInit('lessonForm', function(page){
 });
 
 myApp.onPageInit('plansList', function (page) {
-    var items = [];
-    for (var i = 0; i < 100; i++) {
-        items.push({
-            title: 'Item ' + i,
-            subtitle: 'Subtitle ' + i
+    
+    function getLessons(callback) {
+        
+        var items = new Array();
+        lpdb.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM lessonplans', [], function(tx, results) {
+                alert("here")
+                var len = results.rows.length;
+                for (var i=0; i<len; i++){
+                    // items.push(results.rows.item(i).subject);
+                    var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes }
+                    items.push(row)
+                }
+                alert('ONE: '+ JSON.stringify(items));
+                callback(items)
+            });
         });
     }
 
-    var virtualList= myApp.virtualList('.list-block', {
-        items: items,
-        template: '<li>' +
-                    '<a href="#" class="item-link item-content">' +
-                      '<div class="item-inner">' +
-                        '<div class="item-title-row">' +
-                          '<div class="item-title">{{title}}</div>' +
-                        '</div>' +
-                        '<div class="item-subtitle">{{subtitle}}</div>' +
-                      '</div>' +
-                    '</a>' +
-                  '</li>',
-        // Item height
-        height: 150
+    getLessons(function(items){
+        alert(items)
+    })
 
-    });
+
+
+    // var items = [];
+    // var lessons = getAllLessons(); //returns all lessons in array
+    // alert(lessons[0].id);
+    // for (var i = 0; i < 100; i++) {
+    //     items.push({
+    //         title: 'Item ' + i,
+    //         subtitle: 'Subtitle ' + i
+    //     });
+    // }
+
+    // var virtualList= myApp.virtualList('.list-block', {
+    //     items: lessons,
+    //     template: '<li>' +
+    //                 '<a href="#" class="item-link item-content">' +
+    //                   '<div class="item-inner">' +
+    //                     '<div class="item-title-row">' +
+    //                       '<div class="item-title">{{id}}</div>' +
+    //                     '</div>' +
+    //                     '<div class="item-subtitle">{{school}}</div>' +
+    //                   '</div>' +
+    //                 '</a>' +
+    //               '</li>',
+    //     // Item height
+    //     height: 150
+
+    // });
 });
 
 
