@@ -121,7 +121,7 @@ function updateStandardField(subject, grade){
     formdb.transaction(function(tx) {
             tx.executeSql("SELECT STANDARD FROM ENGLISH WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"'", [], function(tx, res) {
                 var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
-                
+                  
                for (i = 0; i < len; i++){
                 
                     if($.inArray(res.rows.item(i).standard, dup)==-1){
@@ -330,10 +330,14 @@ myApp.onPageInit('plansList', function (page) {
     getLessons(function(items){
         //create virtual list
 
+        //I think I figure this out if I need to go back to it. In order to pass the "query" which is the ID
+        //of the row being referenced, put it in the href at the end (see framework7 for formatting). then, use
+        //operation page.details.query or whatever it is to retrieve this later
+
         var virtualList= myApp.virtualList('.list-block', {
         items: items,
         template: '<li>' +
-                    '<a href="#" class="item-link item-content">' +
+                    '<a href="lessonForm.html?id={{id}}" class="item-link item-content" data-context="{{id}}">' +
                       '<div class="item-inner">' +
                         '<div class="item-title-row">' +
                           '<div class="item-title">{{id}}</div>' +
@@ -348,35 +352,12 @@ myApp.onPageInit('plansList', function (page) {
         });
     })
 
-
-
-    // var items = [];
-    // var lessons = getAllLessons(); //returns all lessons in array
-    // alert(lessons[0].id);
-    // for (var i = 0; i < 100; i++) {
-    //     items.push({
-    //         title: 'Item ' + i,
-    //         subtitle: 'Subtitle ' + i
-    //     });
-    // }
-
-    // var virtualList= myApp.virtualList('.list-block', {
-    //     items: lessons,
-    //     template: '<li>' +
-    //                 '<a href="#" class="item-link item-content">' +
-    //                   '<div class="item-inner">' +
-    //                     '<div class="item-title-row">' +
-    //                       '<div class="item-title">{{id}}</div>' +
-    //                     '</div>' +
-    //                     '<div class="item-subtitle">{{school}}</div>' +
-    //                   '</div>' +
-    //                 '</a>' +
-    //               '</li>',
-    //     // Item height
-    //     height: 150
-
-    // });
 });
+
+myApp.onPageInit('planDetails', function(page){
+
+});
+
 
 
 
