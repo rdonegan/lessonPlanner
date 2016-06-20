@@ -23,3 +23,49 @@ function updateStandardField(subject, grade){
         })
           
 };
+
+
+// Update objective field
+function updateObjectiveField(subject, grade, standards){
+
+    $("#objectives").empty()
+
+
+    //convert standards to usable form
+    var allStds
+    if(standards.length>1){
+      allStds = "'"+standards.join("', '") +"'"
+    
+    }
+    else{
+        allStds = "'"+standards.join()+"'"
+    }
+
+     var dup = []
+    formdb.transaction(function(tx) {
+        tx.executeSql("SELECT OBJECTIVE FROM ENGLISH WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARD IN (" + allStds +")", [], function(tx, res) {
+            var len = res.rows.length, i;
+            
+           for (i = 0; i < len; i++){
+            
+                if($.inArray(res.rows.item(i).objective, dup)==-1){
+                    $("#objectives").append("<option>"+res.rows.item(i).objective + "</option>")
+                    dup.push(res.rows.item(i).objective)
+                }           
+           }
+           
+        })
+    })
+
+   toggleObjectiveVisibility();
+};
+
+
+function toggleObjectiveVisibility(){
+    if(getSelectedStandards().length==0){
+        $(".objectiveSelect").addClass("disabled");
+    }
+    else{
+            $(".objectiveSelect").removeClass("disabled");
+    }
+}
