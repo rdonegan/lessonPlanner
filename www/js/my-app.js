@@ -1,7 +1,14 @@
 // Initialize your app
 var myApp = new Framework7({
     material: true,
-    swipePanel: 'left'
+    swipePanel: 'left',
+    template7Pages: true,
+    template7Data: {
+        'url:lessonForm.html': {
+            teachername: 'John Doe',
+            school: "Koror Elementary School",
+        }
+    }
 });
 
 // Export selectors engine
