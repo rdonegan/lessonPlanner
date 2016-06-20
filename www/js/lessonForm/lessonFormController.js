@@ -1,4 +1,14 @@
+
 myApp.onPageInit('lessonForm', function(page){
+
+
+    if (page.query.id != null){
+        alert("page id:" + page.query.id)
+    }
+
+    // alert(page.query)
+    
+
     // //Update standards when grade or subject changes
     $(".subjIn").on('change', function(){
         updateStandardField(getSelectedSubject(), getSelectedGrade())
