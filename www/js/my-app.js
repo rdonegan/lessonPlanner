@@ -15,6 +15,16 @@ var lpdb;
 
 
 
+// $$(document).on('pageInit', function(e){
+//     var page = e.detail.page //.name to get name of page
+//     if (page.name == "lessonForm"){
+//         alert('lessonform page id:' + page.query.id)
+//         // myApp.onPageInit("lessonForm", function(page))
+//     }
+// })
+
+    
+
 // Cordova is ready
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "test.db", location: 'default', createFromLocation: 1});
@@ -198,8 +208,7 @@ function getSelectedStandards(){
 
     $("#standards option:selected").each(function()
     {
-        // var v = $(this)
-        // console.log(v.val())
+       
         selectedStandards.push($(this).val())
     })
         
@@ -237,14 +246,7 @@ var mainView = myApp.addView('.view-main', {
     
 });
 
-// Callbacks to run specific code for specific pages, for example for About page:
-myApp.onPageInit('about', function (page) {
-    // run createContentPage func after link was clicked
-    $$('.create-page').on('click', function () {
-        createContentPage();
 
-    });
-});
 
 myApp.onPageInit('lessonForm', function(page){
     // //Update standards when grade or subject changes
