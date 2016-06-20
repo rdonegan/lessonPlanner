@@ -48,9 +48,6 @@ function errorcb(){
 
 
 function insertLPDB(data){
-
-    // it's inserting, but only if it's in the form of a string and not null
-    //for some reason, it only inserts works if you change the grade
    
     var teachername = data.teachername
     var school = data.school 
@@ -131,26 +128,26 @@ function showTable(){
 
 
 
-function getSelectedSubject(){
-    return $(".subjIn").val();
-};
+// function getSelectedSubject(){
+//     return $(".subjIn").val();
+// };
 
-function getSelectedGrade(){
-    return $(".gradeIn").val();
-};
+// function getSelectedGrade(){
+//     return $(".gradeIn").val();
+// };
 
-function getSelectedStandards(){
-    //return all selected standards, as array
-    selectedStandards=[]
+// function getSelectedStandards(){
+//     //return all selected standards, as array
+//     selectedStandards=[]
 
-    $("#standards option:selected").each(function()
-    {
+//     $("#standards option:selected").each(function()
+//     {
        
-        selectedStandards.push($(this).val())
-    })
+//         selectedStandards.push($(this).val())
+//     })
         
-        return selectedStandards;      
-}
+//         return selectedStandards;      
+// };
     
 
 // Read CSV and return object array

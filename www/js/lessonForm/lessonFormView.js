@@ -68,4 +68,4 @@ function toggleObjectiveVisibility(){
     else{
             $(".objectiveSelect").removeClass("disabled");
     }
-}
+};

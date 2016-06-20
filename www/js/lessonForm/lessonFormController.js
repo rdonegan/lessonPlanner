@@ -26,5 +26,27 @@ myApp.onPageInit('lessonForm', function(page){
           }
     })
 
-
 });
+
+
+
+function getSelectedSubject(){
+    return $(".subjIn").val();
+};
+
+function getSelectedGrade(){
+    return $(".gradeIn").val();
+};
+
+function getSelectedStandards(){
+    //return all selected standards, as array
+    selectedStandards=[]
+
+    $("#standards option:selected").each(function()
+    {
+       
+        selectedStandards.push($(this).val())
+    })
+        
+        return selectedStandards;      
+};
