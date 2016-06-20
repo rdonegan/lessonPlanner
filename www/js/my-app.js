@@ -23,7 +23,9 @@ var lpdb;
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
   
     var searchTemplate = $('script#ryand').html();
-alert(searchTemplate)
+     // alert(searchTemplate)
+    var compiledTemplate = Template7.compile(searchTemplate)
+    $('.Ry').html(compiledTemplate)
   };
 
 
