@@ -14,6 +14,7 @@ myApp.onPageInit('lessonForm', function(page){
     })
 
     // save data when SUBMIT clicked
+    // WILL NEED TO ADD VALIDATION
     $$('.get-storage-data').on('click', function(){
         var storedData = myApp.formGetData('lessonForm')
         // alert(JSON.stringify(storedData));
