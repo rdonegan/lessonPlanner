@@ -1,9 +1,17 @@
 
 myApp.onPageInit('lessonForm', function(page){
 
+    var state = {isNew: false};
 
-    if (page.query.id != null){
-        alert("page id:" + page.query.id)
+    if (page.query && page.query.id){
+        // you're referencing a pre-made record. edit.
+        state.isNew = false;
+    }
+    else{
+        state.isNew = true;
+        // var searchTemplate = $$('#sample').html();
+        // var compiledSearchTemplate = Template7.compile(searchTemplate);
+        // $('#example').html(compiledSearchTemplate);
     }
 
     // alert(page.query)
@@ -61,3 +69,6 @@ function getSelectedStandards(){
         
         return selectedStandards;      
 };
+
+
+

@@ -12,12 +12,18 @@ var formdb;
 
 //Initialize database for all saved lesson plans
 var lpdb;
+
+
+// var compiledSearchTemplate = Template7.compile(searchTemplate);
     
 
 // Cordova is ready
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "test.db", location: 'default', createFromLocation: 1});
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
+  
+    var searchTemplate = $('script#ryand').html();
+alert(searchTemplate)
   };
 
 
