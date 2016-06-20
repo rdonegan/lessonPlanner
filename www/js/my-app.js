@@ -80,33 +80,6 @@ function insertLPDB(data){
     })
 }
 
-//gets all lesson plan data and returns as array of objects
-function getAllLessons(){
-    var lessons;
-
-    lessons = lpdb.transaction(function(tx){
-        tx.executeSql("SELECT * FROM lessonplans", [], function(tx, results) {
-
-            var len = results.rows.length, i;
-            for(i=0; i < len; i++){
-                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes }
-                lessons.push(row)
-
-                return lessons;
-
-
-            }
-
-            alert(lessons[0].subject)
-
-
-            // cb(lessons);
-        }, null)
-    })
-
-    alert("outer lessons: " + lessons[0].subject)
-}
-
 
 
 function showTable(){
@@ -125,29 +98,6 @@ function showTable(){
       });
 }
 
-
-
-
-// function getSelectedSubject(){
-//     return $(".subjIn").val();
-// };
-
-// function getSelectedGrade(){
-//     return $(".gradeIn").val();
-// };
-
-// function getSelectedStandards(){
-//     //return all selected standards, as array
-//     selectedStandards=[]
-
-//     $("#standards option:selected").each(function()
-//     {
-       
-//         selectedStandards.push($(this).val())
-//     })
-        
-//         return selectedStandards;      
-// };
     
 
 // Read CSV and return object array
@@ -181,67 +131,6 @@ var mainView = myApp.addView('.view-main', {
 });
 
 
-
-// myApp.onPageInit('lessonForm', function(page){
-//     // //Update standards when grade or subject changes
-//     $(".subjIn").on('change', function(){
-//         //CLEAR STANDARDS FIRST
-//         $("#standards").empty(),
-//         //update standards
-//         updateStandardField(getSelectedSubject(), getSelectedGrade()),
-//         $(".standardSelect").removeClass("disabled");
-//         //clear objectives and deactivate
-//         $("#objectives").empty()
-
-//     })
-
-//     $(".gradeIn").on('change', function(){
-//         //CLEAR STANDARDS FIRST
-//         $("#standards").empty(),
-//         //update standards
-//         updateStandardField(getSelectedSubject(), getSelectedGrade()),
-//         $(".standardSelect").removeClass("disabled");
-//         //clear objectives and deactivate
-//         $("#objectives").empty()
-
-//     })
-
-//     //Update objectives if standard changes
-//     $("#standards").on('change', function(){
-//         //CLEAR objectives FIRST
-//         $("#objectives").empty()
-//         //update standards
-//         updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedStandards())
-//         if(getSelectedStandards().length==0){
-//             $(".objectiveSelect").addClass("disabled");
-//         }
-//         else{
-//             $(".objectiveSelect").removeClass("disabled");
-//         }
-
-//     })
-
-//     // save data when SUBMIT clicked
-//     $$('.get-storage-data').on('click', function(){
-//         var storedData = myApp.formGetData('lessonForm')
-        
-//         // alert(JSON.stringify(storedData));
-
-//         if(storedData) {
-//             // alert(JSON.stringify(storedData));
-//             // openLPdb();
-//             insertLPDB(storedData);
-
-            
-
-//           }
-//           else {
-//             alert('There is no stored data for this form yet. Try to change any field')
-//           }
-//     })
-
-
-// });
 
 myApp.onPageInit('plansList', function (page) {
     
@@ -289,7 +178,5 @@ myApp.onPageInit('plansList', function (page) {
     })
 
 });
-
-
 
 
