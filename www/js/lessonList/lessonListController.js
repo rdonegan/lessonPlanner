@@ -27,8 +27,20 @@ myApp.onPageInit('lessonList', function (page) {
 
         var virtualList= myApp.virtualList('.list-block', {
         items: items,
+        // renderItem: function(index,item){
+        //     return '<li>' +
+        //             '<a href="lessonForm.html" class="item-link item-content">' +
+        //               '<div class="item-inner">' +
+        //                 '<div class="item-title-row">' +
+        //                   '<div class="item-title">' + item.id + '</div>' +
+        //                 '</div>' +
+        //                 '<div class="item-subtitle">' + item.subject + '</div>' +
+        //               '</div>' +
+        //             '</a>' +
+        //           '</li>';
+        // }
         template: '<li>' +
-                    '<a href="lessonForm.html?id={{id}}" class="item-link item-content" data-context="{{id}}">' +
+                    '<a href="lessonForm.html?id={{id}}" class="item-link item-content">' +
                       '<div class="item-inner">' +
                         '<div class="item-title-row">' +
                           '<div class="item-title">{{id}}</div>' +

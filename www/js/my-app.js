@@ -2,7 +2,8 @@
 var myApp = new Framework7({
     material: true,
     swipePanel: 'left',
-    template7Pages: true
+    template7Pages: true,
+    precompileTemplates: true
     // template7Data: {
     //     'url:lessonForm.html': {
     //         teachername: 'John Doe',

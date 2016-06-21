@@ -3,6 +3,11 @@ myApp.onPageInit('lessonForm', function(page){
 
     var state = {isNew: false};
 
+    // if (Template7.data){
+    //     alert(JSON.stringify(Template7.data))
+    // }
+    
+
     if (page.query && page.query.id){
         // you're referencing a pre-made record. edit.
         state.isNew = false;
