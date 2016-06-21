@@ -19,7 +19,7 @@ myApp.onPageInit('lessonList', function (page) {
     }
 
     getLessons(function(items){
-        //create virtual list
+        
 
         //I think I figure this out if I need to go back to it. In order to pass the "query" which is the ID
         //of the row being referenced, put it in the href at the end (see framework7 for formatting). then, use
@@ -40,7 +40,7 @@ myApp.onPageInit('lessonList', function (page) {
         //           '</li>';
         // }
         template: '<li>' +
-                    '<a href="lessonForm.html?id={{id}}" class="item-link item-content">' +
+                    '<a href="lessonForm.html?id={{id}}" class="item-link item-content" data-context= \'{"school": "{{school}}" }\'";>' +
                       '<div class="item-inner">' +
                         '<div class="item-title-row">' +
                           '<div class="item-title">{{id}}</div>' +
