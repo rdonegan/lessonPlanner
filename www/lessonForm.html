@@ -1,20 +1,4 @@
 
-<script type="text/template7" id="sample">
-  <div class="item-content">
-                        
-    <div class="item-inner">
-      <div class="item-title label">Example</div>
-      <div class="item-input">
-        <select name="example" class="ex">
-          <option>1</option>
-          <option>2</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-</script>
-
 
 <div class="pages navbar-fixed">
   <!-- Page, data-page contains page name-->
@@ -82,6 +66,9 @@
                             <div class="item-title label">Grade</div>
                             <div class="item-input">
                               <select name="grade" class="gradeIn">
+                                {{#if grade}}
+                                  <option selected="selected">grade</option>
+                                {{/if}}
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
