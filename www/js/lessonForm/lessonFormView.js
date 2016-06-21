@@ -2,7 +2,7 @@
 function updateStandardField(subject, grade){
 
     $("#standards").empty()
-    $(".standardSelect").removeClass("disabled");
+    // $(".standardSelect").removeClass("disabled");
     $("#objectives").empty()
 
     var dup = [] // To check if duplicate strands have been added

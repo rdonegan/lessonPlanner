@@ -20,7 +20,7 @@ myApp.onPageInit('lessonList', function (page) {
 
     getLessons(function(items){
         
-
+        alert(items[0].standards)
         //I think I figure this out if I need to go back to it. In order to pass the "query" which is the ID
         //of the row being referenced, put it in the href at the end (see framework7 for formatting). then, use
         //operation page.details.query or whatever it is to retrieve this later

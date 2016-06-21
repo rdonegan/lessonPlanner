@@ -14,6 +14,7 @@ myApp.onPageInit('lessonForm', function(page){
     }
     else{
         state.isNew = true;
+        updateStandardField(getSelectedSubject(), getSelectedGrade())
         // var searchTemplate = $$('#sample').html();
         // var compiledSearchTemplate = Template7.compile(searchTemplate);
         // $('#example').html(compiledSearchTemplate);
