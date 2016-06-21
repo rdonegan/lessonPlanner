@@ -73,10 +73,13 @@ function insertLPDB(data){
     var section = data.section
     var subject = data.subject
     var standards = JSON.stringify(data.standards)
+    var objectives = JSON.stringify(data.objectives)
+    var indicators = JSON.stringify(data.indicators)
+    var resources = JSON.stringify(data.resources)
     // var standards = data.standards.toString()
-    var objectives = data.objectives.toString()
-    var indicators = data.indicators.toString()
-    var resources = data.resources.toString()
+    // var objectives = data.objectives.toString()
+    // var indicators = data.indicators.toString()
+    // var resources = data.resources.toString()
     var notes = data.notes
 
 
