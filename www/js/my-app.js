@@ -7,6 +7,7 @@ var myApp = new Framework7({
         'url:lessonForm.html': {
             teachername: 'John Doe',
             school: "Koror Elementary School",
+            standards: ["st1", "st2"]
         }
     }
 });
