@@ -209,9 +209,12 @@
                   <a href="#" class="item-link smart-select">
                   <!-- "multiple" attribute for multiple select-->
                   <select id="standards" name="standards" multiple>
-                    {{#each standards}}
-                      <option selected="selected">{{this}}</option>
-                    {{/each}}
+                    
+                    {{#if standards}}
+                      {{#each standards}}
+                        <option selected="selected">{{this}}</option>
+                      {{/each}}
+                    {{/if}}
                    
                   </select>
                   <div class="item-content">
