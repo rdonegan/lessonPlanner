@@ -72,7 +72,8 @@ function insertLPDB(data){
     var quarter = data.quarter
     var section = data.section
     var subject = data.subject
-    var standards = data.standards.toString()
+    var standards = JSON.stringify(data.standards)
+    // var standards = data.standards.toString()
     var objectives = data.objectives.toString()
     var indicators = data.indicators.toString()
     var resources = data.resources.toString()
@@ -105,7 +106,7 @@ function showTable(){
        
            var len = results.rows.length, i;
            for (i = 0; i < len; i++){
-              $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+ " standards: " + results.rows.item(i).standards + " objectives: " + results.rows.item(i).objectives + " section: "+ results.rows.item(i).section); //+ "standards: " + result.rows.item(i).standards + " OBJECTIVES: " + result.rows.item(i).objectives);
+              $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+ " standards: " + (JSON.parse(results.rows.item(i).standards))[0] + " objectives: " + results.rows.item(i).objectives + " section: "+ results.rows.item(i).section); //+ "standards: " + result.rows.item(i).standards + " OBJECTIVES: " + result.rows.item(i).objectives);
             // $(".dailyLessons").append(results.rows.item(i).subject)
            }
 
