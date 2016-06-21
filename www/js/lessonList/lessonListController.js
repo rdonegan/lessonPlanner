@@ -1,4 +1,4 @@
-myApp.onPageInit('plansList', function (page) {
+myApp.onPageInit('lessonList', function (page) {
     
     function getLessons(callback) {
         

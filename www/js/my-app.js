@@ -2,14 +2,14 @@
 var myApp = new Framework7({
     material: true,
     swipePanel: 'left',
-    template7Pages: true,
-    template7Data: {
-        'url:lessonForm.html': {
-            teachername: 'John Doe',
-            school: "Koror Elementary School",
-            standards: ["st1", "st2"]
-        }
-    }
+    template7Pages: true
+    // template7Data: {
+    //     'url:lessonForm.html': {
+    //         teachername: 'John Doe',
+    //         school: "Koror Elementary School",
+    //         standards: ["st1", "st2"]
+    //     }
+    // }
 });
 
 // Export selectors engine
