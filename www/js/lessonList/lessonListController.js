@@ -55,7 +55,7 @@ myApp.onPageInit('lessonList', function (page) {
             items: items,
             renderItem: function(index,item){
                 return '<li>' +
-                        '<a href="lessonForm.html" class="item-link item-content">' +
+                        '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
                           '<div class="item-inner">' +
                             '<div class="item-title-row">' +
                               '<div class="item-title">' + item.id + '</div>' +

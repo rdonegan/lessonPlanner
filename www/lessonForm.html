@@ -213,14 +213,15 @@
 
 
               <!-- OBJECTIVES -->
-              <li class="objectiveSelect disabled">
+              <li class="objectiveSelect">
                 <a href="#" class="item-link smart-select" data-open-in="popup">
                 <!-- "multiple" attribute for multiple select-->
                 <select id="objectives" name="objectives" multiple >
-                  <!-- options grouped within "optgroup" tag-->
-                  
-                  
-                 
+                  {{#if objectives}}
+                      {{#each objectives}}
+                        <option value="{{this}}" selected>{{this}}</option>
+                      {{/each}}
+                  {{/if}}
                 </select>
                 <div class="item-content">
                   <div class="item-inner">
