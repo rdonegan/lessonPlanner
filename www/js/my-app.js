@@ -4,14 +4,8 @@ var myApp = new Framework7({
     swipePanel: 'left',
     template7Pages: true,
     precompileTemplates: true
-    // template7Data: {
-    //     'url:lessonForm.html': {
-    //         teachername: 'John Doe',
-    //         school: "Koror Elementary School",
-    //         standards: ["st1", "st2"]
-    //     }
-    // }
 });
+
 
 // Export selectors engine
 var $$ = Dom7;
