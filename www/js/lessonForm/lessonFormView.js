@@ -122,6 +122,22 @@ function populateForm(data){
             $("#objectives").append("<option selected>"+objectives[i] + "</option>")
         }
     }
+
+    if(data.indicators){
+        indicators = JSON.parse(data.indicators)
+        var len = indicators.length;
+        for (var i=0; i<len; i++){
+            $("#indicators").append("<option selected>"+indicators[i] + "</option>")
+        }
+    }
+
+    if(data.resources){
+        resources = JSON.parse(data.resources)
+        var len = resources.length;
+        for (var i=0; i<len; i++){
+            $("#resources").append("<option selected>"+resources[i] + "</option>")
+        }
+    }
     // alert(data.subject)
 
 }
