@@ -2,15 +2,54 @@
 myApp.onPageInit('lessonForm', function(page){
 
     var state = {isNew: false};
+    var lessonData; //for storing data while editing
 
     // if (Template7.data){
     //     alert(JSON.stringify(Template7.data))
     // }
+
+    function getRecord(id, callback){
+        var record;
+
+
+
+        lpdb.transaction(function(tx){
+            tx.executeSql('SELECT * FROM lessonplans WHERE ID= "' + id + '"', [], function(tx, results){
+                // alert('happened')
+                if (results){
+                    // alert(JSON.stringify(results.rows.item(0)))
+                    // alert(JSON.parse(results.rows.item(0).standards)[0])
+                    record = results.rows.item(0)
+                    // alert(JSON.parse(record.standards)[0])
+                }
+                callback(record)
+
+            })
+
+
+        })
+
+       
+    };
     
 
     if (page.query && page.query.id){
+
+        // USE THIS TO GRAB THE INFORMATION FOR THAT RECORD AND POPULATE THE FORM AS NEEDED****
         // you're referencing a pre-made record. edit.
         state.isNew = false;
+        lessonData = getRecord(page.query.id, function(record){
+            alert(JSON.parse(record.standards)[0])
+            //probs have to set everything up in here too
+            return record;
+
+
+        })
+
+
+
+
+        // alert("query id: " + page.query.id)
     }
     else{
         state.isNew = true;
