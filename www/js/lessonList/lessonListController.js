@@ -1,4 +1,17 @@
 myApp.onPageInit('lessonList', function (page) {
+
+
+
+    $(".list-block").on("click", ".planItem", function(){
+        // alert("hello")
+        mainView.router.load({
+            url: 'lessonForm.html'
+           
+        });
+
+
+    });
+      
     
     function getLessons(callback) {
         
@@ -49,7 +62,7 @@ myApp.onPageInit('lessonList', function (page) {
             //           '</li>';
             // }
         template: '<li class="item-content">' +
-                    '<a href="#" class="item-link">' +
+                    '<a href="#" class="item-link planItem">' +
                           '<div class="item-inner">' +
                             '<div class="item-title-row">' +
                               '<div class="item-title">{{id}}</div>' +
