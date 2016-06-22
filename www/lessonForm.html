@@ -189,11 +189,7 @@
                   <!-- "multiple" attribute for multiple select-->
                   <select id="standards" name="standards" multiple>
                     
-                    {{#if standards}}
-                      {{#each standards}}
-                        <option value="{{this}}" selected>{{this}}</option>
-                      {{/each}}
-                    {{/if}}
+                   
                    
                   </select>
                   <div class="item-content">
@@ -209,11 +205,7 @@
                 <a href="#" class="item-link smart-select" data-open-in="popup">
                 <!-- "multiple" attribute for multiple select-->
                 <select id="objectives" name="objectives" multiple >
-                  {{#if objectives}}
-                      {{#each objectives}}
-                        <option value="{{this}}" selected>{{this}}</option>
-                      {{/each}}
-                  {{/if}}
+                 
                 </select>
                 <div class="item-content">
                   <div class="item-inner">
@@ -272,7 +264,7 @@
                   <div class="item-content">
                     <div class="item-inner">
                       <div class="item-title label">Tap below to type</div>
-                      <div class="item-input" name="notes">
+                      <div class="item-input" class="notesIn" name="notes">
                           <textarea></textarea>
                       </div>
                     </div>

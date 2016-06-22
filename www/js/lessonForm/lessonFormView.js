@@ -108,6 +108,13 @@ function populateForm(data){
     else{
         $('.endDateIn').val(data.startdate)
     }
+    if(data.standards){
+        standards = JSON.parse(data.standards)
+        var len = standards.length;
+        for (var i=0; i<len; i++){
+            $("#standards").append("<option selected>"+standards[i] + "</option>")
+        }
+    }
     // alert(data.subject)
 
 }
