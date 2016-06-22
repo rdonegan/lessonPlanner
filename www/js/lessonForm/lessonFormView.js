@@ -138,6 +138,9 @@ function populateForm(data){
             $("#resources").append("<option selected>"+resources[i] + "</option>")
         }
     }
+    if (data.notes){
+        $('.notesIn').val(data.notes)
+    }
     // alert(data.subject)
 
 }

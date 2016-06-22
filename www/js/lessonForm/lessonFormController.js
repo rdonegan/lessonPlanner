@@ -82,7 +82,7 @@ myApp.onPageInit('lessonForm', function(page){
     // WILL NEED TO ADD VALIDATION
     $$('.get-storage-data').on('click', function(){
         var storedData = myApp.formGetData('lessonForm')
-        // alert(JSON.stringify(storedData));
+        alert(JSON.stringify(storedData));
         if(storedData) {
             // alert(JSON.stringify(storedData));
             insertLPDB(storedData);   
