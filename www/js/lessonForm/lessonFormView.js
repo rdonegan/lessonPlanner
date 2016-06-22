@@ -69,3 +69,17 @@ function toggleObjectiveVisibility(){
             $(".objectiveSelect").removeClass("disabled");
     }
 };
+
+// uses JSON data to populate form from record
+function populateForm(data){
+//data.{field} ,for everything except arrays
+//JSON.parse(data.{field}[i] ,for arrays
+
+    // alert(data.subject);
+    if (data.subject){
+        // alert("here")
+        $(".subjIn").val(data.subject)
+    }
+    // alert(data.subject)
+
+}

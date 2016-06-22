@@ -39,8 +39,10 @@ myApp.onPageInit('lessonForm', function(page){
         // you're referencing a pre-made record. edit.
         state.isNew = false;
         lessonData = getRecord(page.query.id, function(record){
-            alert(JSON.parse(record.standards)[0])
+            // alert(JSON.parse(record.standards)[0])
             //probs have to set everything up in here too
+            populateForm(record)
+
             return record;
 
 
@@ -88,6 +90,7 @@ myApp.onPageInit('lessonForm', function(page){
           else {
             alert('There is no stored data for this form yet. Try to change any field')
           }
+          myApp.formDeleteData('lessonForm')
     })
 
 });
