@@ -81,7 +81,12 @@ function populateForm(data){
     }
     if (data.grade){
         $('.gradeIn').val(data.grade)
-
+    }
+    if (data.quarter){
+        $('.quarterIn').val(data.quarter)
+    }
+    if (data.section){
+        $('.sectionIn').val(data.section)
     }
     // alert(data.subject)
 
