@@ -94,6 +94,20 @@ function populateForm(data){
     if (data.teachername){
         $('.teacherIn').val(data.teachername)
     }
+    if (data.startdate){
+        $('.startDateIn').val(data.startdate)
+    }
+    else{
+        var d = new Date();
+        var date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+        $('.startDateIn').val(date)
+    }
+    if (data.enddate){
+        $('.endDateIn').val(data.enddate)
+    }
+    else{
+        $('.endDateIn').val(data.startdate)
+    }
     // alert(data.subject)
 
 }
