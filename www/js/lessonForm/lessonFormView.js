@@ -115,6 +115,13 @@ function populateForm(data){
             $("#standards").append("<option selected>"+standards[i] + "</option>")
         }
     }
+    if(data.objectives){
+        objectives = JSON.parse(data.objectives)
+        var len = objectives.length;
+        for (var i=0; i<len; i++){
+            $("#objectives").append("<option selected>"+objectives[i] + "</option>")
+        }
+    }
     // alert(data.subject)
 
 }
