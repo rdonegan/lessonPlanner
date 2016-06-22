@@ -88,6 +88,12 @@ function populateForm(data){
     if (data.section){
         $('.sectionIn').val(data.section)
     }
+    if (data.school){
+        $('.schoolIn').val(data.school)
+    }
+    if (data.teachername){
+        $('.teacherIn').val(data.teachername)
+    }
     // alert(data.subject)
 
 }
