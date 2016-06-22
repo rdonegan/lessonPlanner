@@ -10,9 +10,6 @@ myApp.onPageInit('lessonForm', function(page){
 
     function getRecord(id, callback){
         var record;
-
-
-
         lpdb.transaction(function(tx){
             tx.executeSql('SELECT * FROM lessonplans WHERE ID= "' + id + '"', [], function(tx, results){
                 // alert('happened')
@@ -25,27 +22,20 @@ myApp.onPageInit('lessonForm', function(page){
                 callback(record)
 
             })
-
-
         })
-
-       
+     
     };
     
 
     if (page.query && page.query.id){
-
-        // USE THIS TO GRAB THE INFORMATION FOR THAT RECORD AND POPULATE THE FORM AS NEEDED****
-        // you're referencing a pre-made record. edit.
         state.isNew = false;
+        $(".formTitle").html("Edit Lesson")
+        $(".navbar").addClass("theme-pink")
         lessonData = getRecord(page.query.id, function(record){
             // alert(JSON.parse(record.standards)[0])
             //probs have to set everything up in here too
             populateForm(record)
-
             return record;
-
-
         })
 
 
