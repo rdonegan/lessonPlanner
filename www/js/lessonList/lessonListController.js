@@ -19,34 +19,43 @@ myApp.onPageInit('lessonList', function (page) {
     }
 
     getLessons(function(items){
+
+
+        // SO THIS IS STILL SHOWING WEIRD BEHAVIOR. MY FIRST PIECE OF ADVICE IS TO ***NOT PANIC***.
+        // NOW, IF AN IDEA STRIKES YOU DURIN GHT NIGHT, YOU COULD TRY ANOTHER APPROACH TO THIS TO 
+        // DIAGNOSE THE WEIRD JUMPINESS PROBLEM. OR, IF THAT SEEMS FRUSTRATING, SWITCH TO A TOTALLY NEW APPROACH.
+        // IM TALKIN ABOUT JUST STRAIGHT UP GETTING DATA FROM THE DATABASE, DISPLAYING IT AS A LIST,
+        // THEN MANUALLY USING JAVASCRIPT TO FETCH INFO FROM EACH AND SEND IT TO THE FORM WHERE IT WILL
+        // ME MANUALLY PLACED IN VIA JAVASCRIPT. NOT A PRETTY SOLUTION, BUT IF IT WORKS, IT WORKS. YOU
+        // COULD COMBINE THAT APPROACH WITH THE OTHER APPROACH (SEND THE QUERY ID), AND THEN JUST WRITE
+        // A SHIT TON OF JAVASCRIPT TO DEAL WITH THIS CONDITION. THAT ACTUALLY MIGHT BE EASIER - MANUALLY INPUTTING
+        // VALUES INTO CLASSES THAN RELYING ON TEMPLAT7. FUCK TEMPLATE7
+
         
         // alert(items[0].standards)
-        //I think I figure this out if I need to go back to it. In order to pass the "query" which is the ID
-        //of the row being referenced, put it in the href at the end (see framework7 for formatting). then, use
-        //operation page.details.query or whatever it is to retrieve this later
-
+        
         var virtualList= myApp.virtualList('.list-block', {
-        items: items,
-        // renderItem: function(index,item){
-        //     return '<li>' +
-        //             '<a href="lessonForm.html" class="item-link item-content">' +
-        //               '<div class="item-inner">' +
-        //                 '<div class="item-title-row">' +
-        //                   '<div class="item-title">' + item.id + '</div>' +
-        //                 '</div>' +
-        //                 '<div class="item-subtitle">' + item.subject + '</div>' +
-        //               '</div>' +
-        //             '</a>' +
-        //           '</li>';
-        // }
-        template: '<li>' +
-                    '<a href="lessonForm.html?id={{id}}" class="item-link item-content" data-context= \'{"school": "{{school}}", "standards": {{standards}} }\'";>' +
-                      '<div class="item-inner">' +
-                        '<div class="item-title-row">' +
-                          '<div class="item-title">{{id}}</div>' +
-                        '</div>' +
-                        '<div class="item-subtitle">{{standards}}</div>' +
-                      '</div>' +
+            items: items,
+            // renderItem: function(index,item){
+            //     return '<li>' +
+            //             '<a href="lessonForm.html" class="item-link item-content">' +
+            //               '<div class="item-inner">' +
+            //                 '<div class="item-title-row">' +
+            //                   '<div class="item-title">' + item.id + '</div>' +
+            //                 '</div>' +
+            //                 '<div class="item-subtitle">' + item.subject + '</div>' +
+            //               '</div>' +
+            //             '</a>' +
+            //           '</li>';
+            // }
+        template: '<li class="item-content">' +
+                    '<a href="#" class="item-link">' +
+                          '<div class="item-inner">' +
+                            '<div class="item-title-row">' +
+                              '<div class="item-title">{{id}}</div>' +
+                            '</div>' +
+                            '<div class="item-subtitle">{{standards}}</div>' +
+                          '</div>' +
                     '</a>' +
                   '</li>'
         // Item height
