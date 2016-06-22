@@ -77,8 +77,11 @@ function populateForm(data){
 
     // alert(data.subject);
     if (data.subject){
-        // alert("here")
         $(".subjIn").val(data.subject)
+    }
+    if (data.grade){
+        $('.gradeIn').val(data.grade)
+
     }
     // alert(data.subject)
 
