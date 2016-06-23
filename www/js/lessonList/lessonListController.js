@@ -1,8 +1,9 @@
 myApp.onPageInit('lessonList', function (page) {
 
 
-    $('.list-block').on("click", ".swipeout-delete", function(){
-        alert("calling")
+    $('.list-block').on("click", ".swipeout-delete", function(e){
+        // alert(this.id)
+        deleteFromLPDB(this.id)
     })  
     
     function getLessons(callback) {
@@ -41,7 +42,7 @@ myApp.onPageInit('lessonList', function (page) {
                           '</div>' +
                         '</a>' +
                         '<div class="swipeout-actions-right">'+
-                            '<a href="#" class="swipeout-delete">Delete'+
+                            '<a id="'+ item.id +'" href="#" class="swipeout-delete">Delete'+
                             '</a>'+
                         '</div>'+
                       '</li>';

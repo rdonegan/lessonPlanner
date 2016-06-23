@@ -129,6 +129,15 @@ function updateLPDB(id, data){
 
 }
 
+function deleteFromLPDB(id){
+    lpdb.transaction(function(tx){
+        var executeQuery = "DELETE FROM lessonplans where id=?";
+        tx.executeSql(executeQuery, [id])
+
+    })
+    
+}
+
 
 
 function showTable(){
