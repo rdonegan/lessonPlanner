@@ -17,7 +17,40 @@ var formdb;
 var lpdb;
 
 
-// var compiledSearchTemplate = Template7.compile(searchTemplate);
+
+var logOb; //file object
+
+
+$('.shareLink').click(function(){
+    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
+        // alert("got main dir: " + JSON.stringify(dir));
+        dir.getFile("log.txt", {create:true}, function(file) {
+            // alert("got the file: " + JSON.stringify(file));
+            // logOb = file;
+            writeLog("App started", file);          
+        });
+    });
+});
+
+
+function writeLog(str, file) {
+    // if(!logOb) return;
+    // var log = str + " [" + (new Date()) + "]\n";
+    // alert("going to log: "+log);
+    file.createWriter(function(fileWriter) {
+        alert("ok, in theory i worked");
+        // use SEEK if you want to append instead of overwrite
+        // fileWriter.seek(fileWriter.length);
+        
+        // var blob = new Blob([log], {type:'text/plain'});
+        // fileWriter.write("hello please work");
+        
+    }, fail);
+}
+
+
+    
+
     
 
 // Cordova is ready
