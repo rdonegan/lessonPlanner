@@ -1,7 +1,9 @@
 myApp.onPageInit('lessonList', function (page) {
 
 
-      
+    $('.list-block').on("click", ".swipeout-delete", function(){
+        alert("calling")
+    })  
     
     function getLessons(callback) {
         
@@ -39,7 +41,7 @@ myApp.onPageInit('lessonList', function (page) {
                           '</div>' +
                         '</a>' +
                         '<div class="swipeout-actions-right">'+
-                            '<a href="#" class="swipeout-delete" data-confirm="Are you sure you want to delete this lesson plan?" data-confirm-title="Delete?">Delete'+
+                            '<a href="#" class="swipeout-delete">Delete'+
                             '</a>'+
                         '</div>'+
                       '</li>';
