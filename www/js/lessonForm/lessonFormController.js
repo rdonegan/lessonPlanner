@@ -50,8 +50,6 @@ myApp.onPageInit('lessonForm', function(page){
         // var compiledSearchTemplate = Template7.compile(searchTemplate);
         // $('#example').html(compiledSearchTemplate);
     }
-
-    // alert(page.query)
     
 
     // //Update standards when grade or subject changes
@@ -72,14 +70,17 @@ myApp.onPageInit('lessonForm', function(page){
     // WILL NEED TO ADD VALIDATION
     $$('.get-storage-data').on('click', function(){
         var storedData = myApp.formGetData('lessonForm')
-        alert(JSON.stringify(storedData));
-        if(storedData) {
+        // alert(JSON.stringify(storedData));
+        if(state.isNew && storedData) {
             // alert(JSON.stringify(storedData));
             insertLPDB(storedData);   
-          }
-          else {
+        }
+        else if (!state.isNew && storedData){
+            updateLPDB(page.query.id, storedData)
+        }
+        else {
             alert('There is no stored data for this form yet. Try to change any field')
-          }
+        }
           myApp.formDeleteData('lessonForm')
     })
 
