@@ -21,32 +21,47 @@ var lpdb;
 var logOb; //file object
 
 
+
+function writeFile(fileEntry, dataObj){
+    fileEntry.createWriter(function(fileWriter){
+        fileWriter.write("This is a test!")
+    })
+}
+
+
+function createFile(dirEntry, fileName){
+    dirEntry.getFile(fileName, {create: true, exclusive: false}, function(fileEntry){
+        // alert("here")
+        writeFile(fileEntry, null)
+    })
+}
+
 $('.shareLink').click(function(){
+
     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
+        // alert('jere')
         // alert("got main dir: " + JSON.stringify(dir));
-        dir.getFile("log.txt", {create:true}, function(file) {
-            // alert("got the file: " + JSON.stringify(file));
-            // logOb = file;
-            writeLog("App started", file);          
-        });
+        createFile(dir, "log.txt") 
     });
 });
 
 
-function writeLog(str, file) {
-    // if(!logOb) return;
-    // var log = str + " [" + (new Date()) + "]\n";
-    // alert("going to log: "+log);
-    file.createWriter(function(fileWriter) {
-        alert("ok, in theory i worked");
-        // use SEEK if you want to append instead of overwrite
-        // fileWriter.seek(fileWriter.length);
+
+
+// function writeLog(str, file) {
+//     // if(!logOb) return;
+//     // var log = str + " [" + (new Date()) + "]\n";
+//     // alert("going to log: "+log);
+//     file.createWriter(function(fileWriter) {
+//         alert("ok, in theory i worked");
+//         // use SEEK if you want to append instead of overwrite
+//         // fileWriter.seek(fileWriter.length);
         
-        // var blob = new Blob([log], {type:'text/plain'});
-        // fileWriter.write("hello please work");
+//         // var blob = new Blob([log], {type:'text/plain'});
+//         // fileWriter.write("hello please work");
         
-    }, fail);
-}
+//     }, fail);
+// }
 
 
     
