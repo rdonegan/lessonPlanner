@@ -54,9 +54,19 @@ function jsonToCSV(objArray){
     for (var i = 0; i < array.length; i++) {
         var line = '';
         for (var index in array[i]) {
-            if (line != '') line += ','
-         
-            line += array[i][index];
+            if (line != ''){ line += ','}
+
+            if (jQuery.type(array[i][index])=="string" && array[i][index].charAt(0) == "["){
+                // alert(array[i][index].charAt(0))
+                var newStr = array[i][index].replace(/,/g, "")
+                line += newStr
+            }
+            else{
+                line += array[i][index];
+            }
+
+           
+            
         }
 
         str += line + '\r\n';
