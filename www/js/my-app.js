@@ -34,7 +34,7 @@ function jsonToCSV(objArray){
         var line = '';
         for (var index in array[i]) {
             if (line != '') line += ','
-            // alert(array[i][index])
+         
             line += array[i][index];
         }
 
