@@ -23,9 +23,15 @@ var logOb; //file object
 
 
 function writeFile(fileEntry, dataObj){
-    fileEntry.createWriter(function(fileWriter){
-        fileWriter.write("This is a test!")
+    
+    getLessons(function(items){
+        fileEntry.createWriter(function(fileWriter){
+            // alert("still in here")
+            fileWriter.write(JSON.stringify(items[0]))
+        })
     })
+
+    
 }
 
 
