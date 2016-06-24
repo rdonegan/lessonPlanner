@@ -22,12 +22,31 @@ var logOb; //file object
 
 
 
+function jsonToCSV(objArray){
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+            if (line != '') line += ','
+
+            line += array[i][index];
+        }
+
+        str += line + '\r\n';
+    }
+    // alert(str)
+    return str;
+}
+
 function writeFile(fileEntry, dataObj){
     
     getLessons(function(items){
+        var csvItems = jsonToCSV(items)
         fileEntry.createWriter(function(fileWriter){
             // alert("still in here")
-            fileWriter.write(JSON.stringify(items[0]))
+            fileWriter.write(csvItems)
         })
     })
 
@@ -47,7 +66,7 @@ $('.shareLink').click(function(){
     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
         // alert('jere')
         // alert("got main dir: " + JSON.stringify(dir));
-        createFile(dir, "log.txt") 
+        createFile(dir, "log.csv") 
     });
 });
 
