@@ -67,7 +67,6 @@ function createFile(dirEntry, fileName){
 }
 
 $('.shareLink').click(function(){
-
     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
         // alert('jere')
         // alert("got main dir: " + JSON.stringify(dir));
