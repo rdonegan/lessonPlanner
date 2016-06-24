@@ -29,7 +29,7 @@ function getLessonsByDate(callback) {
         var items = new Array();
         lpdb.transaction(function(tx) {
             tx.executeSql('SELECT * FROM lessonplans WHERE startdate >= "' + startDate + '" AND enddate <= "' + endDate +'"', [], function(tx, results) {
-                alert(results.rows.length)
+                // alert(results.rows.length)
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
                     // items.push(results.rows.item(i).subject);
