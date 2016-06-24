@@ -71,7 +71,7 @@ $('.shareLink').click(function(){
     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
         // alert('jere')
         // alert("got main dir: " + JSON.stringify(dir));
-        createFile(dir, "log.txt") 
+        createFile(dir, "log.csv") 
     });
 });
 
