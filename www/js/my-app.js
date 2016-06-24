@@ -21,6 +21,27 @@ var lpdb;
 var logOb; //file object
 
 
+function getLessonsByDate(callback) {
+        
+        var startDate= $('.startDateInput').val() //get from input
+        var endDate= $('.endDateInput').val() //get from input
+
+        var items = new Array();
+        lpdb.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM lessonplans WHERE startdate >= "' + startDate + '" AND enddate <= "' + endDate +'"', [], function(tx, results) {
+                alert(results.rows.length)
+                var len = results.rows.length;
+                for (var i=0; i<len; i++){
+                    // items.push(results.rows.item(i).subject);
+                    var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes }
+                    items.push(row)
+                }
+                
+                callback(items)
+            });
+        });
+    }
+
 
 function jsonToCSV(objArray){
     var header = Object.keys(objArray[0])
@@ -45,9 +66,11 @@ function jsonToCSV(objArray){
     return str;
 }
 
+
+
 function writeFile(fileEntry, dataObj){
     
-    getLessons(function(items){
+    getLessonsByDate(function(items){
         var csvItems = jsonToCSV(items)
         fileEntry.createWriter(function(fileWriter){
             // alert("still in here")
