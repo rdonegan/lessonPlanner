@@ -23,19 +23,24 @@ var logOb; //file object
 
 
 function jsonToCSV(objArray){
+    var header = Object.keys(objArray[0])
     var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-    var str = '';
+    // var str = '';
+    var str = header + '\r\n';
+
+    // alert(JSON.stringify(array))
 
     for (var i = 0; i < array.length; i++) {
         var line = '';
         for (var index in array[i]) {
             if (line != '') line += ','
-
+            // alert(array[i][index])
             line += array[i][index];
         }
 
         str += line + '\r\n';
     }
+
     // alert(str)
     return str;
 }
@@ -66,7 +71,7 @@ $('.shareLink').click(function(){
     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
         // alert('jere')
         // alert("got main dir: " + JSON.stringify(dir));
-        createFile(dir, "log.csv") 
+        createFile(dir, "log.txt") 
     });
 });
 
