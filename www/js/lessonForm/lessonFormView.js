@@ -1,6 +1,9 @@
+var selectedStandardIds = [];
+
 //Everytime subject or grade fields are updated, reload contents of Standards select options
 function updateStandardField(subject, grade, quarter){
 
+    selectedStandardIds = [];
     $("#standards").empty()
     // $(".standardSelect").removeClass("disabled");
     $("#objectives").empty()
@@ -16,7 +19,9 @@ function updateStandardField(subject, grade, quarter){
                     if($.inArray(res.rows.item(i).standard, dup)==-1 && res.rows.item(i).standard != ""){
                         $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
                         dup.push(res.rows.item(i).standard)
-                    }           
+                        alert(res.rows.item(i).standard)
+                    } 
+                    // alert(selectedStandardIds);          
                }
                
             })
@@ -30,7 +35,6 @@ function updateObjectiveField(subject, grade, standards){
 
     $("#objectives").empty()
 
-
     //convert standards to usable form
     var allStds
     if(standards.length>1){
@@ -43,9 +47,10 @@ function updateObjectiveField(subject, grade, standards){
 
      var dup = []
     formdb.transaction(function(tx) {
+
         tx.executeSql("SELECT OBJECTIVE FROM ENGLISH WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARD IN (" + allStds +")", [], function(tx, res) {
             var len = res.rows.length, i;
-            
+            // alert(len)
            for (i = 0; i < len; i++){
             
                 if($.inArray(res.rows.item(i).objective, dup)==-1){
