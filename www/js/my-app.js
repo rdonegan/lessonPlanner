@@ -109,42 +109,24 @@ $('.shareLink').click(function(){
 
 
 
-
-// function writeLog(str, file) {
-//     // if(!logOb) return;
-//     // var log = str + " [" + (new Date()) + "]\n";
-//     // alert("going to log: "+log);
-//     file.createWriter(function(fileWriter) {
-//         alert("ok, in theory i worked");
-//         // use SEEK if you want to append instead of overwrite
-//         // fileWriter.seek(fileWriter.length);
-        
-//         // var blob = new Blob([log], {type:'text/plain'});
-//         // fileWriter.write("hello please work");
-        
-//     }, fail);
-// }
-
-
-    
-
-    
-
 // Cordova is ready
   function onDeviceReady() {
-    formdb = window.sqlitePlugin.openDatabase({name: "test.db", location: 'default', createFromLocation: 1});
+    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, successCreate);
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
   
-    // var searchTemplate = $('script#ryand').html();
-    //  // alert(searchTemplate)
-    // var compiledTemplate = Template7.compile(searchTemplate)
-    // $('.Ry').html(compiledTemplate)
   };
 
 
   // Wait for Cordova to load
   document.addEventListener("deviceready", onDeviceReady, false);
 
+function successCreate(){
+    formdb.transaction(function(transaction){
+        transaction.executeSql('SELECT * FROM ENGLISH', [], function(tx, res){
+            alert(res.rows.item(0).standard)
+        })
+    })
+}
 
 function successcb(){
     
