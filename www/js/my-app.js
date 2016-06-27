@@ -123,7 +123,7 @@ $('.shareLink').click(function(){
 function successC()
 {
     formdb.transaction(function(transaction){
-        transaction.executeSql('SELECT * FROM ENGLISH', [], 
+        transaction.executeSql('SELECT * FROM CURRICULUM', [], 
             function(tx, result){
                 alert(JSON.stringify(result.rows.item(174)))
             })
