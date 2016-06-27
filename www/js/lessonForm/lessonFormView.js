@@ -13,7 +13,7 @@ function updateStandardField(subject, grade){
                   
                for (i = 0; i < len; i++){
                 
-                    if($.inArray(res.rows.item(i).standard, dup)==-1){
+                    if($.inArray(res.rows.item(i).standard, dup)==-1 && res.rows.item(i).standard != ""){
                         $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
                         dup.push(res.rows.item(i).standard)
                     }           
