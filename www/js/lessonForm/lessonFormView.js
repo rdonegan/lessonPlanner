@@ -1,5 +1,5 @@
 //Everytime subject or grade fields are updated, reload contents of Standards select options
-function updateStandardField(subject, grade){
+function updateStandardField(subject, grade, quarter){
 
     $("#standards").empty()
     // $(".standardSelect").removeClass("disabled");
@@ -8,7 +8,7 @@ function updateStandardField(subject, grade){
     var dup = [] // To check if duplicate strands have been added
 
     formdb.transaction(function(tx) {
-            tx.executeSql("SELECT STANDARD FROM ENGLISH WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"'", [], function(tx, res) {
+            tx.executeSql("SELECT STANDARD FROM ENGLISH WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND QUARTER = '"+ quarter + "'", [], function(tx, res) {
                 var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
                   
                for (i = 0; i < len; i++){

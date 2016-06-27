@@ -111,7 +111,7 @@ $('.shareLink').click(function(){
 
 // Cordova is ready
   function onDeviceReady() {
-    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, successCreate);
+    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
   
   };
@@ -120,13 +120,7 @@ $('.shareLink').click(function(){
   // Wait for Cordova to load
   document.addEventListener("deviceready", onDeviceReady, false);
 
-function successCreate(){
-    formdb.transaction(function(transaction){
-        transaction.executeSql('SELECT * FROM ENGLISH', [], function(tx, res){
-            alert(res.rows.item(0).standard)
-        })
-    })
-}
+
 
 function successcb(){
     

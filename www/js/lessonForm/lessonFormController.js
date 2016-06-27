@@ -45,20 +45,24 @@ myApp.onPageInit('lessonForm', function(page){
     }
     else{
         state.isNew = true;
-        updateStandardField(getSelectedSubject(), getSelectedGrade())
+        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
         // var searchTemplate = $$('#sample').html();
         // var compiledSearchTemplate = Template7.compile(searchTemplate);
         // $('#example').html(compiledSearchTemplate);
     }
     
 
-    // //Update standards when grade or subject changes
+    // //Update standards on field changes
     $(".subjIn").on('change', function(){
-        updateStandardField(getSelectedSubject(), getSelectedGrade())
+        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
+    })
+
+    $(".quarterIn").on('change', function(){
+        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
     })
 
     $(".gradeIn").on('change', function(){
-        updateStandardField(getSelectedSubject(), getSelectedGrade())
+        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
     })
 
     //Update objectives if standard changes
@@ -95,6 +99,10 @@ function getSelectedSubject(){
 function getSelectedGrade(){
     return $(".gradeIn").val();
 };
+
+function getSelectedQuarter(){
+    return $(".quarterIn").val();
+}
 
 function getSelectedStandards(){
     //return all selected standards, as array
