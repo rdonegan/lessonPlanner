@@ -60,7 +60,6 @@ function updateResourcesField(subject, grade, standards){
 
         tx.executeSql("SELECT RESOURCES FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
             var len = res.rows.length, i;
-            alert("resource length: "+len)
            for (i = 0; i < len; i++){
             
                 if($.inArray(res.rows.item(i).resources, dup)==-1){
