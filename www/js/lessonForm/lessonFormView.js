@@ -1,6 +1,3 @@
-
-
-
 //Everytime subject or grade fields are updated, reload contents of Standards select options
 function updateStandardField(subject, grade, quarter){
 
@@ -30,28 +27,15 @@ function updateStandardField(subject, grade, quarter){
           
 };
 
-
-
-
 // Update objective field
 function updateObjectiveField(subject, grade, standards){
 
     $("#objectives").empty()
 
-    //convert standards to usable form
-    var allStds
-    if(standards.length>1){
-      allStds = "'"+standards.join("', '") +"'"
-    
-    }
-    else{
-        allStds = "'"+standards.join()+"'"
-    }
-
-     var dup = []
+    var dup = ["", " "]
     formdb.transaction(function(tx) {
 
-        tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARD IN (" + allStds +")", [], function(tx, res) {
+        tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
             var len = res.rows.length, i;
             // alert(len)
            for (i = 0; i < len; i++){
@@ -70,12 +54,6 @@ function updateObjectiveField(subject, grade, standards){
 
 function updateResourcesField(subject, grade, standards){
     $("#resources").empty()
-
-    // alert(jQuery.type(standards))
-    // alert(standards)
-
-
-   
 
     var dup = ["", " "]
     formdb.transaction(function(tx) {

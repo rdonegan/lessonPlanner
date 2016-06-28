@@ -60,6 +60,7 @@ myApp.onPageInit('lessonForm', function(page){
         getSelectedStandardsIDs(getSelectedStandards(), function(standardIDs){
             alert("the standard id's are: "+ standardIDs)
             updateResourcesField(getSelectedSubject(), getSelectedGrade(), standardIDs)
+            updateObjectiveField(getSelectedSubject(), getSelectedGrade(), standardIDs)
         })
 
         // var standardIDs = getSelectedStandardsIDs(getSelectedStandards())
