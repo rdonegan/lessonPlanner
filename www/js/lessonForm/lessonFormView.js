@@ -13,15 +13,15 @@ function updateStandardField(subject, grade, quarter){
     var dup = [] // To check if duplicate strands have been added
 
     formdb.transaction(function(tx) {
-            tx.executeSql("SELECT STANDARD FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND QUARTER = '"+ quarter + "'", [], function(tx, res) {
+            tx.executeSql("SELECT STANDARD FROM CURRICULUM WHERE GRADE = '" + grade + "' AND SUBJECT= '" + subject.toLowerCase() +"' AND QUARTER = '"+ quarter + "'", [], function(tx, res) {
                 var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
-                  
+                  alert(len)
                for (i = 0; i < len; i++){
                 
                     if($.inArray(res.rows.item(i).standard, dup)==-1 && res.rows.item(i).standard != ""){
                         $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
                         dup.push(res.rows.item(i).standard)
-                        alert(res.rows.item(i).standard)
+                        // alert(res.rows.item(i).standard)
                     } 
                     // alert(selectedStandardIds);          
                }
@@ -41,10 +41,10 @@ function updateStandardField(subject, grade, quarter){
 
 //     // var dup = [] // To check if duplicate strands have been added
 
-//     var standard = "Demonstrate understanding of, and facility, accuracy and efficiency with, operations on numbers, their meanings and order, and how they relate to each other.";
+//     // var standard = "Demonstrate understanding of, and facility, accuracy and efficiency with, operations on numbers, their meanings and order, and how they relate to each other.";
 
 //     formdb.transaction(function(tx) {
-//             tx.executeSql("SELECT * FROM CURRICULUM WHERE STANDARD = '" + standard + "'" , [], function(tx, res) {
+//             tx.executeSql("SELECT * FROM CURRICULUM WHERE SUBJECT = 'math' AND QUARTER='2'", [], function(tx, res) {
 //                 var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
 //                 // alert("length: " + len)
 //                for (i = 0; i < len; i++){
