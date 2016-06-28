@@ -69,6 +69,7 @@ myApp.onPageInit('lessonForm', function(page){
         // alert('objective changed')
         getStandardsAndObjectivesIDs(getSelectedStandards(), getSelectedObjectives(), function(ids){
             updateIndicatorsField(getSelectedSubject(), getSelectedGrade(), ids)
+            updateSubObjectivesField(getSelectedSubject(), getSelectedGrade(), ids)
         })
     })
 
