@@ -1,4 +1,6 @@
 
+
+
 //Everytime subject or grade fields are updated, reload contents of Standards select options
 function updateStandardField(subject, grade, quarter){
 
@@ -18,7 +20,7 @@ function updateStandardField(subject, grade, quarter){
                         $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
                         dup.push(res.rows.item(i).standard)
                         
-                        // alert(res.rows.item(i).standard)
+                        // alert(JSON.stringify(res.rows.item(i).standardID))
                     } 
                           
                }
@@ -65,6 +67,34 @@ function updateObjectiveField(subject, grade, standards){
 
    toggleObjectiveVisibility();
 };
+
+function updateResourcesField(subject, grade, standards){
+    $("#resources").empty()
+
+    // alert(jQuery.type(standards))
+    // alert(standards)
+
+
+   
+
+    var dup = ["", " "]
+    formdb.transaction(function(tx) {
+
+        tx.executeSql("SELECT RESOURCES FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
+            var len = res.rows.length, i;
+            alert("resource length: "+len)
+           for (i = 0; i < len; i++){
+            
+                if($.inArray(res.rows.item(i).resources, dup)==-1){
+                    $("#resources").append("<option>"+res.rows.item(i).resources + "</option>")
+                    dup.push(res.rows.item(i).objective)
+                }           
+           }
+           
+        })
+    })
+
+}
 
 
 function toggleObjectiveVisibility(){

@@ -4,10 +4,6 @@ myApp.onPageInit('lessonForm', function(page){
     var state = {isNew: false};
     var lessonData; //for storing data while editing
 
-    // if (Template7.data){
-    //     alert(JSON.stringify(Template7.data))
-    // }
-
     function getRecord(id, callback){
         var record;
         lpdb.transaction(function(tx){
@@ -38,17 +34,11 @@ myApp.onPageInit('lessonForm', function(page){
             return record;
         })
 
-
-
-
-        // alert("query id: " + page.query.id)
     }
     else{
         state.isNew = true;
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
-        // var searchTemplate = $$('#sample').html();
-        // var compiledSearchTemplate = Template7.compile(searchTemplate);
-        // $('#example').html(compiledSearchTemplate);
+      
     }
     
 
@@ -67,8 +57,49 @@ myApp.onPageInit('lessonForm', function(page){
 
     //Update objectives if standard changes
     $("#standards").on('change', function(){
-        updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedStandards())
+        getSelectedStandardsIDs(getSelectedStandards(), function(standardIDs){
+            alert("the standard id's are: "+ standardIDs)
+            updateResourcesField(getSelectedSubject(), getSelectedGrade(), standardIDs)
+        })
+
+        // var standardIDs = getSelectedStandardsIDs(getSelectedStandards())
+        // alert(standardIDs)
+        // updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedStandards());
+        // getSelectedStandardsIDs(getSelectedStandards());
+        // updateResourcesField(getSelectedSubject(), getSelectedGrade(), getSelectedStandardsIDs(getSelectedStandards()));
     })
+
+    //identifies checked standards and returns array of coresponding id in database
+function getSelectedStandardsIDs(standards, callback){
+
+    var standardIDs= [];
+    // alert("1")
+    var allStds
+    if(standards.length>1){
+      allStds = "'"+standards.join("', '") +"'"
+    
+    }
+    else{
+        allStds = "'"+standards.join()+"'"
+    }
+
+    formdb.transaction(function(tx) {
+            tx.executeSql("SELECT STANDARDID FROM CURRICULUM WHERE STANDARD IN (" + allStds +")", [], function(tx, res) {
+               var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
+                 
+               for (i = 0; i < len; i++){
+                    standardIDs.push(res.rows.item(i).standardID)  
+
+               }
+                // alert("ssdf: " + standardIDs)
+               // return standardIDs
+               callback(standardIDs)
+               
+            })
+    })
+}
+
+
 
     // save data when SUBMIT clicked
     // WILL NEED TO ADD VALIDATION
