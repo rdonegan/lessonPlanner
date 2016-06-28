@@ -58,16 +58,15 @@ myApp.onPageInit('lessonForm', function(page){
     //Update objectives if standard changes
     $("#standards").on('change', function(){
         getSelectedStandardsIDs(getSelectedStandards(), function(standardIDs){
-            alert("the standard id's are: "+ standardIDs)
             updateResourcesField(getSelectedSubject(), getSelectedGrade(), standardIDs)
             updateObjectiveField(getSelectedSubject(), getSelectedGrade(), standardIDs)
         })
 
-        // var standardIDs = getSelectedStandardsIDs(getSelectedStandards())
-        // alert(standardIDs)
-        // updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedStandards());
-        // getSelectedStandardsIDs(getSelectedStandards());
-        // updateResourcesField(getSelectedSubject(), getSelectedGrade(), getSelectedStandardsIDs(getSelectedStandards()));
+    })
+
+    //update subobjectives and indicators
+    $("#objectives").on('change', function(){
+        alert('objective changed')
     })
 
     //identifies checked standards and returns array of coresponding id in database
