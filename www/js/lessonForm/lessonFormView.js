@@ -52,6 +52,26 @@ function updateObjectiveField(subject, grade, standards){
    toggleObjectiveVisibility();
 };
 
+
+function updateIndicatorsField(subject, grade, ids){
+
+    var dup = ["", " "]
+    formdb.transaction(function(tx){
+        tx.executeSql("SELECT INDICATOR FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") AND GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
+            var len=res.rows.length, i;
+            // alert("got length here: " + len)
+            for (i = 0; i < len; i++){
+                if($.inArray(res.rows.item(i).resources, dup)==-1){
+                    $("#indicators").append("<option>"+res.rows.item(i).indicator + "</option>")
+                    dup.push(res.rows.item(i).indicator)
+                }           
+           }
+        })
+    })
+
+}
+
+
 function updateResourcesField(subject, grade, standards){
     $("#resources").empty()
 

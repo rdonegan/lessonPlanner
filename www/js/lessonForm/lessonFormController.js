@@ -66,8 +66,53 @@ myApp.onPageInit('lessonForm', function(page){
 
     //update subobjectives and indicators
     $("#objectives").on('change', function(){
-        alert('objective changed')
+        // alert('objective changed')
+        getStandardsAndObjectivesIDs(getSelectedStandards(), getSelectedObjectives(), function(ids){
+            updateIndicatorsField(getSelectedSubject(), getSelectedGrade(), ids)
+        })
     })
+
+
+//return array where items in array[0] are standards, and array[1] are objectives
+function getStandardsAndObjectivesIDs(standards, objectives, callback){
+    // alert("in stands and objectives")
+    var IDs= [[],[]];
+
+    var allStds
+    if(standards.length>1){
+      allStds = "'"+standards.join("', '") +"'"
+    
+    }
+    else{
+        allStds = "'"+standards.join()+"'"
+    }
+
+    var allObjectives
+    if(standards.length>1){
+      allObjectives = "'"+objectives.join("', '") +"'"
+    
+    }
+    else{
+        allObjectives = "'"+objectives.join()+"'"
+    }
+
+    
+    formdb.transaction(function(tx){
+        tx.executeSql("SELECT STANDARDID, GRADEOBJID FROM CURRICULUM WHERE STANDARD IN (" + allStds + ") AND OBJECTIVE IN (" + allObjectives + ")", [], function(tx,res){
+            var len = res.rows.length, i;
+            // alert(JSON.stringify(res.rows.item(0).standardID))
+            // alert('length of all results=: ' + len)
+            for (i = 0; i < len; i++){
+                    IDs[0].push(res.rows.item(i).standardID)
+                    IDs[1].push(res.rows.item(i).gradeObjID)
+
+               }
+               // alert(IDs.toString())
+               callback(IDs)
+            
+        })
+    })
+}
 
     //identifies checked standards and returns array of coresponding id in database
 function getSelectedStandardsIDs(standards, callback){
@@ -147,6 +192,16 @@ function getSelectedStandards(){
         
         return selectedStandards;      
 };
+
+function getSelectedObjectives(){
+    selectedObjectives=[]
+
+    $("#objectives option:selected").each(function(){
+        selectedObjectives.push($(this).val())
+    })
+        
+    return selectedObjectives;
+}
 
 
 
