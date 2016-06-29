@@ -159,6 +159,8 @@ $('.shareLink').click(function(){
                 alert("successfully read file: " + this.result)
 
                 Papa.parse(this.result, {
+                    header: true,
+                    dynamicTyping: true,
                     complete:function(results){
                         alert(JSON.stringify(results))
                     }
