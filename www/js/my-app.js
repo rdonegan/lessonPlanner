@@ -158,6 +158,12 @@ $('.shareLink').click(function(){
             reader.onloadend = function(){
                 alert("successfully read file: " + this.result)
 
+                Papa.parse(this.result, {
+                    complete:function(results){
+                        alert(JSON.stringify(results))
+                    }
+                })
+
             }
 
             // Papa.parse(file, {
