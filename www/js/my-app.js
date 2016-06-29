@@ -113,7 +113,49 @@ $('.shareLink').click(function(){
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, successC);
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
-  
+    
+
+    //The directory to store data
+    var store;
+
+
+    //URL of our asset
+    var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/updated-curric-database.csv";
+
+    //File name of our important data file we didn't ship with the app
+    var fileName = "updated-curric-database.csv";
+
+    function init() {
+    
+        store = cordova.file.dataDirectory;
+        alert("store: "+store)
+        //Check for the file. 
+        window.resolveLocalFileSystemURL(store + fileName, appStart, downloadAsset);
+
+    }
+
+    function downloadAsset() {
+        var fileTransfer = new FileTransfer();
+        alert("About to start transfer");
+        fileTransfer.download(assetURL, store + fileName, 
+            function(entry) {
+                alert("Success!");
+                // appStart();
+            }, 
+            function(err) {
+                alert("Error");
+                alert(JSON.stringify(err));
+            });
+    }
+
+    //I'm only called when the file exists or has been downloaded.
+    function appStart() {
+        alert("App ready!");
+    }
+    
+
+    init()
+
   };
 
 
@@ -253,16 +295,18 @@ function showTable(){
     
 
 // Read CSV and return object array
-function readCSV(subject){
+function readCSV(){
+    alert("here")
     $.ajax({
-    url: "data/" + subject + ".csv",
-    async: false,
+    url: "https://www.dropbox.com/s/tzebmr8asnrgaih/updated-curric-database.csv?dl=0",
+    async: true,
     success: function (csvd) {
         var curricSpecs = $.csv.toObjects(csvd);
+        alert(curricspecs)
         // console.log(curricSpecs);
         // console.log(items[0].eval)
-        console.log(curricSpecs)
-        return curricSpecs;
+        // console.log(curricSpecs)
+        // return curricSpecs;
         //var jsonobject = JSON.stringify(items);
         //alert(jsonobject);
     },
@@ -270,6 +314,7 @@ function readCSV(subject){
     complete: function () {
         // call a function on complete 
         // console.log(items);
+        alert("in success")
     }
 })
 }

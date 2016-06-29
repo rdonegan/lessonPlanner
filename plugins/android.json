@@ -15,6 +15,9 @@
         },
         "cordova-sqlite-ext": {
             "PACKAGE_NAME": "com.lessonPlanner.app"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "com.lessonPlanner.app"
         }
     },
     "dependent_plugins": {
