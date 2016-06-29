@@ -173,8 +173,15 @@ $('.shareLink').click(function(){
   // Wait for Cordova to load
   document.addEventListener("deviceready", onDeviceReady, false);
 
-function updateFormTable(results){
-    alert(results[0].subject)
+function updateFormTable(results, tx){
+    // alert(results[0].subject)
+    var sql = "INSERT INTO CURRICULUM (subject, quarter, grade, standardID, standard, gradeObjID, objective, subobjective, indicator, resources) VALUES (?,?,?,?,?,?,?,?,?,?)"
+    for (var i in results){
+        var params = [results[i].subject, results[i].quarter, results[i].grade, results[i].standardID, results[i].standard, results[i].gradeObjId, results[i].objective, results[i].subobjective, results[i].indicator, results[i].resources]
+        // alert(results[i].toString())
+        tx.executeSql(sql, params)
+
+    }
 }
 
 function checkForUpdates()
@@ -224,8 +231,8 @@ function checkForUpdates()
                         formdb.transaction(function(transaction){
                             transaction.executeSql('DELETE FROM CURRICULUM', [], 
                                 function(tx, result){
-                                    alert(result.rows.length)
-                                    updateFormTable(results.data)
+                                    // alert(result.rows.length)
+                                    updateFormTable(results.data, tx)
                                 })
                         })
                     }
