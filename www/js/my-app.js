@@ -111,28 +111,91 @@ $('.shareLink').click(function(){
 
 // Cordova is ready
   function onDeviceReady() {
-    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, successC);
+    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, checkForUpdates);
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
     
 
+    
+
+    // function init() {
+    
+    //     store = cordova.file.dataDirectory;
+    //     alert("store: "+store)
+    //     //Check for the file. 
+    //     window.resolveLocalFileSystemURL(store + fileName, appStart, downloadAsset);
+
+    // }
+
+    // function downloadAsset() {
+    //     var fileTransfer = new FileTransfer();
+    //     alert("About to start transfer");
+    //     fileTransfer.download(assetURL, store + fileName, 
+    //         function(entry) {
+    //             alert("Success!");
+    //             appStart(entry);
+    //         }, 
+    //         function(err) {
+    //             alert("Error");
+    //             alert(JSON.stringify(err));
+    //         });
+    // }
+
+    // //I'm only called when the file exists or has been downloaded.
+    // function appStart(fileEntry) {
+    //     alert("fileEntry: " + fileEntry.toURL());
+      
+    //     fileEntry.file(function (file) {
+    //         var reader = new FileReader();
+
+    //         reader.onloadend = function(){
+    //             alert("successfully read file: ") //+ this.result)
+
+    //             Papa.parse(this.result, {
+    //                 header: true,
+    //                 dynamicTyping: true,
+    //                 complete:function(results){
+    //                     alert(JSON.stringify(results))
+    //                     // updateFormTable(results)
+    //                 }
+    //             })
+
+    //         }
+    //         reader.readAsBinaryString(file);
+
+    //     })
+    // }
+    
+
+    // init()
+
+  };
+
+  // Wait for Cordova to load
+  document.addEventListener("deviceready", onDeviceReady, false);
+
+function updateFormTable(results){
+    formdb.transaction(function(transaction){
+        transaction.executeSql('DELETE * FROM curriculum', [],
+            function(tx,result){
+                alert('table deleted!')
+            })
+    })
+}
+
+function checkForUpdates()
+{
+
     //The directory to store data
     var store;
-
-
     //URL of our asset
     var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
-
     //File name of our important data file we didn't ship with the app
     var fileName = "curriculum.csv";
-
-    function init() {
     
-        store = cordova.file.dataDirectory;
-        alert("store: "+store)
-        //Check for the file. 
-        window.resolveLocalFileSystemURL(store + fileName, appStart, downloadAsset);
-
-    }
+    store = cordova.file.dataDirectory;
+    alert("store: "+store)
+    //Check for the file. 
+    window.resolveLocalFileSystemURL(store + fileName, appStart, downloadAsset);
 
     function downloadAsset() {
         var fileTransfer = new FileTransfer();
@@ -156,41 +219,23 @@ $('.shareLink').click(function(){
             var reader = new FileReader();
 
             reader.onloadend = function(){
-                alert("successfully read file: " + this.result)
+                alert("successfully read file: ") //+ this.result)
 
                 Papa.parse(this.result, {
                     header: true,
                     dynamicTyping: true,
                     complete:function(results){
                         alert(JSON.stringify(results))
+                        // updateFormTable(results)
                     }
                 })
 
             }
-
-            // Papa.parse(file, {
-            //     complete: function(results) {
-            //         alert(results);
-            //     }
-            // })
-
-
             reader.readAsBinaryString(file);
 
         })
     }
     
-
-    init()
-
-  };
-
-
-  // Wait for Cordova to load
-  document.addEventListener("deviceready", onDeviceReady, false);
-
-function successC()
-{
     // formdb.transaction(function(transaction){
     //     transaction.executeSql('SELECT * FROM CURRICULUM', [], 
     //         function(tx, result){
