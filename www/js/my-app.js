@@ -123,7 +123,7 @@ $('.shareLink').click(function(){
     var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/updated-curric-database.csv";
 
     //File name of our important data file we didn't ship with the app
-    var fileName = "updated-curric-database.csv";
+    var fileName = "curriculum.csv";
 
     function init() {
     
@@ -140,7 +140,7 @@ $('.shareLink').click(function(){
         fileTransfer.download(assetURL, store + fileName, 
             function(entry) {
                 alert("Success!");
-                // appStart();
+                appStart();
             }, 
             function(err) {
                 alert("Error");
