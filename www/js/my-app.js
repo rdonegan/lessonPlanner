@@ -149,8 +149,27 @@ $('.shareLink').click(function(){
     }
 
     //I'm only called when the file exists or has been downloaded.
-    function appStart(entry) {
-        alert("entry: " + entry.toURL());
+    function appStart(fileEntry) {
+        alert("fileEntry: " + fileEntry.toURL());
+      
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+
+            reader.onloadend = function(){
+                alert("successfully read file: " + this.result)
+
+            }
+
+            // Papa.parse(file, {
+            //     complete: function(results) {
+            //         alert(results);
+            //     }
+            // })
+
+
+            reader.readAsBinaryString(file);
+
+        })
     }
     
 
