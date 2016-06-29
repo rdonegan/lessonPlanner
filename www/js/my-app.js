@@ -115,58 +115,6 @@ $('.shareLink').click(function(){
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
     
 
-    
-
-    // function init() {
-    
-    //     store = cordova.file.dataDirectory;
-    //     alert("store: "+store)
-    //     //Check for the file. 
-    //     window.resolveLocalFileSystemURL(store + fileName, appStart, downloadAsset);
-
-    // }
-
-    // function downloadAsset() {
-    //     var fileTransfer = new FileTransfer();
-    //     alert("About to start transfer");
-    //     fileTransfer.download(assetURL, store + fileName, 
-    //         function(entry) {
-    //             alert("Success!");
-    //             appStart(entry);
-    //         }, 
-    //         function(err) {
-    //             alert("Error");
-    //             alert(JSON.stringify(err));
-    //         });
-    // }
-
-    // //I'm only called when the file exists or has been downloaded.
-    // function appStart(fileEntry) {
-    //     alert("fileEntry: " + fileEntry.toURL());
-      
-    //     fileEntry.file(function (file) {
-    //         var reader = new FileReader();
-
-    //         reader.onloadend = function(){
-    //             alert("successfully read file: ") //+ this.result)
-
-    //             Papa.parse(this.result, {
-    //                 header: true,
-    //                 dynamicTyping: true,
-    //                 complete:function(results){
-    //                     alert(JSON.stringify(results))
-    //                     // updateFormTable(results)
-    //                 }
-    //             })
-
-    //         }
-    //         reader.readAsBinaryString(file);
-
-    //     })
-    // }
-    
-
-    // init()
 
   };
 
