@@ -226,7 +226,13 @@ function checkForUpdates()
                     dynamicTyping: true,
                     complete:function(results){
                         alert(JSON.stringify(results))
-                        // updateFormTable(results)
+                        formdb.transaction(function(transaction){
+                            transaction.executeSql('DELETE FROM CURRICULUM', [], 
+                                function(tx, result){
+                                    alert(result.rows.length)
+                                    // alert('deleted everything')
+                                })
+                        })
                     }
                 })
 
