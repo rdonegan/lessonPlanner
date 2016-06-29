@@ -174,7 +174,7 @@ $('.shareLink').click(function(){
   document.addEventListener("deviceready", onDeviceReady, false);
 
 function updateFormTable(results){
-    alert("in updateformtable")
+    alert(results[0].subject)
 }
 
 function checkForUpdates()
@@ -225,7 +225,7 @@ function checkForUpdates()
                             transaction.executeSql('DELETE FROM CURRICULUM', [], 
                                 function(tx, result){
                                     alert(result.rows.length)
-                                    updateFormTable(results)
+                                    updateFormTable(results.data)
                                 })
                         })
                     }
