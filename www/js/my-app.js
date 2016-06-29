@@ -120,7 +120,7 @@ $('.shareLink').click(function(){
 
 
     //URL of our asset
-    var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/updated-curric-database.csv";
+    var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
 
     //File name of our important data file we didn't ship with the app
     var fileName = "curriculum.csv";
@@ -140,7 +140,7 @@ $('.shareLink').click(function(){
         fileTransfer.download(assetURL, store + fileName, 
             function(entry) {
                 alert("Success!");
-                appStart();
+                appStart(entry);
             }, 
             function(err) {
                 alert("Error");
@@ -149,8 +149,8 @@ $('.shareLink').click(function(){
     }
 
     //I'm only called when the file exists or has been downloaded.
-    function appStart() {
-        alert("App ready!");
+    function appStart(entry) {
+        alert("entry: " + entry.toURL());
     }
     
 
