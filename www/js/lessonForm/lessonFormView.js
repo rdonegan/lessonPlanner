@@ -59,7 +59,7 @@ function updateSubObjectivesField(subject, grade, ids){
     formdb.transaction(function(tx){
         tx.executeSql("SELECT SUBOBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") AND GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
             var len=res.rows.length, i;
-            // alert("got length here: " + len)
+            // alert("got subobj length here: " + len)
             for (i = 0; i < len; i++){
                 if($.inArray(res.rows.item(i).subobjective, dup)==-1){
                     $("#subObjectives").append("<option>"+res.rows.item(i).subobjective + "</option>")
@@ -75,9 +75,9 @@ function updateIndicatorsField(subject, grade, ids){
     $("#indicators").empty()
     var dup = ["", " "]
     formdb.transaction(function(tx){
-        tx.executeSql("SELECT INDICATOR FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") AND GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
+        tx.executeSql("SELECT INDICATOR FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") and GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
             var len=res.rows.length, i;
-            // alert("got length here: " + len)
+            // alert("got indicators length here: " + len)
             for (i = 0; i < len; i++){
                 if($.inArray(res.rows.item(i).indicator, dup)==-1){
                     $("#indicators").append("<option>"+res.rows.item(i).indicator + "</option>")
