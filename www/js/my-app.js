@@ -174,12 +174,7 @@ $('.shareLink').click(function(){
   document.addEventListener("deviceready", onDeviceReady, false);
 
 function updateFormTable(results){
-    formdb.transaction(function(transaction){
-        transaction.executeSql('DELETE * FROM curriculum', [],
-            function(tx,result){
-                alert('table deleted!')
-            })
-    })
+    alert("in updateformtable")
 }
 
 function checkForUpdates()
@@ -193,16 +188,16 @@ function checkForUpdates()
     var fileName = "curriculum.csv";
     
     store = cordova.file.dataDirectory;
-    alert("store: "+store)
+    // alert("store: "+store)
     //Check for the file. 
     window.resolveLocalFileSystemURL(store + fileName, appStart, downloadAsset);
 
     function downloadAsset() {
         var fileTransfer = new FileTransfer();
-        alert("About to start transfer");
+        // alert("About to start transfer");
         fileTransfer.download(assetURL, store + fileName, 
             function(entry) {
-                alert("Success!");
+                // alert("Success!");
                 appStart(entry);
             }, 
             function(err) {
@@ -213,7 +208,7 @@ function checkForUpdates()
 
     //I'm only called when the file exists or has been downloaded.
     function appStart(fileEntry) {
-        alert("fileEntry: " + fileEntry.toURL());
+        // alert("fileEntry: " + fileEntry.toURL());
       
         fileEntry.file(function (file) {
             var reader = new FileReader();
@@ -230,7 +225,7 @@ function checkForUpdates()
                             transaction.executeSql('DELETE FROM CURRICULUM', [], 
                                 function(tx, result){
                                     alert(result.rows.length)
-                                    // alert('deleted everything')
+                                    updateFormTable(results)
                                 })
                         })
                     }
