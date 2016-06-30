@@ -1,8 +1,16 @@
 .sectionHeader{
 	background-color: #e3e3e3;
 	padding-bottom: 10px;
+
 	/*height*/
 }
+
+.subSection{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	
+}
+
 
 .toolbar{
 	bottom:0;
