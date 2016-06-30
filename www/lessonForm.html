@@ -25,114 +25,14 @@
       <!-- Form will have to be expanded later to cover all fields -->
         <form id="lessonForm" class="list-block store-data">
           <ul>
-            
 
-              <!-- General info that needs to be updated -->
-              
-
-                
-                  
-                    <!-- SUBJECT -->
-                    <li>
-                      <div class="item-content">
-                        
-                        <div class="item-inner">
-                          <div class="item-title label">Subject</div>
-                          <div class="item-input">
-                            <select name="subject" class="subjIn">
-                              <option value="english">English</option>
-                              <option value="math">Math</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                
-
-
-                 
-                    <!-- GRADE -->
-                    <li>
-                        <div class="item-content">
-                          
-                          <div class="item-inner">
-                            <div class="item-title label">Grade</div>
-                            <div class="item-input">
-                              <select name="grade" class="gradeIn">
-                               
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                    </li>
-
-                  
-                
-
-              
-                  
-                    <!-- SUBJECT -->
-                    <li>
-                      <div class="item-content">
-                        
-                        <div class="item-inner">
-                          <div class="item-title label">Quarter</div>
-                          <div class="item-input">
-                            <select name="quarter" class="quarterIn">
-                              <option value="1">1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                              <option value="4">4</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-
-                 
-
-
-                  
-                    <!-- GRADE -->
-                    <li>
-                        <div class="item-content">
-                          
-                          <div class="item-inner">
-                            <div class="item-title label">Section</div>
-                            <div class="item-input">
-                              <input type="text" class="sectionIn" name="section" placeholder="N/A">
-                             
-                              
-                            </div>
-                          </div>
-                        </div>
-                    </li>
-
-                 
-                  
-
-
-               
-
-             
-
-             
-
-                <!-- Information that's already stored -->
-                <li>
+          <div class="row">
+            <div class="col-50">
+              <li>
                   <div class="item-content">
                     
                     <div class="item-inner">
-                      
+                      <div class="item-title label">School</div>
                       <div class="item-input">
                           <input type="text" class="schoolIn" name="school" placeholder="Koror Elementary, JFK, etc.">
                       </div>
@@ -140,11 +40,15 @@
                   </div>
                 </li>
 
+            </div>
+
+
+            <div class="col-50">
                 <li>
                   <div class="item-content">
                     
                     <div class="item-inner">
-                      
+                      <div class="item-title label">Teacher</div>
                       <div class="item-input">
                           <input type="text" name="teachername" placeholder="My name" class="teacherIn">
                       </div>
@@ -152,35 +56,124 @@
                   </div>
                 </li>
 
+            </div>
+
+          </div>
+
+          <div class="row sectionHeader">
+            <div class="content-block-title">Lesson Details</div>
+          </div>
+
+          <div class="row">
+            <div class="col-50">
+               <!-- SUBJECT -->
+                <li>
+                  <div class="item-content">
+                    
+                    <div class="item-inner">
+                      <div class="item-title label">Subject</div>
+                      <div class="item-input">
+                        <select name="subject" class="subjIn">
+                          <option value="english">English</option>
+                          <option value="math">Math</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <!-- GRADE -->
                 <li>
                     <div class="item-content">
+                      
                       <div class="item-inner">
-                         <div class="item-title label">Start date</div>
+                        <div class="item-title label">Grade</div>
                         <div class="item-input">
-                          <input type="date" class="startDateIn" name="startdate">
+                          <select name="grade" class="gradeIn">
+                           
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                          </select>
                         </div>
                       </div>
                     </div>
-                  </li>
-                  <li>
-                      <div class="item-content">
-                        <div class="item-inner">
-                           <div class="item-title label">End date</div>
-                          <div class="item-input">
-                            <input type="date" class="endDateIn" name="enddate" >
-                          </div>
+                </li>
+
+
+                <!-- QUARTER -->
+                <li>
+                  <div class="item-content">
+                    
+                    <div class="item-inner">
+                      <div class="item-title label">Quarter</div>
+                      <div class="item-input">
+                        <select name="quarter" class="quarterIn">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <!-- SECTION -->
+                <li>
+                    <div class="item-content">
+                      
+                      <div class="item-inner">
+                        <div class="item-title label">Section</div>
+                        <div class="item-input">
+                          <input type="text" class="sectionIn" name="section" placeholder="N/A">
+                         
+                          
                         </div>
                       </div>
-                    </li>
+                    </div>
+                </li>
 
-            
+            </div>
 
 
-           
+            <div class="col-50">
+              <li>
+                <div class="item-content">
+                  <div class="item-inner">
+                     <div class="item-title label">Start date</div>
+                    <div class="item-input">
+                      <input type="date" class="startDateIn" name="startdate">
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                  <div class="item-content">
+                    <div class="item-inner">
+                       <div class="item-title label">End date</div>
+                      <div class="item-input">
+                        <input type="date" class="endDateIn" name="enddate" >
+                      </div>
+                    </div>
+                  </div>
+                </li>
 
-            
-        
-            <div class="content-block-title">Lesson Information</div>
+
+            </div>
+
+          </div>
+
+
+          <div class="row sectionHeader">
+            <div class="content-block-title">Curriculum Goals</div>
+          </div>
+          
             <div class="list-block">
               <ul>
               <!-- STANDARDS  -->
@@ -189,53 +182,53 @@
                   <!-- "multiple" attribute for multiple select-->
                   <select id="standards" name="standards" multiple>
                     
-                   
-                   
                   </select>
                   <div class="item-content">
                     <div class="item-inner">
-                      <div class="item-title label">Standards</div>
+                      <div class="item-title label">Lesson Standards</div>
                     </div>
                   </div></a>
               </li>
 
+              
 
-              <!-- OBJECTIVES -->
-              <li class="objectiveSelect">
-                <a href="#" class="item-link smart-select" data-open-in="popup">
-                <!-- "multiple" attribute for multiple select-->
-                <select id="objectives" name="objectives" multiple >
-                 
-                </select>
-                <div class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title label">Objectives</div>
-                  </div>
-                </div></a>
-              </li>
+              <div class="row">
+                <div class="col-70">
+                  <!-- OBJECTIVES -->
+                  <li class="objectiveSelect">
+                    <a href="#" class="item-link smart-select" data-open-in="popup">
+                    <!-- "multiple" attribute for multiple select-->
+                    <select id="objectives" name="objectives" multiple >
+                     
+                    </select>
+                    <div class="item-content">
+                      <div class="item-inner">
+                        <div class="item-title label">Lesson Objectives</div>
+                      </div>
+                    </div></a>
+                  </li>
 
-              <!-- SUBOBJECTIVES -->
-              <li class="subObjectiveSelect">
-                <a href="#" class="item-link smart-select" data-open-in="popup">
-                <!-- "multiple" attribute for multiple select-->
-                <select id="subObjectives" name="objectives" multiple >
-                 
-                </select>
-                <div class="item-content">
-                  <div class="item-inner">
-                    <div class="item-title label">Sub Objectives</div>
-                  </div>
-                </div></a>
-              </li>
-             
-            </ul>
-          </div>
+                </div>
 
-                
-      
-          <div class="content-block-title">Other Considerations</div>
-          <div class="list-block">
-            <ul>
+                <div class="col-30">
+                  <!-- SUBOBJECTIVES -->
+                    <li class="subObjectiveSelect">
+                      <a href="#" class="item-link smart-select" data-open-in="popup">
+                      <!-- "multiple" attribute for multiple select-->
+                      <select id="subObjectives" name="objectives" multiple >
+                       
+                      </select>
+                      <div class="item-content">
+                        <div class="item-inner">
+                          <div class="item-title label">Sub-Objectives</div>
+                        </div>
+                      </div></a>
+                    </li>
+
+
+                </div>
+              </div>
+
               <!-- Resources  -->
               <li class="" > 
                 <a href="#" class="item-link smart-select" data-open-in="popup">
@@ -250,6 +243,23 @@
                   </div>
                 </div></a>
               </li>
+
+
+              
+
+              
+             
+            </ul>
+          </div>
+
+                
+      
+          <div class="row sectionHeader">
+            <div class="content-block-title">My Evaluation</div>
+          </div>
+          <div class="list-block">
+            <ul>
+              
 
               <!-- Performance Indicators  -->
               <li class="" >
@@ -272,14 +282,13 @@
             </div>
 
 
-            <div class="content-block-title">My notes, thoughts, and ideas</div>
             <div class="list-block">
               <ul>
                 <!-- Additional "align-top" class for correct textarea alignment -->
                 <li class="align-top">
                   <div class="item-content">
                     <div class="item-inner">
-                      <div class="item-title label">Tap below to type</div>
+                      <div class="item-title label">My notes, thoughts, and ideas (tap below to type)</div>
                       <div class="item-input">
                           <textarea class="notesIn" name="notes"></textarea>
                       </div>
@@ -294,9 +303,9 @@
 
       <div class="content-block">
         <div class="row">
-          <div class="col-50"><a href="index.html" class="button button-big button-fill color-red back">Cancel</a></div>
+          <div class="col-50"><a href="index.html" class="button button-big button-fill color-red button-raised back">Cancel</a></div>
           <div class="col-50">
-            <input type="submit" value="Submit" class="button button-big button-fill color-green get-storage-data"/>
+            <input type="submit" value="Save" class="button button-big button-fill color-teal button-raised get-storage-data"/>
           </div>
         </div>
       </div>
