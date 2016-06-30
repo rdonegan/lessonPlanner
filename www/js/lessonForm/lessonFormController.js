@@ -3,6 +3,27 @@ myApp.onPageInit('lessonForm', function(page){
 
     var state = {isNew: false};
     var lessonData; //for storing data while editing
+    var schools = ('Aimeliik Airai Angaur GB Harris Ibobang PJF Koror Melekeok Meyuns Ngaraard Ngarchelong Ngardmau Ngeremlengui Peleliu Pulo Anna Sonsorol').split(' ');
+
+
+
+    var autocompleteDropdownSimple = myApp.autocomplete({
+    input: '#autocomplete-dropdown',
+    openIn: 'dropdown',
+    source: function (autocomplete, query, render) {
+            var results = [];
+            if (query.length === 0) {
+                render(results);
+                return;
+            }
+            // Find matched items
+            for (var i = 0; i < schools.length; i++) {
+                if (schools[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(schools[i]);
+            }
+            // Render items by passing array with result items
+            render(results);
+        }
+    });
 
     function getRecord(id, callback){
         var record;
