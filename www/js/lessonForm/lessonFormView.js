@@ -160,10 +160,11 @@ function populateForm(data){
         $('.endDateIn').val(data.startdate)
     }
     if(data.standards){
+        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
         standards = JSON.parse(data.standards)
         var len = standards.length;
         for (var i=0; i<len; i++){
-            $("#standards").append("<option selected>"+standards[i] + "</option>")
+            $("#standards").prepend("<option selected>"+standards[i] + "</option>")
         }
     }
     if(data.objectives){
