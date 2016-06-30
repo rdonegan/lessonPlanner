@@ -193,7 +193,6 @@ function populateForm(data){
     }
 
     if(data.subobjective){
-        alert("subobjectives: " + data.subobjective)
         subobjectives = JSON.parse(data.subobjective)
         var len = subobjectives.length;
         for (var i=0; i<len; i++){
