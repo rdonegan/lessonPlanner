@@ -174,7 +174,8 @@ function getSelectedStandardsIDs(standards, callback){
         var storedData = myApp.formGetData('lessonForm')
         // alert(JSON.stringify(storedData));
         if(state.isNew && storedData) {
-            // alert(JSON.stringify(storedData));
+            alert(JSON.stringify(storedData));
+            
             insertLPDB(storedData);   
         }
         else if (!state.isNew && storedData){

@@ -168,10 +168,11 @@ function populateForm(data){
         }
     }
     if(data.objectives){
+        
         objectives = JSON.parse(data.objectives)
         var len = objectives.length;
         for (var i=0; i<len; i++){
-            $("#objectives").append("<option selected>"+objectives[i] + "</option>")
+            $("#objectives").prepend("<option selected>"+objectives[i] + "</option>")
         }
     }
 
@@ -179,7 +180,7 @@ function populateForm(data){
         indicators = JSON.parse(data.indicators)
         var len = indicators.length;
         for (var i=0; i<len; i++){
-            $("#indicators").append("<option selected>"+indicators[i] + "</option>")
+            $("#indicators").prepend("<option selected>"+indicators[i] + "</option>")
         }
     }
 
@@ -187,9 +188,18 @@ function populateForm(data){
         resources = JSON.parse(data.resources)
         var len = resources.length;
         for (var i=0; i<len; i++){
-            $("#resources").append("<option selected>"+resources[i] + "</option>")
+            $("#resources").prepend("<option selected>"+resources[i] + "</option>")
         }
     }
+
+    if(data.subobjective){
+        subobjectives = JSON.parse(data.subobjective)
+        var len = resources.length;
+        for (var i=0; i<len; i++){
+            $("#subObjectives").prepend("<option selected>"+subobjectives[i] + "</option>")
+        }
+    }
+
     if (data.notes){
         $('.notesIn').val(data.notes)
     }

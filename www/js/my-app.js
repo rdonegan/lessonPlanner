@@ -203,7 +203,7 @@ function checkForUpdates()
 function successcb(){
     
     lpdb.transaction(function(transaction) {
-    transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text)', [],
+    transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text)', [],
         function(tx, result) {
             // alert("Table created successfully");
             showTable();
@@ -232,6 +232,7 @@ function insertLPDB(data){
     var subject = data.subject
     var standards = JSON.stringify(data.standards)
     var objectives = JSON.stringify(data.objectives)
+    var subobjectives = JSON.stringify(data.subobjective)
     var indicators = JSON.stringify(data.indicators)
     var resources = JSON.stringify(data.resources)
     // var standards = data.standards.toString()
@@ -243,9 +244,9 @@ function insertLPDB(data){
 
     lpdb.transaction(function(tx){
         // alert("standards: " + standards + " subject: " + subject)
-        var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
-        tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes],
+        tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives],
             // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
                 myApp.formDeleteData('lessonForm')
@@ -312,7 +313,7 @@ function showTable(){
        
            var len = results.rows.length, i;
            for (i = 0; i < len; i++){
-              $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+ " standards: " + (JSON.parse(results.rows.item(i).standards))[0] + " objectives: " + results.rows.item(i).objectives + " section: "+ results.rows.item(i).section + " notes: " + results.rows.item(i).notes); //+ "standards: " + result.rows.item(i).standards + " OBJECTIVES: " + result.rows.item(i).objectives);
+              $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+ " standards: " + (JSON.parse(results.rows.item(i).standards))[0] + " SUBOBJECTIVES: " + results.rows.item(i).subobjective + " section: "+ results.rows.item(i).section + " notes: " + results.rows.item(i).notes); //+ "standards: " + result.rows.item(i).standards + " OBJECTIVES: " + result.rows.item(i).objectives);
             // $(".dailyLessons").append(results.rows.item(i).subject)
            }
 
