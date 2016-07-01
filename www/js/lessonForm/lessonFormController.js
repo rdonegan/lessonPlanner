@@ -58,7 +58,9 @@ myApp.onPageInit('lessonForm', function(page){
     }
     else{
         state.isNew = true;
-        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
+        // $('.startDateIn').val('2020-04-04')
+        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter());
+        upDateStartAndEndDates()
       
     }
     

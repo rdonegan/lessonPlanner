@@ -121,6 +121,20 @@ function toggleObjectiveVisibility(){
     }
 };
 
+
+
+function upDateStartAndEndDates(){
+    var now = new Date();
+
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+    $('.startDateIn').val(today);
+    $('.endDateIn').val(today);
+
+}
 // uses JSON data to populate form from record
 function populateForm(data){
 //data.{field} ,for everything except arrays
