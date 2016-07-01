@@ -16,9 +16,9 @@
 	bottom:0;
 }
 
-h2{
+/*h2{
 	color: white;
-}
+}*/
 
 /*.navbar, .subnavbar, .toolbar{
 	background: #1976D2;
@@ -26,4 +26,5 @@ h2{
 
 .profileHeader{
 	background-color: #1976D2;
+	color:white;
 }
