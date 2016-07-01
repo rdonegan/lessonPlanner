@@ -28,3 +28,13 @@
 	background-color: #1976D2;
 	color:white;
 }
+
+.profileHeader h2{
+	margin-left:5px;
+}
+
+.profileInfo i{
+	float:left;
+	display:inline;
+}
+
