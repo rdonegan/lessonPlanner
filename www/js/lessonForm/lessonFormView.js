@@ -203,7 +203,8 @@ function populateForm(data){
         objectives = JSON.parse(data.objectives)
         var len = objectives.length;
         for (var i=0; i<len; i++){
-            $("#objectives").prepend("<option selected>"+objectives[i] + "</option>")
+            // $("#objectives").prepend("<option selected>"+objectives[i] + "</option>")
+            myApp.smartSelectAddOption('#objectives', '<option value="'+objectives[i]+'" selected>'+objectives[i]+'</option>');
         }
     }
 
@@ -211,7 +212,8 @@ function populateForm(data){
         indicators = JSON.parse(data.indicators)
         var len = indicators.length;
         for (var i=0; i<len; i++){
-            $("#indicators").prepend("<option selected>"+indicators[i] + "</option>")
+            // $("#indicators").prepend("<option selected>"+indicators[i] + "</option>")
+            myApp.smartSelectAddOption('#indicators', '<option value="'+indicators[i]+'" selected>'+indicators[i]+'</option>');
         }
     }
 
@@ -219,7 +221,8 @@ function populateForm(data){
         resources = JSON.parse(data.resources)
         var len = resources.length;
         for (var i=0; i<len; i++){
-            $("#resources").prepend("<option selected>"+resources[i] + "</option>")
+            // $("#resources").prepend("<option selected>"+resources[i] + "</option>")
+            myApp.smartSelectAddOption('#resources', '<option value="'+resources[i]+'" selected>'+resources[i]+'</option>');
         }
     }
 
@@ -227,7 +230,8 @@ function populateForm(data){
         subobjectives = JSON.parse(data.subobjective)
         var len = subobjectives.length;
         for (var i=0; i<len; i++){
-            $("#subObjectives").prepend("<option selected>"+subobjectives[i] + "</option>")
+            // $("#subObjectives").prepend("<option selected>"+subobjectives[i] + "</option>")
+            myApp.smartSelectAddOption('#subObjectives', '<option value="'+subobjectives[i]+'" selected>'+subobjectives[i]+'</option>');
         }
     }
 
