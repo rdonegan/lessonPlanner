@@ -42,7 +42,8 @@ function updateObjectiveField(subject, grade, standards){
            for (i = 0; i < len; i++){
             
                 if($.inArray(res.rows.item(i).objective, dup)==-1){
-                    $("#objectives").append("<option>"+res.rows.item(i).objective + "</option>")
+                    // $("#objectives").append("<option>"+res.rows.item(i).objective + "</option>")
+                    myApp.smartSelectAddOption('#objectives', '<option value="'+res.rows.item(i).objective+'">'+res.rows.item(i).objective+'</option>');
                     dup.push(res.rows.item(i).objective)
                 }           
            }
@@ -63,7 +64,8 @@ function updateSubObjectivesField(subject, grade, ids){
             // alert("got subobj length here: " + len)
             for (i = 0; i < len; i++){
                 if($.inArray(res.rows.item(i).subobjective, dup)==-1){
-                    $("#subObjectives").append("<option>"+res.rows.item(i).subobjective + "</option>")
+                    // $("#subObjectives").append("<option>"+res.rows.item(i).subobjective + "</option>")
+                    myApp.smartSelectAddOption('#subObjectives', '<option value="'+res.rows.item(i).subobjective+'">'+res.rows.item(i).subobjective+'</option>');
                     dup.push(res.rows.item(i).subobjective)
                 }           
            }
@@ -81,7 +83,8 @@ function updateIndicatorsField(subject, grade, ids){
             // alert("got indicators length here: " + len)
             for (i = 0; i < len; i++){
                 if($.inArray(res.rows.item(i).indicator, dup)==-1){
-                    $("#indicators").append("<option>"+res.rows.item(i).indicator + "</option>")
+                    // $("#indicators").append("<option>"+res.rows.item(i).indicator + "</option>")
+                    myApp.smartSelectAddOption('#indicators', '<option value="'+res.rows.item(i).indicator+'">'+res.rows.item(i).indicator+'</option>');
                     dup.push(res.rows.item(i).indicator)
                 }           
            }
@@ -102,7 +105,8 @@ function updateResourcesField(subject, grade, standards){
            for (i = 0; i < len; i++){
             
                 if($.inArray(res.rows.item(i).resources, dup)==-1){
-                    $("#resources").append("<option>"+res.rows.item(i).resources + "</option>")
+                    // $("#resources").append("<option>"+res.rows.item(i).resources + "</option>")
+                    myApp.smartSelectAddOption('#resources', '<option value="'+res.rows.item(i).resources+'">'+res.rows.item(i).resources+'</option>');
                     dup.push(res.rows.item(i).objective)
                 }           
            }
