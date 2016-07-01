@@ -163,15 +163,26 @@ function populateForm(data){
         $('.startDateIn').val(data.startdate)
     }
     else{
-        var d = new Date();
-        var date = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
-        $('.startDateIn').val(date)
+        var now = new Date();
+
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+        $('.startDateIn').val(today);
     }
     if (data.enddate){
         $('.endDateIn').val(data.enddate)
     }
     else{
-        $('.endDateIn').val(data.startdate)
+        var now = new Date();
+
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        $('.endDateIn').val(today)
     }
     if(data.standards){
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
