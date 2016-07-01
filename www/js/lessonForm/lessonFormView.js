@@ -14,7 +14,8 @@ function updateStandardField(subject, grade, quarter){
                for (i = 0; i < len; i++){
                 
                     if($.inArray(res.rows.item(i).standard, dup)==-1 && res.rows.item(i).standard != ""){
-                        $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
+                        // $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
+                        myApp.smartSelectAddOption('#standards', '<option value="'+res.rows.item(i).standard+'">'+res.rows.item(i).standard+'</option>');
                         dup.push(res.rows.item(i).standard)
                         
                         // alert(JSON.stringify(res.rows.item(i).standardID))
