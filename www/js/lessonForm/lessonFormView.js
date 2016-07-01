@@ -194,7 +194,8 @@ function populateForm(data){
         standards = JSON.parse(data.standards)
         var len = standards.length;
         for (var i=0; i<len; i++){
-            $("#standards").prepend("<option selected>"+standards[i] + "</option>")
+            // $("#standards").prepend("<option selected>"+standards[i] + "</option>")
+            myApp.smartSelectAddOption('#standards', '<option value="'+standards[i]+'" selected>'+standards[i]+'</option>');
         }
     }
     if(data.objectives){
