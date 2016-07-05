@@ -21,7 +21,7 @@ myApp.onPageInit('lessonList', function (page) {
                           '<div class="item-inner">' +
                             '<div class="item-title-row">' +
                               '<div class="item-title">Grade ' + item.grade + '</div>' +
-                              '<div class="item-after">'+item.startdate+'</div>' +
+                              '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
                             '</div>' +
                             '<div class="item-subtitle">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) +', Quarter '+ item.quarter + '</div>' +
                           '</div>' +
