@@ -1,12 +1,14 @@
 //Everytime subject or grade fields are updated, reload contents of Standards select options
 function updateStandardField(subject, grade, quarter){
-
+   if (state.isNew){
     $("#standards").empty()
     $("#objectives").empty()
     $("#subObjectives").empty()
     $("#resources").empty()
-    $("#indicators").empty()
-
+    $("#indicators").empty() 
+   }
+    
+    
     var dup = [] // To check if duplicate strands have been added
 
     formdb.transaction(function(tx) {
@@ -29,6 +31,27 @@ function updateStandardField(subject, grade, quarter){
         })
           
 };
+
+//used when updating from a prior record
+function addObjectives(subject, grade, standards){
+    var dup = ["", " "]
+    formdb.transaction(function(tx) {
+
+        tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
+            var len = res.rows.length, i;
+            // alert(len)
+           for (i = 0; i < len; i++){
+            
+                if($.inArray(res.rows.item(i).objective, dup)==-1){
+                    myApp.smartSelectAddOption('#objectives', '<option value="'+res.rows.item(i).objective+'">'+res.rows.item(i).objective+'</option>');
+                    dup.push(res.rows.item(i).objective)
+                }           
+           }
+           toggleVisibility()
+           
+        })
+    })
+}
 
 // Update objective field
 function updateObjectiveField(subject, grade, standards){
@@ -177,6 +200,11 @@ function upDateStartAndEndDates(){
 function populateForm(data){
 //data.{field} ,for everything except arrays
 //JSON.parse(data.{field}[i] ,for arrays
+
+    //YOU KNOW WHAT. DON'T EVEN TRY TO BE CLEVER. JUST WRITE SEPARATE, UNIQUE FUNCTIONS FOR
+    //WHEN YOU'RE UPDATING OBJECTIVES/RESOURCES/ETC FROM A PRE-POPULATED RECORD. BC ITS ASYNC
+    //YOU'LL HAVE TO JUST USE DATA GROM THE 'DATA' VARIABLE PASSED TO THE FUNCTION. IT'LL BE 
+    //DIRTY BUT IT'LL WORK
 
     // alert(data.subject);
     if (data.subject){

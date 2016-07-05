@@ -1,7 +1,7 @@
-
+var state = {isNew: false};
 myApp.onPageInit('lessonForm', function(page){
 
-    var state = {isNew: false};
+    
     var lessonData; //for storing data while editing
     var schools = ('Aimeliik Airai Angaur GB Harris Ibobang PJF Koror Melekeok Meyuns Ngaraard Ngarchelong Ngardmau Ngeremlengui Peleliu Pulo Anna Sonsorol').split(' ');
 
