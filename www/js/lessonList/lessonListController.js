@@ -13,7 +13,7 @@ myApp.onPageInit('lessonList', function (page) {
         
         // alert(items[0].standards)
         
-        var virtualList= myApp.virtualList('.list-block', {
+        var virtualList= myApp.virtualList('.editLessons', {
             items: items,
             renderItem: function(index,item){
                 return '<li class="swipeout">' +
