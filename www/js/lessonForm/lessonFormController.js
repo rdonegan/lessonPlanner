@@ -174,6 +174,7 @@ function getSelectedStandardsIDs(standards, callback){
     // save data when SUBMIT clicked
     // WILL NEED TO ADD VALIDATION
     $$('.get-storage-data').on('click', function(){
+        $(".navbar").removeClass("theme-pink")
         var storedData = myApp.formGetData('lessonForm')
         // alert(JSON.stringify(storedData));
         if(state.isNew && storedData) {
