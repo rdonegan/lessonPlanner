@@ -61,6 +61,7 @@ myApp.onPageInit('lessonForm', function(page){
         // $('.startDateIn').val('2020-04-04')
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter());
         upDateStartAndEndDates()
+        
       
     }
     

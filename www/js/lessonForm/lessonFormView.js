@@ -2,8 +2,10 @@
 function updateStandardField(subject, grade, quarter){
 
     $("#standards").empty()
-    // $(".standardSelect").removeClass("disabled");
     $("#objectives").empty()
+    $("#subObjectives").empty()
+    $("#resources").empty()
+    $("#indicators").empty()
 
     var dup = [] // To check if duplicate strands have been added
 
@@ -22,7 +24,7 @@ function updateStandardField(subject, grade, quarter){
                     } 
                           
                }
-               
+               toggleVisibility()
             })
         })
           
@@ -32,6 +34,8 @@ function updateStandardField(subject, grade, quarter){
 function updateObjectiveField(subject, grade, standards){
 
     $("#objectives").empty()
+    $("#subObjectives").empty()
+    $("#indicators").empty()
 
     var dup = ["", " "]
     formdb.transaction(function(tx) {
@@ -47,11 +51,12 @@ function updateObjectiveField(subject, grade, standards){
                     dup.push(res.rows.item(i).objective)
                 }           
            }
+           toggleVisibility()
            
         })
     })
 
-   toggleObjectiveVisibility();
+   
 };
 
 
@@ -69,6 +74,7 @@ function updateSubObjectivesField(subject, grade, ids){
                     dup.push(res.rows.item(i).subobjective)
                 }           
            }
+           toggleVisibility()
         })
     })
 }
@@ -88,6 +94,7 @@ function updateIndicatorsField(subject, grade, ids){
                     dup.push(res.rows.item(i).indicator)
                 }           
            }
+           toggleVisibility()
         })
     })
 
@@ -110,19 +117,45 @@ function updateResourcesField(subject, grade, standards){
                     dup.push(res.rows.item(i).objective)
                 }           
            }
+           toggleVisibility()
            
         })
     })
 
 }
 
-
-function toggleObjectiveVisibility(){
-    if(getSelectedStandards().length==0){
+//Iterate through all conditional fields and toggle disabled
+//depending on if its populated
+function toggleVisibility(){
+    if($(".standardSelect").has('option').length ==0){
+        $(".standardSelect").addClass("disabled");
+    }
+    else{
+        $(".standardSelect").removeClass("disabled");
+    }
+    if($(".objectiveSelect").has('option').length ==0){
         $(".objectiveSelect").addClass("disabled");
     }
     else{
-            $(".objectiveSelect").removeClass("disabled");
+        $(".objectiveSelect").removeClass("disabled");
+    }
+    if($(".subObjectiveSelect").has('option').length ==0){
+        $(".subObjectiveSelect").addClass("disabled");
+    }
+    else{
+        $(".subObjectiveSelect").removeClass("disabled");
+    }
+    if($(".resourcesSelect").has('option').length ==0){
+        $(".resourcesSelect").addClass("disabled");
+    }
+    else{
+        $(".resourcesSelect").removeClass("disabled");
+    }
+    if($(".indicatorsSelect").has('option').length ==0){
+        $(".indicatorsSelect").addClass("disabled");
+    }
+    else{
+        $(".indicatorsSelect").removeClass("disabled");
     }
 };
 
