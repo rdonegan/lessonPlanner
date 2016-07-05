@@ -1,5 +1,6 @@
 // Initialize your app
 var myApp = new Framework7({
+    init:false,
     material: true,
     swipePanel: 'left',
     template7Pages: true,
@@ -19,6 +20,48 @@ var lpdb;
 
 
 var logOb; //file object
+
+myApp.onPageInit('index', function (page) {
+  // alert("index initialized")
+  getCurrentLessons(function(items){
+    // alert("in get lessons")
+  })
+});
+
+function getCurrentLessons(callback) {
+
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if(dd<10) {
+        dd='0'+dd
+    } 
+    if(mm<10) {
+        mm='0'+mm
+    } 
+
+    today =  yyyy+'-'+mm+'-'+dd;
+    // alert("today's date: " + today)
+        
+    var items = new Array();
+    lpdb.transaction(function(tx) {
+        tx.executeSql('SELECT * FROM lessonplans WHERE startdate <= "' + today + '" AND enddate >= "' + today +'"', [], function(tx, results) {
+            
+            var len = results.rows.length;
+            for (var i=0; i<len; i++){
+                // items.push(results.rows.item(i).subject);
+                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes }
+                items.push(row)
+            }
+            
+            callback(items)
+        });
+    });
+}
+
+
 
 
 function getLessonsByDate(callback) {
@@ -113,7 +156,7 @@ $('.shareLink').click(function(){
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
-    
+    myApp.init() //now you should be able to create databases from within because the deviceisready
 
 
   };
@@ -207,6 +250,7 @@ function successcb(){
         function(tx, result) {
             // alert("Table created successfully");
             showTable();
+            // alert("success called")
         }, 
         function(error) {
               alert("Error occurred while creating the table.");
