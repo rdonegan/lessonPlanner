@@ -20,9 +20,10 @@ myApp.onPageInit('lessonList', function (page) {
                         '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content swipeout-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
                           '<div class="item-inner">' +
                             '<div class="item-title-row">' +
-                              '<div class="item-title">' + item.id + '</div>' +
+                              '<div class="item-title">Grade ' + item.grade + '</div>' +
+                              '<div class="item-after">'+item.startdate+'</div>' +
                             '</div>' +
-                            '<div class="item-subtitle">' + item.subject + '</div>' +
+                            '<div class="item-subtitle">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) +', Quarter '+ item.quarter + '</div>' +
                           '</div>' +
                         '</a>' +
                         '<div class="swipeout-actions-right">'+
@@ -30,20 +31,8 @@ myApp.onPageInit('lessonList', function (page) {
                             '</a>'+
                         '</div>'+
                       '</li>';
-            }
-        // template: '<li class="item-content">' +
-        //             '<a href="#" class="item-link planItem">' +
-        //                   '<div class="item-inner">' +
-        //                     '<div class="item-title-row">' +
-        //                       '<div class="item-title">{{id}}</div>' +
-        //                     '</div>' +
-        //                     '<div class="item-subtitle">{{standards}}</div>' +
-        //                   '</div>' +
-        //             '</a>' +
-        //           '</li>'
-        // Item height
-       
-
+            },
+            height:70
         });
     })
 
