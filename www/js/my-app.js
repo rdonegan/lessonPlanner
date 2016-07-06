@@ -199,12 +199,16 @@ function updateFormTable(results, tx){
         var params = [results[i].subject, results[i].quarter, results[i].grade, results[i].standardID, results[i].standard, results[i].gradeObjID, results[i].objective, results[i].subobjective, results[i].indicator, results[i].resources]
         // alert(JSON.stringify(results[i]))
         tx.executeSql(sql, params)
+        myApp.hidePreloader()
+        myApp.confirm("Update Complete", "My Planner")
 
     }
 }
 
 $(".updateApp").click(function(){
 
+    //Freeze screen and show preloader
+    myApp.showPreloader("Updating");
     //The directory to store data
     var store;
     store = cordova.file.dataDirectory;
@@ -219,10 +223,11 @@ $(".updateApp").click(function(){
     // alert("About to start transfer");
     fileTransfer.download(assetURL, store + fileName, 
         function(entry) {
-            alert("Success downloading file!");
+            // alert("Success downloading file!");
             appStart(entry);
         }, 
         function(err) {
+            myApp.hidePreloader()
             alert("Error updating. Check your internet connection and retry.");
             alert(JSON.stringify(err));
         });
@@ -236,12 +241,12 @@ $(".updateApp").click(function(){
             var reader = new FileReader();
 
             reader.onloadend = function(){
-                alert("successfully read file: ") //+ this.result)
+                // alert("successfully read file: ") //+ this.result)
                 Papa.parse(this.result, {
                     header: true,
                     dynamicTyping: true,
                     complete:function(results){
-                        alert(JSON.stringify(results))
+                        // alert(JSON.stringify(results))
                         formdb.transaction(function(transaction){
                             transaction.executeSql('DELETE FROM CURRICULUM', [], 
                                 function(tx, result){
