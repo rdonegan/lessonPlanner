@@ -182,7 +182,7 @@ $('.shareLink').click(function(){
 
 // Cordova is ready
   function onDeviceReady() {
-    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
+    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, checkForUpdates);//, checkForUpdates);
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
     myApp.init() //now you should be able to create databases from within because the deviceisready
 
@@ -273,20 +273,24 @@ function checkForUpdates()
     store = cordova.file.dataDirectory;
     // alert("store: "+store)
     //Check for the file. 
-    window.resolveLocalFileSystemURL(store + fileName, appStart, downloadAsset);
+    window.resolveLocalFileSystemURL(store + fileName, appStart, noFilePresent);//, downloadAsset);
 
-    function downloadAsset() {
-        var fileTransfer = new FileTransfer();
-        // alert("About to start transfer");
-        fileTransfer.download(assetURL, store + fileName, 
-            function(entry) {
-                alert("Success downloading file!");
-                appStart(entry);
-            }, 
-            function(err) {
-                alert("Error updating. Check your internet connection and retry.");
-                alert(JSON.stringify(err));
-            });
+    // function downloadAsset() {
+    //     var fileTransfer = new FileTransfer();
+    //     // alert("About to start transfer");
+    //     fileTransfer.download(assetURL, store + fileName, 
+    //         function(entry) {
+    //             alert("Success downloading file!");
+    //             appStart(entry);
+    //         }, 
+    //         function(err) {
+    //             alert("Error updating. Check your internet connection and retry.");
+    //             alert(JSON.stringify(err));
+    //         });
+    // }
+
+    function noFilePresent(){
+        //nothing happens, there's no file to draw from
     }
 
     //I'm only called when the file exists or has been downloaded.
@@ -297,13 +301,13 @@ function checkForUpdates()
             var reader = new FileReader();
 
             reader.onloadend = function(){
-                alert("successfully read file: ") //+ this.result)
+                // alert("successfully read file: ") //+ this.result)
 
                 Papa.parse(this.result, {
                     header: true,
                     dynamicTyping: true,
                     complete:function(results){
-                        alert(JSON.stringify(results))
+                        // alert(JSON.stringify(results))
                         formdb.transaction(function(transaction){
                             transaction.executeSql('DELETE FROM CURRICULUM', [], 
                                 function(tx, result){
