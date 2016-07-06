@@ -207,7 +207,20 @@ $('.shareLink').click(function(){
 // Cordova is ready
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, checkForUpdates);//, checkForUpdates);
-    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
+    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
+        lpdb.transaction(function(tx){
+            tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text)', [])
+        }, function(error){
+            alert("transaction error: " + error.message);
+        }, function(){
+            alert("transaction ok");
+        });
+
+
+    }, function (error){
+        alert('Open database ERROR: ' + JSON.stringify(error));
+    });  
+
     myApp.init() //now you should be able to create databases from within because the deviceisready
 
 
