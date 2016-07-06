@@ -37,10 +37,10 @@ myApp.onPageInit('index', function (page) {
                         '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content swipeout-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
                           '<div class="item-inner">' +
                             '<div class="item-title-row">' +
-                              '<div class="item-title">Grade ' + item.grade + '</div>' +
+                              '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
                               '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
                             '</div>' +
-                            '<div class="item-subtitle">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) +', Quarter '+ item.quarter + '</div>' +
+                            '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
                           '</div>' +
                         '</a>' +
                         '<div class="swipeout-actions-right">'+
