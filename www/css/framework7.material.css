@@ -1987,7 +1987,8 @@ i.icon.icon-close {
 .chip {
   font-size: 13px;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.87);
+  /*color: rgba(0, 0, 0, 0.87);*/
+  color: #ffffff;
   background: rgba(0, 0, 0, 0.12);
   display: inline-block;
   height: 32px;

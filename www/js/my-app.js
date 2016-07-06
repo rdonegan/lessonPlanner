@@ -47,6 +47,9 @@ myApp.onPageInit('index', function (page) {
                                   '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
                                 '</div>' +
                                 '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
+                                '<div class="chip bg-teal"><div class="chip-label">Standards: '+JSON.parse(item.standards).length+'</div></div>'+
+                                '<div class="chip bg-amber"><div class="chip-label">Objectives: '+JSON.parse(item.objectives).length+'</div></div>'+
+                                '<div class="chip bg-indigo"><div class="chip-label">Performance Indicators: '+JSON.parse(item.indicators).length+'</div></div>'+
                               '</div>' +
                             '</a>' +
                             '<div class="swipeout-actions-right">'+
@@ -55,7 +58,7 @@ myApp.onPageInit('index', function (page) {
                             '</div>'+
                           '</li>';
                 },
-                height:70
+                height:115
             });
         }
 
