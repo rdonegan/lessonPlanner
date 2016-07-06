@@ -116,10 +116,18 @@ function getLessonsByDate(callback) {
                     var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes }
                     items.push(row)
                 }
-                
+                if (items.length==0){
+                    myApp.hidePreloader();
+                    myApp.alert("Error exporting. No lesson plans saved.", "My Planner")
+
+                }
                 callback(items)
-            });
+            }, errorHandler);
         });
+        function errorHandler(){
+            myApp.hidePreloader();
+            myApp.alert("Error exporting. No lesson plans saved.", "My Planner")
+        }
     }
 
 
@@ -165,6 +173,8 @@ function writeFile(fileEntry, dataObj){
         fileEntry.createWriter(function(fileWriter){
             // alert("still in here")
             fileWriter.write(csvItems)
+            myApp.hidePreloader();
+            myApp.alert("Records saved as log.csv in your app documents.", "My Planner")
         })
     })
 
@@ -180,6 +190,7 @@ function createFile(dirEntry, fileName){
 }
 
 $('.shareLink').click(function(){
+    myApp.showPreloader("Exporting your files");
     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
         // alert('jere')
         // alert("got main dir: " + JSON.stringify(dir));
@@ -209,7 +220,7 @@ function updateFormTable(results, tx){
         // alert(JSON.stringify(results[i]))
         tx.executeSql(sql, params)
         myApp.hidePreloader()
-        myApp.confirm("Update Complete", "My Planner")
+        myApp.alert("Update Complete", "My Planner")
 
     }
 }
@@ -237,7 +248,7 @@ $(".updateApp").click(function(){
         }, 
         function(err) {
             myApp.hidePreloader()
-            myApp.confirm("Error updating. Check your internet connection and retry.", "My Planner")
+            myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
             // alert("Error updating. Check your internet connection and retry.");
             // alert(JSON.stringify(err));
         });
