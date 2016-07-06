@@ -182,7 +182,7 @@ $('.shareLink').click(function(){
 
 // Cordova is ready
   function onDeviceReady() {
-    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
+    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, checkForUpdates);//, checkForUpdates);
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
     myApp.init() //now you should be able to create databases from within because the deviceisready
 
