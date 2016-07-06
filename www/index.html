@@ -35,24 +35,35 @@
     <!-- About Popup -->
     <div class="popup popup-share">
       <div class="content-block">
-        <p>Choose the dates of lesson plans to share</p>
-        <div class="item-content">
-            <div class="item-inner">
-               <div class="item-title label">Start date</div>
-              <div class="item-input">
-                <input type="date" class="startDateInput" name="startdate">
+        <p>Choose interval of lesson plans to share</p>
+        <div class="list-block">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                  <div class="item-inner">
+                     <div class="item-title label">From (Start date)</div>
+                    <div class="item-input">
+                      <input type="date" class="startDateInput" name="startdate">
+                    </div>
+                  </div>
               </div>
-            </div>
-        </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                  <div class="item-inner">
+                     <div class="item-title label">To (End date)</div>
+                    <div class="item-input">
+                      <input type="date" class="endDateInput" name="enddate" >
+                    </div>
+                  </div>
+              </div>
+            </li>
 
-        <div class="item-content">
-              <div class="item-inner">
-                 <div class="item-title label">End date</div>
-                <div class="item-input">
-                  <input type="date" class="endDateInput" name="enddate" >
-                </div>
-              </div>
-          </div>
+          </ul>
+        </div>
+        
 
           <div><a href="#" class="button button-big button-fill color-red close-popup">Cancel</a></div>
 
