@@ -394,10 +394,6 @@ function insertLPDB(data){
     var subobjectives = JSON.stringify(data.subobjective)
     var indicators = JSON.stringify(data.indicators)
     var resources = JSON.stringify(data.resources)
-    // var standards = data.standards.toString()
-    // var objectives = data.objectives.toString()
-    // var indicators = data.indicators.toString()
-    // var resources = data.resources.toString()
     var notes = data.notes
 
 
@@ -413,7 +409,8 @@ function insertLPDB(data){
                 
             },
             function(error){
-                alert('error occurred')
+                // alert("Error occurred. Couldn't save lesson plan.")
+                myApp.alert("Error occurred. Couldn't save lesson plan.", "Lesson Planner")
             })
     })
 }
