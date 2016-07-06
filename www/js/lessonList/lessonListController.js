@@ -11,29 +11,35 @@ myApp.onPageInit('lessonList', function (page) {
     getLessons(function(items){
 
         
-        // alert(items[0].standards)
+        if(items.length==0){
+            $('.editLessons').html('<div class="content-block-title">No Lesson Plans Created :(</div>');
+        }
+        else{
+            var virtualList= myApp.virtualList('.editLessons', {
+                items: items,
+                renderItem: function(index,item){
+                    return '<li class="swipeout">' +
+                            '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content swipeout-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+                              '<div class="item-inner">' +
+                                '<div class="item-title-row">' +
+                                  '<div class="item-title">Grade ' + item.grade + '</div>' +
+                                  '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
+                                '</div>' +
+                                '<div class="item-subtitle">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) +', Quarter '+ item.quarter + '</div>' +
+                              '</div>' +
+                            '</a>' +
+                            '<div class="swipeout-actions-right">'+
+                                '<a id="'+ item.id +'" href="#" class="swipeout-delete">Delete'+
+                                '</a>'+
+                            '</div>'+
+                          '</li>';
+                },
+                height:70
+            });
+
+        }
         
-        var virtualList= myApp.virtualList('.editLessons', {
-            items: items,
-            renderItem: function(index,item){
-                return '<li class="swipeout">' +
-                        '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content swipeout-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
-                          '<div class="item-inner">' +
-                            '<div class="item-title-row">' +
-                              '<div class="item-title">Grade ' + item.grade + '</div>' +
-                              '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
-                            '</div>' +
-                            '<div class="item-subtitle">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) +', Quarter '+ item.quarter + '</div>' +
-                          '</div>' +
-                        '</a>' +
-                        '<div class="swipeout-actions-right">'+
-                            '<a id="'+ item.id +'" href="#" class="swipeout-delete">Delete'+
-                            '</a>'+
-                        '</div>'+
-                      '</li>';
-            },
-            height:70
-        });
+        
     })
 
 });
