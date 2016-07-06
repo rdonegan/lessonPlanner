@@ -28,30 +28,39 @@ myApp.onPageAfterAnimation('index', function(page){
 myApp.onPageInit('index', function (page) {
   // alert("index initialized")
   getCurrentLessons(function(items){
-    for(var i in items){
-        // alert(items[i].standards)
-        var currentPlansList= myApp.virtualList('.currentLessons', {
-            items: items,
-            renderItem: function(index,item){
-                return '<li class="swipeout">' +
-                        '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content swipeout-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
-                          '<div class="item-inner">' +
-                            '<div class="item-title-row">' +
-                              '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
-                              '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
-                            '</div>' +
-                            '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
-                          '</div>' +
-                        '</a>' +
-                        '<div class="swipeout-actions-right">'+
-                            '<a id="'+ item.id +'" href="#" class="swipeout-delete">Delete'+
-                            '</a>'+
-                        '</div>'+
-                      '</li>';
-            },
-            height:70
-        });
+
+    if (items.length==0){
+        $('.currentLessons').html('<div class="content-block-title">No lesson plans created for today</div>');
     }
+    else{
+        for(var i in items){
+        // alert(items[i].standards)
+            var currentPlansList= myApp.virtualList('.currentLessons', {
+                items: items,
+                renderItem: function(index,item){
+                    return '<li class="swipeout">' +
+                            '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content swipeout-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+                              '<div class="item-inner">' +
+                                '<div class="item-title-row">' +
+                                  '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
+                                  '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
+                                '</div>' +
+                                '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
+                              '</div>' +
+                            '</a>' +
+                            '<div class="swipeout-actions-right">'+
+                                '<a id="'+ item.id +'" href="#" class="swipeout-delete">Delete'+
+                                '</a>'+
+                            '</div>'+
+                          '</li>';
+                },
+                height:70
+            });
+        }
+
+    }
+
+    
 
   })
 });
