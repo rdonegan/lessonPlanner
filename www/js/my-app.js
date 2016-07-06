@@ -182,7 +182,7 @@ $('.shareLink').click(function(){
 
 // Cordova is ready
   function onDeviceReady() {
-    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, checkForUpdates);//, checkForUpdates);
+    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
     lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default', androidDatabaseImplementation: 2, androidLockWorkaround: 1}, successcb, errorcb);  
     myApp.init() //now you should be able to create databases from within because the deviceisready
 
@@ -203,14 +203,70 @@ function updateFormTable(results, tx){
     }
 }
 
+$(".updateApp").click(function(){
+
+    //The directory to store data
+    var store;
+    store = cordova.file.dataDirectory;
+    //URL of our asset
+    var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
+    //var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
+    //File name of our important data file we didn't ship with the app
+    var fileName = "curriculum.csv";
+
+
+    var fileTransfer = new FileTransfer();
+    // alert("About to start transfer");
+    fileTransfer.download(assetURL, store + fileName, 
+        function(entry) {
+            alert("Success downloading file!");
+            appStart(entry);
+        }, 
+        function(err) {
+            alert("Error updating. Check your internet connection and retry.");
+            alert(JSON.stringify(err));
+        });
+
+
+    //I'm only called when the file exists or has been downloaded.
+    function appStart(fileEntry) {
+        // alert("fileEntry: " + fileEntry.toURL());
+      
+        fileEntry.file(function (file) {
+            var reader = new FileReader();
+
+            reader.onloadend = function(){
+                alert("successfully read file: ") //+ this.result)
+                Papa.parse(this.result, {
+                    header: true,
+                    dynamicTyping: true,
+                    complete:function(results){
+                        alert(JSON.stringify(results))
+                        formdb.transaction(function(transaction){
+                            transaction.executeSql('DELETE FROM CURRICULUM', [], 
+                                function(tx, result){
+                                    // alert(result.rows.length)
+                                    updateFormTable(results.data, tx)
+                                })
+                        })
+                    }
+                })
+            }
+            reader.readAsBinaryString(file);
+
+        })
+    }
+
+})
+
 function checkForUpdates()
 {
 
     //The directory to store data
     var store;
     //URL of our asset
-    // var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
-    var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
+    var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
+    //var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
     //File name of our important data file we didn't ship with the app
     var fileName = "curriculum.csv";
     
