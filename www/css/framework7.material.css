@@ -1931,6 +1931,16 @@ i.icon.icon-form-url {
   height: 24px;
   background-image: url("../img/i-form-url-material.svg");
 }
+i.icon.icon-share{
+  width:24px;
+  height: 24px;
+  background-image: url("../img/share-icon.svg");
+}
+i.icon.icon-edit{
+  width:24px;
+  height: 24px;
+  background-image: url("../img/edit-icon.svg");
+}
 i.icon.icon-next,
 i.icon.icon-prev {
   width: 24px;

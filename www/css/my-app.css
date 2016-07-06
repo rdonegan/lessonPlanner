@@ -48,6 +48,12 @@
 	font-weight: 100;
 }
 
+.icon-img{
+	width: 24px;
+  	height: 24px;
+  	font-size: 0;
+}
+
 /*.profileInfo i{
 	float:left;
 	display:inline;
