@@ -209,7 +209,8 @@ function checkForUpdates()
     //The directory to store data
     var store;
     //URL of our asset
-    var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
+    // var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
+    var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
     //File name of our important data file we didn't ship with the app
     var fileName = "curriculum.csv";
     
@@ -223,11 +224,11 @@ function checkForUpdates()
         // alert("About to start transfer");
         fileTransfer.download(assetURL, store + fileName, 
             function(entry) {
-                // alert("Success!");
+                alert("Success downloading file!");
                 appStart(entry);
             }, 
             function(err) {
-                alert("Error");
+                alert("Error updating. Check your internet connection and retry.");
                 alert(JSON.stringify(err));
             });
     }
