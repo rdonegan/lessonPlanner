@@ -34,15 +34,24 @@
 	font-size: 1.2em;
 }
 
-.profileHeader h2{
+.profileHeader h2, .profileHeader h1{
 	margin-left:5px;
 	color:#ffffff;
+	display: inline-block;
 }
 
-.profileInfo i{
+.introText{
+	font-weight: 900;
+}
+
+.helpText{
+	font-weight: 100;
+}
+
+/*.profileInfo i{
 	float:left;
 	display:inline;
-}
+}*/
 
 .panel{
 	background-color: #1976D2;
