@@ -228,8 +228,9 @@ $(".updateApp").click(function(){
         }, 
         function(err) {
             myApp.hidePreloader()
-            alert("Error updating. Check your internet connection and retry.");
-            alert(JSON.stringify(err));
+            myApp.confirm("Error updating. Check your internet connection and retry.", "My Planner")
+            // alert("Error updating. Check your internet connection and retry.");
+            // alert(JSON.stringify(err));
         });
 
 
