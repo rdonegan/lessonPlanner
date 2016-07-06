@@ -221,13 +221,13 @@ function updateFormTable(results, tx){
         // alert(JSON.stringify(results[i]))
         tx.executeSql(sql, params)
         myApp.hidePreloader()
-        myApp.alert("Update Complete", "My Planner")
+        // myApp.alert("Update Complete", "My Planner")
 
     }
 }
 
 $(".updateApp").click(function(){
-
+    alert("here")
     //Freeze screen and show preloader
     myApp.showPreloader("Updating");
     //The directory to store data
