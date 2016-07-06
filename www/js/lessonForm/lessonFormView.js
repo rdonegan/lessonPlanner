@@ -1,12 +1,11 @@
 //Everytime subject or grade fields are updated, reload contents of Standards select options
 function updateStandardField(subject, grade, quarter){
-   if (state.isNew){
     $("#standards").empty()
     $("#objectives").empty()
     $("#subObjectives").empty()
     $("#resources").empty()
     $("#indicators").empty() 
-   }
+   
     
     
     var dup = [] // To check if duplicate strands have been added
@@ -35,7 +34,6 @@ function updateStandardField(subject, grade, quarter){
 //used when updating from a prior record
 function addObjectives(subject, grade, standards){
 
-    alert("addobjectives")
     //convert standards to usable form
     var allStds
     if(standards.length>1){
@@ -45,7 +43,7 @@ function addObjectives(subject, grade, standards){
     else{
         allStds = "'"+standards.join()+"'"
     }
-    alert(allStds)
+    
 
 
     var dup = ["", " "]
@@ -53,8 +51,7 @@ function addObjectives(subject, grade, standards){
 
         tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() + "'AND STANDARD IN (" + allStds +")", [], function(tx, res) {
             var len = res.rows.length, i;
-            alert(len)
-           for (i = 0; i < len; i++){
+               for (i = 0; i < len; i++){
             
                 if($.inArray(res.rows.item(i).objective, dup)==-1){
                     myApp.smartSelectAddOption('#objectives', '<option value="'+res.rows.item(i).objective+'">'+res.rows.item(i).objective+'</option>');
@@ -66,6 +63,8 @@ function addObjectives(subject, grade, standards){
         })
     })
 }
+
+
 
 // Update objective field
 function updateObjectiveField(subject, grade, standards){
