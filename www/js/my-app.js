@@ -211,6 +211,7 @@ $$(document).on('click', '.shareLink', function(e){
 
 // Cordova is ready
   function onDeviceReady() {
+    //curriculum.db is only pre-populated if that database doesn't already exist (AKA on first run)
     formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, checkForUpdates);//, checkForUpdates);
     if (lpdb==null){
         lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
@@ -357,25 +358,6 @@ function checkForUpdates()
     var fileName = "curriculum.csv";
     
     store = cordova.file.dataDirectory;
-    // alert("store: "+store)
-    //Check for the file. 
-    window.resolveLocalFileSystemURL(store + fileName, appStart);//, downloadAsset);
-
-    // function downloadAsset() {
-    //     var fileTransfer = new FileTransfer();
-    //     // alert("About to start transfer");
-    //     fileTransfer.download(assetURL, store + fileName, 
-    //         function(entry) {
-    //             alert("Success downloading file!");
-    //             appStart(entry);
-    //         }, 
-    //         function(err) {
-    //             alert("Error updating. Check your internet connection and retry.");
-    //             alert(JSON.stringify(err));
-    //         });
-    // }
-
-   
 
     //I'm only called when the file exists or has been downloaded.
     function appStart(fileEntry) {
@@ -408,12 +390,7 @@ function checkForUpdates()
         })
     }
     
-    // formdb.transaction(function(transaction){
-    //     transaction.executeSql('SELECT * FROM CURRICULUM', [], 
-    //         function(tx, result){
-    //             alert(JSON.stringify(result.rows.item(174)))
-    //         })
-    // })
+   
 }
 
 function successcb(){
