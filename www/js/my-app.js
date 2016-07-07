@@ -349,7 +349,7 @@ function checkForUpdates()
     store = cordova.file.dataDirectory;
     // alert("store: "+store)
     //Check for the file. 
-    window.resolveLocalFileSystemURL(store + fileName, appStart, noFilePresent);//, downloadAsset);
+    window.resolveLocalFileSystemURL(store + fileName, appStart);//, downloadAsset);
 
     // function downloadAsset() {
     //     var fileTransfer = new FileTransfer();
@@ -365,11 +365,7 @@ function checkForUpdates()
     //         });
     // }
 
-    function noFilePresent(){
-        //nothing happens, there's no file to draw from
-        alert("no file present")
-        
-    }
+   
 
     //I'm only called when the file exists or has been downloaded.
     function appStart(fileEntry) {
