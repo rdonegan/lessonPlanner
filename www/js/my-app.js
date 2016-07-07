@@ -189,7 +189,8 @@ function createFile(dirEntry, fileName){
     })
 }
 
-$('.shareLink').click(function(){
+// $('.shareLink').click(function(){
+$$(document).on('click', '.shareLink', function(e){
     myApp.showPreloader("Exporting your files");
     window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
         // alert('jere')
