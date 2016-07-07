@@ -246,8 +246,13 @@ function updateFormTable(results, tx){
     }
 }
 
-//$(".updateApp").click(function(){
+
 $$(document).on('click','.updateApp', function(e){
+    //If offline, abort update
+    if (!navigator.onLine){
+        myApp.alert("You're offline. Please connect to the internet to update.", "Lesson Planner");
+        return;
+    }
     //Freeze screen and show preloader
     myApp.showPreloader("Updating");
     //The directory to store data
