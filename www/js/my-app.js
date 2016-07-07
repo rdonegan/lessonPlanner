@@ -315,21 +315,13 @@ $$(document).on('click', '.resetData', function(e){
     window.resolveLocalFileSystemURL(store + fileName, function(file){
         
         file.remove(function(){
-            alert("file deleted")
+            // alert("file deleted")
             window.sqlitePlugin.deleteDatabase({name: 'curriculum.db', location: 'default'}, function(){
-                formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});
+                formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, function(){
+                    myApp.alert("Standards, objectives, resources, and indicator data successfully reset", "Lesson Planner")
+                    mainView.router.refreshPage()
+                });
             });
-            // formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, function(err){
-            //     alert(JSON.stringify(err))
-            // });
-            //then drop old table and insert new data maybe
-            // formdb.transaction(function(transaction){
-            //     transaction.executeSql('DROP TABLE IF EXISTS CURRICULUM',[],
-            //         function(tx,result){
-            //             alert("table dropped")
-            //             formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, successFun, errorFun);
-            //         })
-            // })
              
         })
     })
