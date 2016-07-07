@@ -309,29 +309,30 @@ $$(document).on('click','.updateApp', function(e){
 
 //deletes update from file system and reverts to default db shipped with install
 $$(document).on('click', '.resetData', function(e){
-    var store = cordova.file.dataDirectory;
-    var fileName = "curriculum.csv";
+    myApp.confirm("Are you sure you want to reset the curriculum database? This will restore all standards, objectives, resources, indicators, and sub-objectives to their original options. Your saved lesson plans will not be affected.", "Curriculum Reset", function(){
+        var store = cordova.file.dataDirectory;
+        var fileName = "curriculum.csv";
 
-    window.resolveLocalFileSystemURL(store + fileName, function(file){
-        
-        file.remove(function(){
-            // alert("file deleted")
-            window.sqlitePlugin.deleteDatabase({name: 'curriculum.db', location: 'default'}, function(){
-                formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, function(){
-                    myApp.alert("Standards, objectives, resources, and indicator data successfully reset", "Lesson Planner")
-                    mainView.router.refreshPage()
+        window.resolveLocalFileSystemURL(store + fileName, function(file){
+            
+            file.remove(function(){
+                // alert("file deleted")
+                window.sqlitePlugin.deleteDatabase({name: 'curriculum.db', location: 'default'}, function(){
+                    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, function(){
+                        myApp.alert("Standards, objectives, resources, and indicator data successfully reset", "Lesson Planner")
+                        mainView.router.refreshPage()
+                    });
                 });
-            });
-             
+                 
+            })
         })
     })
 
+    
+
 })
 
-function errorFun(error){
-    alert("error: " + JSON.stringify(error))
-}
-    
+
 
 
 function checkForUpdates()
