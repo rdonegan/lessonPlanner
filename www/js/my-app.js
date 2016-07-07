@@ -467,6 +467,7 @@ function updateLPDB(id, data){
             function(tx, result){
                 myApp.formDeleteData('lessonForm')
                 mainView.router.loadPage('index.html');
+               
   
             },
             function(error){
