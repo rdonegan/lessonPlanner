@@ -313,21 +313,32 @@ $$(document).on('click', '.resetData', function(e){
     var fileName = "curriculum.csv";
 
     window.resolveLocalFileSystemURL(store + fileName, function(file){
+        
         file.remove(function(){
             alert("file deleted")
+            window.sqlitePlugin.deleteDatabase({name: 'curriculum.db', location: 'default'}, function(){
+                formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});
+            });
+            // formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, function(err){
+            //     alert(JSON.stringify(err))
+            // });
             //then drop old table and insert new data maybe
-            formdb.transaction(function(transaction){
-                transaction.executeSql('DROP TABLE IF EXISTS CURRICULUM',[],
-                    function(tx,result){
-                        alert("table dropped")
-                        formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});
-                    })
-            })
-            // 
+            // formdb.transaction(function(transaction){
+            //     transaction.executeSql('DROP TABLE IF EXISTS CURRICULUM',[],
+            //         function(tx,result){
+            //             alert("table dropped")
+            //             formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, successFun, errorFun);
+            //         })
+            // })
+             
         })
     })
 
 })
+
+function errorFun(error){
+    alert("error: " + JSON.stringify(error))
+}
     
 
 
@@ -363,6 +374,7 @@ function checkForUpdates()
 
     function noFilePresent(){
         //nothing happens, there's no file to draw from
+        alert("no file present")
         
     }
 
