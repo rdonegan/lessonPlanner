@@ -39,8 +39,8 @@ myApp.onPageInit('index', function (page) {
             var currentPlansList= myApp.virtualList('.currentLessons', {
                 items: items,
                 renderItem: function(index,item){
-                    return '<li class="swipeout">' +
-                            '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content swipeout-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+                    return '<li>' +
+                            '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
                               '<div class="item-inner">' +
                                 '<div class="item-title-row">' +
                                   '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
@@ -52,10 +52,6 @@ myApp.onPageInit('index', function (page) {
                                 '<div class="chip bg-indigo"><div class="chip-label">Performance Indicators: '+JSON.parse(item.indicators).length+'</div></div>'+
                               '</div>' +
                             '</a>' +
-                            '<div class="swipeout-actions-right">'+
-                                '<a id="'+ item.id +'" href="#" class="swipeout-delete">Delete'+
-                                '</a>'+
-                            '</div>'+
                           '</li>';
                 },
                 height:115
@@ -467,7 +463,7 @@ function updateLPDB(id, data){
             function(tx, result){
                 myApp.formDeleteData('lessonForm')
                 mainView.router.loadPage('index.html');
-               
+
   
             },
             function(error){
