@@ -207,19 +207,25 @@ $('.shareLink').click(function(){
 // Cordova is ready
   function onDeviceReady() {
     formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, checkForUpdates);//, checkForUpdates);
-    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
-        lpdb.transaction(function(tx){
-            tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text)', [])
-        }, function(error){
-            alert("transaction error: " + error.message);
-        }, function(){
-            alert("transaction ok");
-        });
+    if (lpdb==null){
+        lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
+            lpdb.transaction(function(tx){
+                tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text)', [], 
+                    function(tx,result){
+                        alert("inner result: " + JSON.stringify(result))
+                    })
+            }, function(error){
+                alert("transaction error: " + error.message);
+            }, function(){
+                alert("transaction ok");
+                
+            });
 
 
-    }, function (error){
-        alert('Open database ERROR: ' + JSON.stringify(error));
-    });  
+        }, function (error){
+            alert('Open database ERROR: ' + JSON.stringify(error));
+        }); 
+    } 
 
     myApp.init() //now you should be able to create databases from within because the deviceisready
 
@@ -413,14 +419,16 @@ function insertLPDB(data){
     var resources = JSON.stringify(data.resources)
     var notes = data.notes
 
-
     lpdb.transaction(function(tx){
         // alert("standards: " + standards + " subject: " + subject)
+        alert("lpdb right now: " + JSON.stringify(lpdb))
         var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
         tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives],
             // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
+                alert("lpdb after transaction: " + JSON.stringify(lpdb))
+                // alert("result after transaction: " + JSON.stringify(result))
                 myApp.formDeleteData('lessonForm')
                 // alert('saved actually')
                 
