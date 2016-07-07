@@ -428,6 +428,9 @@ function insertLPDB(data){
                 // alert("result after transaction: " + JSON.stringify(result))
                 myApp.formDeleteData('lessonForm')
                 mainView.router.loadPage('index.html');
+                myApp.addNotification({
+                    message: 'Successfully created new lesson plan!'
+                });
                 // alert('saved actually')
                 
             },
@@ -463,6 +466,9 @@ function updateLPDB(id, data){
             function(tx, result){
                 myApp.formDeleteData('lessonForm')
                 mainView.router.loadPage('index.html');
+                myApp.addNotification({
+                    message: 'Successfully updated lesson plan!'
+                });
 
   
             },
