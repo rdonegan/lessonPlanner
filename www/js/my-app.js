@@ -307,6 +307,30 @@ $$(document).on('click','.updateApp', function(e){
 
 })
 
+//deletes update from file system and reverts to default db shipped with install
+$$(document).on('click', '.resetData', function(e){
+    var store = cordova.file.dataDirectory;
+    var fileName = "curriculum.csv";
+
+    window.resolveLocalFileSystemURL(store + fileName, function(file){
+        file.remove(function(){
+            alert("file deleted")
+            //then drop old table and insert new data maybe
+            formdb.transaction(function(transaction){
+                transaction.executeSql('DROP TABLE IF EXISTS CURRICULUM',[],
+                    function(tx,result){
+                        alert("table dropped")
+                        formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});
+                    })
+            })
+            // 
+        })
+    })
+
+})
+    
+
+
 function checkForUpdates()
 {
 
@@ -339,6 +363,7 @@ function checkForUpdates()
 
     function noFilePresent(){
         //nothing happens, there's no file to draw from
+        
     }
 
     //I'm only called when the file exists or has been downloaded.
