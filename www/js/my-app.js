@@ -255,7 +255,8 @@ $$(document).on('click','.updateApp', function(e){
     var store;
     store = cordova.file.dataDirectory;
     //URL of our asset
-    var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
+    var assetURL = "http://owncloud.moe/index.php/s/LUoPOp7UqLImIED/download"
+    // var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
     //var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
     //File name of our important data file we didn't ship with the app
     var fileName = "curriculum.csv";
@@ -341,7 +342,8 @@ function checkForUpdates()
     //The directory to store data
     var store;
     //URL of our asset
-    var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
+    var assetURL = "http://owncloud.moe/index.php/s/LUoPOp7UqLImIED/download";
+    // var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
     //var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
     //File name of our important data file we didn't ship with the app
     var fileName = "curriculum.csv";
