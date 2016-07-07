@@ -191,12 +191,20 @@ function createFile(dirEntry, fileName){
 
 // $('.shareLink').click(function(){
 $$(document).on('click', '.shareLink', function(e){
-    myApp.showPreloader("Exporting your files");
-    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
-        // alert('jere')
+    //check that start and endate are both filled in, otherwise, show error
+    if($('.startDateInput').val()=="" || $('.endDateInput').val()=="" ){
+        myApp.alert("No lesson plans shared. Please fill in values for both to and from dates.")
+        return;
+    }
+    else{
+        myApp.showPreloader("Exporting your files");
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
         // alert("got main dir: " + JSON.stringify(dir));
         createFile(dir, "log.csv") 
     });
+
+    }
+    
 });
 
 
