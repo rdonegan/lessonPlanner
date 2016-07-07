@@ -245,8 +245,8 @@ function updateFormTable(results, tx){
     }
 }
 
-$(".updateApp").click(function(){
-    alert("here")
+//$(".updateApp").click(function(){
+$$(document).on('click','.updateApp', function(e){
     //Freeze screen and show preloader
     myApp.showPreloader("Updating");
     //The directory to store data
