@@ -186,7 +186,7 @@ function getSelectedStandardsIDs(standards, callback){
             updateLPDB(page.query.id, storedData)
         }
         else {
-            alert('There is no stored data for this form yet. Try to change any field')
+            myApp.alert("Did you mean to save? Try to add or change something before saving.", 'Lesson Planner')
         }
           myApp.formDeleteData('lessonForm')
     })

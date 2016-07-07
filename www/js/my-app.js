@@ -212,12 +212,13 @@ $('.shareLink').click(function(){
             lpdb.transaction(function(tx){
                 tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text)', [], 
                     function(tx,result){
-                        alert("inner result: " + JSON.stringify(result))
+                        // alert("inner result: " + JSON.stringify(result))
                     })
             }, function(error){
-                alert("transaction error: " + error.message);
+                // alert("transaction error: " + error.message);
+                myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
             }, function(){
-                alert("transaction ok");
+                // alert("transaction ok");
                 
             });
 
@@ -421,15 +422,16 @@ function insertLPDB(data){
 
     lpdb.transaction(function(tx){
         // alert("standards: " + standards + " subject: " + subject)
-        alert("lpdb right now: " + JSON.stringify(lpdb))
+        // alert("lpdb right now: " + JSON.stringify(lpdb))
         var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
         tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives],
             // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
-                alert("lpdb after transaction: " + JSON.stringify(lpdb))
+                // alert("lpdb after transaction: " + JSON.stringify(lpdb))
                 // alert("result after transaction: " + JSON.stringify(result))
                 myApp.formDeleteData('lessonForm')
+                mainView.router.loadPage('index.html');
                 // alert('saved actually')
                 
             },
@@ -464,12 +466,11 @@ function updateLPDB(id, data){
             // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
                 myApp.formDeleteData('lessonForm')
-                
-                alert('saved actually')
-                
+                mainView.router.loadPage('index.html');
+  
             },
             function(error){
-                alert("Our mistake - there was an error and your updates didn't save" )
+                myApp.alert("Sorry about that, there was an error and your updates didn't save." )
             })
     })
 
