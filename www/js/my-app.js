@@ -25,7 +25,7 @@ var logOb; //file object
 // Cordova is ready
   function onDeviceReady() {
     //curriculum.db is only pre-populated if that database doesn't already exist (AKA on first run)
-    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, checkForUpdates);//, checkForUpdates);
+    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
     if (lpdb==null){
         lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
             lpdb.transaction(function(tx){
@@ -277,54 +277,6 @@ $$(document).on('click', '.resetData', function(e){
 })
 
 
-
-function checkForUpdates()
-{
-
-    //The directory to store data
-    var store;
-    //URL of our asset
-    var assetURL = "http://owncloud.moe/index.php/s/LUoPOp7UqLImIED/download";
-    // var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
-    //var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
-    //File name of our important data file we didn't ship with the app
-    var fileName = "curriculum.csv";
-    
-    store = cordova.file.dataDirectory;
-
-    //I'm only called when the file exists or has been downloaded.
-    function appStart(fileEntry) {
-        // alert("fileEntry: " + fileEntry.toURL());
-      
-        fileEntry.file(function (file) {
-            var reader = new FileReader();
-
-            reader.onloadend = function(){
-                // alert("successfully read file: ") //+ this.result)
-
-                Papa.parse(this.result, {
-                    header: true,
-                    dynamicTyping: true,
-                    complete:function(results){
-                        // alert(JSON.stringify(results))
-                        formdb.transaction(function(transaction){
-                            transaction.executeSql('DELETE FROM CURRICULUM', [], 
-                                function(tx, result){
-                                    // alert(result.rows.length)
-                                    updateFormTable(results.data, tx)
-                                })
-                        })
-                    }
-                })
-
-            }
-            reader.readAsBinaryString(file);
-
-        })
-    }
-    
-   
-}
 
 //FOR TESTING ONLY. DELETE BEFORE PRODUCTION
 function showTable(){
