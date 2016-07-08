@@ -256,10 +256,6 @@ function updateFormTable(results, tx){
 }
 
 
-    
-
-
-
 function compareVersions(callback){
     // alert("comparing")
     var curriculum_version= "";
