@@ -311,3 +311,49 @@ function updateFormTable(results, tx){
 
     }
 }
+
+
+//****
+//Reset database to previously stored update if available
+//****
+
+//restores CURRICULUM data from previous update if data exists
+$$(document).on('click', '.rollbackData', function(e){
+    myApp.confirm("Are you sure you want to rollback to the last update? This will not affect your saved lesson plans.", "Update Rollback", function(){
+
+        //check if old_curriculum table exists - if it does, and has data, delete data from curriculum
+        //copy rows from curriculum-old to curriculum, then refresh page
+        myApp.showPreloader("Rollback to last update");
+        formdb.transaction(function(tx){
+            tx.executeSql('SELECT name FROM sqlite_master WHERE type="table" AND name = "CURRICULUM_OLD"', [], function(tx, res){
+                // alert("success! result: " + JSON.stringify(res))
+                if(res.rows.length == 1){
+                    //delete curriculum and replace with old curriculum
+                    formdb.transaction(function(tx){
+                        tx.executeSql('DELETE FROM CURRICULUM', [], function(tx,res){
+                        })
+                        tx.executeSql('INSERT INTO CURRICULUM SELECT * FROM CURRICULUM_OLD',[], function(tx,res){
+                        })
+                    }, function(err){
+                        mainView.router.refreshPage()
+                        myApp.hidePreloader();
+                        myApp.alert("Rollback failed. Try updating and then rollback again. If this doesn't work, you may need to wait for the next update or reset the database.", "Lesson Planner")
+                    }, function(){
+                        mainView.router.refreshPage()
+                        myApp.hidePreloader();
+                        myApp.alert("Rollback succeeded! You are now using the previous update.", "Lesson Planner")
+                    })
+                }
+                else{
+                    myApp.hidePreloader();
+                    myApp.alert("No backup data available. Update rollback aborted.")
+                    return
+                }
+            }, function(err){
+                myApp.hidePreloader();
+                myApp.alert("No backup data available. Update rollback aborted.")
+                return
+            })
+        })
+    })
+})
