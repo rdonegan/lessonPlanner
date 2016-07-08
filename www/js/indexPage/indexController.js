@@ -6,7 +6,6 @@ myApp.onPageInit('index', function (page) {
         $('.currentLessons').html('<div class="content-block-title">No lesson plans created for today</div>');
     }
     else{
-       
         for(var i in items){
         // alert(items[i].standards)
             var currentPlansList= myApp.virtualList('.currentLessons', {
@@ -30,7 +29,6 @@ myApp.onPageInit('index', function (page) {
                 height:115
             });
         }
-
     }  
 
   })

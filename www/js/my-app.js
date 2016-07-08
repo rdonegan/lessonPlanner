@@ -17,10 +17,7 @@ var formdb;
 //Initialize database for all saved lesson plans
 var lpdb;
 
-
 var logOb; //file object
-
-
 
 // Cordova is ready
   function onDeviceReady() {
@@ -52,8 +49,6 @@ var logOb; //file object
   // Wait for Cordova to load
   document.addEventListener("deviceready", onDeviceReady, false);
 
-
-
 //FOR TESTING ONLY. DELETE BEFORE PRODUCTION
 function showTable(){
     
@@ -77,5 +72,3 @@ var mainView = myApp.addView('.view-main', {
     dynamicNavbar: true
     
 });
-
-
