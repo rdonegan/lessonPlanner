@@ -250,16 +250,31 @@ function updateFormTable(results, tx){
         // alert(JSON.stringify(results[i]))
         tx.executeSql(sql, params)
         myApp.hidePreloader()
-        // myApp.alert("Update Complete", "My Planner")
+        myApp.alert("Update Complete", "My Planner")
 
     }
 }
 
 
 $$(document).on('click','.updateApp', function(e){
+
+    formdb.transaction(function(tx){
+        tx.executeSql('DROP TABLE IF EXISTS CURRICULUM_OLD', [], function(tx,result){
+            alert('succesfully dropped table')
+        });
+        tx.executeSql('CREATE TABLE IF NOT EXISTS CURRICULUM_OLD (subject text, quarter integer, grade integer, standardID integer, standard text, gradeObjID integer, objective text, subobjective text, indicator text, resources text)', [], function(tx, result){
+            alert('succesffuly created new table')
+        });
+        tx.executeSql('INSERT INTO CURRICULUM_OLD SELECT * FROM CURRICULUM', [], function(tx,result){
+            alert("success copying")
+            alert(JSON.stringify(result))
+        }, function(err){
+            alert(err.message)
+        })
+    }) 
     
     //Freeze screen and show preloader
-    myApp.showPreloader("Updating");
+    //myApp.showPreloader("Updating");
     //The directory to store data
     var store;
     store = cordova.file.dataDirectory;
@@ -273,46 +288,58 @@ $$(document).on('click','.updateApp', function(e){
 
     var fileTransfer = new FileTransfer();
     // alert("About to start transfer");
-    fileTransfer.download(assetURL, store + fileName, 
-        function(entry) {
-            // alert("Success downloading file!");
-            appStart(entry);
-        }, 
-        function(err) {
-            myApp.hidePreloader()
-            myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
-            // alert("Error updating. Check your internet connection and retry.");
-            // alert(JSON.stringify(err));
-        });
+    // fileTransfer.download(assetURL, store + fileName, 
+    //     function(entry) {
+    //         // alert("Success downloading file!");
+    //         appStart(entry);
+    //     }, 
+    //     function(err) {
+    //         myApp.hidePreloader()
+    //         myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
+    //         // alert("Error updating. Check your internet connection and retry.");
+    //         // alert(JSON.stringify(err));
+    //     });
 
 
     //I'm only called when the file exists or has been downloaded.
     function appStart(fileEntry) {
         // alert("fileEntry: " + fileEntry.toURL());
+
+        //1. Drop table if exists, CURRICULUM_OLD
+        //2. Create table CURRICULUM_OLD
+        //3. Insert rows from CURRICULUM into CURRICULUM_OLD
+        //4. Update curriculum with data from downloaded file
+        formdb.transaction(function(tx){
+            tx.executeSql('DROP TABLE IF EXISTS CURRICULUM_OLD');
+            tx.executeSql('CREATE TABLE IF NOT EXISTS CURRICULUM_OLD (subject text, quarter integer, grade integer, standardID integer, standard text, gradeObjID integer, objective text, subobjective text, indicator text, resources text)', []);
+            tx.executeSql('INSERT INTO CURRICULUM_OLD SELECT * FROM CURRICULUM', function(tx,result){
+                alert("success copying")
+            })
+        }) 
       
-        fileEntry.file(function (file) {
-            var reader = new FileReader();
+        // fileEntry.file(function (file) {
+        //     var reader = new FileReader();
 
-            reader.onloadend = function(){
-                // alert("successfully read file: ") //+ this.result)
-                Papa.parse(this.result, {
-                    header: true,
-                    dynamicTyping: true,
-                    complete:function(results){
-                        // alert(JSON.stringify(results))
-                        formdb.transaction(function(transaction){
-                            transaction.executeSql('DELETE FROM CURRICULUM', [], 
-                                function(tx, result){
-                                    // alert(result.rows.length)
-                                    updateFormTable(results.data, tx)
-                                })
-                        })
-                    }
-                })
-            }
-            reader.readAsBinaryString(file);
+        //     reader.onloadend = function(){
+        //         // alert("successfully read file: ") //+ this.result)
+        //         Papa.parse(this.result, {
+        //             header: true,
+        //             dynamicTyping: true,
+        //             complete:function(results){
+        //                 // alert(JSON.stringify(results))
+        //                 formdb.transaction(function(transaction){
+        //                     transaction.executeSql('DELETE FROM CURRICULUM', [], 
+        //                         function(tx, result){
+        //                             // alert(result.rows.length)
+        //                             updateFormTable(results.data, tx)
+        //                         })
+        //                 })
+        //             }
+        //         })
+        //     }
+        //     reader.readAsBinaryString(file);
 
-        })
+        // })
     }
 
 })
