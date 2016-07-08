@@ -84,7 +84,7 @@ function getCurrentLessons(callback) {
         
     var items = new Array();
     lpdb.transaction(function(tx) {
-        tx.executeSql('SELECT * FROM lessonplans WHERE startdate <= "' + today + '" AND enddate >= "' + today +'"', [], function(tx, results) {
+        tx.executeSql('SELECT * FROM lessonplans WHERE startdate <= "' + today + '" AND enddate >= "' + today +'" ORDER BY date(startdate)', [], function(tx, results) {
             
             var len = results.rows.length;
             for (var i=0; i<len; i++){

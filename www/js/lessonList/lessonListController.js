@@ -50,7 +50,7 @@ function getLessons(callback) {
         
         var items = new Array();
         lpdb.transaction(function(tx) {
-            tx.executeSql('SELECT * FROM lessonplans', [], function(tx, results) {
+            tx.executeSql('SELECT * FROM lessonplans ORDER BY date(startdate) DESC', [], function(tx, results) {
                 
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
