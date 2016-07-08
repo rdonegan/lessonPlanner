@@ -82,3 +82,16 @@ function updateLPDB(id, data){
             })
     })
 }
+
+//Delete a record from lessonplans
+function deleteFromLPDB(id){
+    lpdb.transaction(function(tx){
+        var executeQuery = "DELETE FROM lessonplans where id=?";
+        tx.executeSql(executeQuery, [id], function(tx, result){
+            myApp.addNotification({
+                message: 'Lesson plan deleted.'
+            })
+        })
+
+    })
+}
