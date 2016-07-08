@@ -255,89 +255,101 @@ function updateFormTable(results, tx){
     }
 }
 
+//Called on update. Backs up current form database to new table and then continues update process
+//The update process is continued even if there is an error in backing up the database
+function createBackup(callback){
+    //1. Drop table if exists, CURRICULUM_OLD
+    //2. Create table CURRICULUM_OLD
+    //3. Insert rows from CURRICULUM into CURRICULUM_OLD
+    //4. Update curriculum with data from downloaded file
+    formdb.transaction(function(tx){
+        tx.executeSql('DROP TABLE IF EXISTS CURRICULUM_OLD', []);
+        tx.executeSql('CREATE TABLE IF NOT EXISTS CURRICULUM_OLD (subject text, quarter integer, grade integer, standardID integer, standard text, gradeObjID integer, objective text, subobjective text, indicator text, resources text)', []);
+        tx.executeSql('INSERT INTO CURRICULUM_OLD SELECT * FROM CURRICULUM', [])
+    }, function(){
+        callback();
+    }, function(err){
+        callback();
+    })
+
+}
+
 
 $$(document).on('click','.updateApp', function(e){
 
-     
-    
     //Freeze screen and show preloader
     myApp.showPreloader("Updating");
-    //The directory to store data
-    var store;
-    store = cordova.file.dataDirectory;
-    //URL of our asset
-    var assetURL = "http://owncloud.moe/index.php/s/LUoPOp7UqLImIED/download"
-    // var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
-    //var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
-    //File name of our important data file we didn't ship with the app
-    var fileName = "curriculum.csv";
+
+    
+    createBackup(function(){
+
+        //The directory to store data
+        var store;
+        store = cordova.file.dataDirectory;
+        //URL of our asset
+        var assetURL = "http://owncloud.moe/index.php/s/LUoPOp7UqLImIED/download"
+        // var assetURL = "https://raw.githubusercontent.com/rdonegan/curriculum/master/sampleData.csv";
+        //var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
+        //File name of our important data file we didn't ship with the app
+        var fileName = "curriculum.csv";
 
 
-    var fileTransfer = new FileTransfer();
-    // alert("About to start transfer");
-    fileTransfer.download(assetURL, store + fileName, 
-        function(entry) {
-            // alert("Success downloading file!");
-            appStart(entry);
-        }, 
-        function(err) {
-            myApp.hidePreloader()
-            myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
-            // alert("Error updating. Check your internet connection and retry.");
-            // alert(JSON.stringify(err));
-        });
-
-
-    //I'm only called when the file exists or has been downloaded.
-    function appStart(fileEntry) {
-        // alert("fileEntry: " + fileEntry.toURL());
-
-        //1. Drop table if exists, CURRICULUM_OLD
-        //2. Create table CURRICULUM_OLD
-        //3. Insert rows from CURRICULUM into CURRICULUM_OLD
-        //4. Update curriculum with data from downloaded file
-        formdb.transaction(function(tx){
-            tx.executeSql('DROP TABLE IF EXISTS CURRICULUM_OLD', [], function(tx,result){
-                alert('succesfully dropped table')
+        var fileTransfer = new FileTransfer();
+        // alert("About to start transfer");
+        fileTransfer.download(assetURL, store + fileName, 
+            function(entry) {
+                // alert("Success downloading file!");
+                appStart(entry);
+            }, 
+            function(err) {
+                myApp.hidePreloader()
+                myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
+                // alert("Error updating. Check your internet connection and retry.");
+                // alert(JSON.stringify(err));
             });
-            tx.executeSql('CREATE TABLE IF NOT EXISTS CURRICULUM_OLD (subject text, quarter integer, grade integer, standardID integer, standard text, gradeObjID integer, objective text, subobjective text, indicator text, resources text)', [], function(tx, result){
-                alert('succesffuly created new table')
-            });
-            tx.executeSql('INSERT INTO CURRICULUM_OLD SELECT * FROM CURRICULUM', [], function(tx,result){
-                alert("success copying")
-                alert(JSON.stringify(result))
 
-                 fileEntry.file(function (file) {
-                    var reader = new FileReader();
 
-                    reader.onloadend = function(){
-                        // alert("successfully read file: ") //+ this.result)
-                        Papa.parse(this.result, {
-                            header: true,
-                            dynamicTyping: true,
-                            complete:function(results){
-                                // alert(JSON.stringify(results))
-                                formdb.transaction(function(transaction){
-                                    transaction.executeSql('DELETE FROM CURRICULUM', [], 
-                                        function(tx, result){
-                                            // alert(result.rows.length)
-                                            updateFormTable(results.data, tx)
-                                        })
-                                })
-                            }
-                        })
-                    }
-                    reader.readAsBinaryString(file);
+        //I'm only called when the file exists or has been downloaded.
+        function appStart(fileEntry) {
+            // alert("fileEntry: " + fileEntry.toURL());
 
-                })
+            
+            fileEntry.file(function (file) {
+                        var reader = new FileReader();
 
-            }, function(err){
-                alert(err.message)
-            })
-        })
-      
-       
-    }
+                        reader.onloadend = function(){
+                            // alert("successfully read file: ") //+ this.result)
+                            Papa.parse(this.result, {
+                                header: true,
+                                dynamicTyping: true,
+                                complete:function(results){
+                                    // alert(JSON.stringify(results))
+                                    formdb.transaction(function(transaction){
+                                        transaction.executeSql('DELETE FROM CURRICULUM', [], 
+                                            function(tx, result){
+                                                // alert(result.rows.length)
+                                                updateFormTable(results.data, tx)
+                                            })
+                                    })
+                                }
+                            })
+                        }
+                        reader.readAsBinaryString(file);
+
+                    })
+          
+           
+        }
+
+
+
+    })
+        
+
+    
+    
+    
+
 
 })
 
