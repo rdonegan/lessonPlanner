@@ -69,35 +69,7 @@ function showTable(){
 
         }, null);
       });
-}
-
-    
-
-// Read CSV and return object array
-function readCSV(){
-    alert("here")
-    $.ajax({
-    url: "https://www.dropbox.com/s/tzebmr8asnrgaih/updated-curric-database.csv?dl=0",
-    async: true,
-    success: function (csvd) {
-        var curricSpecs = $.csv.toObjects(csvd);
-        alert(curricspecs)
-        // console.log(curricSpecs);
-        // console.log(items[0].eval)
-        // console.log(curricSpecs)
-        // return curricSpecs;
-        //var jsonobject = JSON.stringify(items);
-        //alert(jsonobject);
-    },
-    dataType: "text",
-    complete: function () {
-        // call a function on complete 
-        // console.log(items);
-        alert("in success")
-    }
-})
-}
-
+}    
 
 // Add view
 var mainView = myApp.addView('.view-main', {
