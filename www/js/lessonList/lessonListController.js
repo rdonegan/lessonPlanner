@@ -1,5 +1,6 @@
 myApp.onPageInit('lessonList', function (page) {
 
+    var virtualList;
 
     $('.list-block').on("click", ".swipeout-delete", function(e){
         // alert(this.id)
@@ -15,7 +16,7 @@ myApp.onPageInit('lessonList', function (page) {
             $('.editLessons').html('<div class="content-block-title">No Lesson Plans Created :(</div>');
         }
         else{
-            var virtualList= myApp.virtualList('.editLessons', {
+            virtualList= myApp.virtualList('.editLessons', {
                 items: items,
                 renderItem: function(index,item){
                     return '<li class="swipeout">' +
