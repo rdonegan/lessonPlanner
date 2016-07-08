@@ -20,50 +20,9 @@ var lpdb;
 
 var logOb; //file object
 
-myApp.onPageBeforeAnimation('index', function(page){
-    //toggle the styles applied if coming from the edit page
-  $('.navbar').removeClass("theme-pink");
-})
 
-myApp.onPageInit('index', function (page) {
-  // alert("index initialized")
-  getCurrentLessons(function(items){
 
-    if (items.length==0){
-        $('.currentLessons').html('<div class="content-block-title">No lesson plans created for today</div>');
-    }
-    else{
-       
-        for(var i in items){
-        // alert(items[i].standards)
-            var currentPlansList= myApp.virtualList('.currentLessons', {
-                items: items,
-                renderItem: function(index,item){
-                    return '<li>' +
-                            '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
-                              '<div class="item-inner">' +
-                                '<div class="item-title-row">' +
-                                  '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
-                                  '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
-                                '</div>' +
-                                '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
-                                '<div class="chip bg-teal"><div class="chip-label">Standards: '+JSON.parse(item.standards).length+'</div></div>'+
-                                '<div class="chip bg-amber"><div class="chip-label">Objectives: '+JSON.parse(item.objectives).length+'</div></div>'+
-                                '<div class="chip bg-indigo"><div class="chip-label">Performance Indicators: '+JSON.parse(item.indicators).length+'</div></div>'+
-                              '</div>' +
-                            '</a>' +
-                          '</li>';
-                },
-                height:115
-            });
-        }
 
-    }
-
-    
-
-  })
-});
 
 function getCurrentLessons(callback) {
 
@@ -308,8 +267,6 @@ function createBackup(callback){
 }
 
 
-
-
 $$(document).on('click','.updateApp', function(e){
 
     
@@ -467,7 +424,6 @@ $$(document).on('click', '.resetData', function(e){
 
 
 
-
 function checkForUpdates()
 {
 
@@ -514,25 +470,6 @@ function checkForUpdates()
     }
     
    
-}
-
-function successcb(){
-    
-    lpdb.transaction(function(transaction) {
-    transaction.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text)', [],
-        function(tx, result) {
-            // alert("Table created successfully");
-            // showTable();
-            // alert("success called")
-        }, 
-        function(error) {
-              alert("Error occurred while creating the table.");
-        });
-    });
-}
-
-function errorcb(){
-    alert('trouble opening lesson plan db');
 }
 
 
