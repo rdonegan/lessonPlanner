@@ -255,27 +255,61 @@ function updateFormTable(results, tx){
     }
 }
 
+function compareVersions(callback){
+    // alert("comparing")
+    var curriculum_version= "";
+    var old_curriculum_version = "";
+
+    formdb.transaction(function(tx){
+        tx.executeSql('SELECT SUBJECT FROM CURRICULUM ORDER BY ROWID ASC LIMIT 1', [], function(tx,result){
+             // alert("curriculum versionn: " + result.rows.item(0).subject)
+            curriculum_version = result.rows.item(0).subject
+        })
+        tx.executeSql('SELECT SUBJECT FROM CURRICULUM_OLD ORDER BY ROWID ASC LIMIT 1', [], function(tx, result){
+            // alert("old curric version: " + result.rows.item(0).subject)
+            old_curriculum_version = result.rows.item(0).subject
+        })
+
+    }, function(){
+        callback(curriculum_version != old_curriculum_version)
+    }, function(error){
+        callback(curriculum_version != old_curriculum_version)
+    })
+}
+
 //Called on update. Backs up current form database to new table and then continues update process
 //The update process is continued even if there is an error in backing up the database
 function createBackup(callback){
-    //1. Drop table if exists, CURRICULUM_OLD
-    //2. Create table CURRICULUM_OLD
-    //3. Insert rows from CURRICULUM into CURRICULUM_OLD
-    //4. Update curriculum with data from downloaded file
-    formdb.transaction(function(tx){
-        tx.executeSql('DROP TABLE IF EXISTS CURRICULUM_OLD', []);
-        tx.executeSql('CREATE TABLE IF NOT EXISTS CURRICULUM_OLD (subject text, quarter integer, grade integer, standardID integer, standard text, gradeObjID integer, objective text, subobjective text, indicator text, resources text)', []);
-        tx.executeSql('INSERT INTO CURRICULUM_OLD SELECT * FROM CURRICULUM', [])
-    }, function(){
-        callback();
-    }, function(err){
-        callback();
+    
+    //First check that the version being backed up isn't a duplicate
+    compareVersions(function(newVersion){
+        if(newVersion){
+            //1. Drop table if exists, CURRICULUM_OLD
+            //2. Create table CURRICULUM_OLD
+            //3. Insert rows from CURRICULUM into CURRICULUM_OLD
+            //4. Update curriculum with data from downloaded file
+            formdb.transaction(function(tx){
+                tx.executeSql('DROP TABLE IF EXISTS CURRICULUM_OLD', []);
+                tx.executeSql('CREATE TABLE IF NOT EXISTS CURRICULUM_OLD (subject text, quarter integer, grade integer, standardID integer, standard text, gradeObjID integer, objective text, subobjective text, indicator text, resources text)', []);
+                tx.executeSql('INSERT INTO CURRICULUM_OLD SELECT * FROM CURRICULUM', [])
+            }, function(){
+                callback();
+            }, function(err){
+                callback();
+            })
+
+        }
+        else{
+            callback();
+        }
     })
 
 }
 
 
 $$(document).on('click','.updateApp', function(e){
+
+    
 
     //Freeze screen and show preloader
     myApp.showPreloader("Updating");
