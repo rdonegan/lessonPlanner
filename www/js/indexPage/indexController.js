@@ -1,5 +1,5 @@
 myApp.onPageInit('index', function (page) {
-  // alert("index initialized")
+  //index page is initialized
   getCurrentLessons(function(items){
 
     if (items.length==0){
