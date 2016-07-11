@@ -312,6 +312,10 @@ function populateForm(data){
     if (data.notes){
         $('.notesIn').val(data.notes)
     }
-    // alert(data.subject)
+
+    if(data.sequence){
+        $('.sequenceIn').val(data.sequence)
+    }
+    // alert(data.sequence)
 
 }

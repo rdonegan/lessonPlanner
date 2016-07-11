@@ -21,13 +21,14 @@ function insertLPDB(data){
     var indicators = JSON.stringify(data.indicators)
     var resources = JSON.stringify(data.resources)
     var notes = data.notes
+    var sequence = data.sequence
 
     lpdb.transaction(function(tx){
         // alert("standards: " + standards + " subject: " + subject)
         // alert("lpdb right now: " + JSON.stringify(lpdb))
-        var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective, sequence) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
-        tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives],
+        tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
             // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
                 // alert("lpdb after transaction: " + JSON.stringify(lpdb))
@@ -63,12 +64,13 @@ function updateLPDB(id, data){
     var resources = JSON.stringify(data.resources)
     var subobjectives = JSON.stringify(data.subobjective)
     var notes = data.notes
+    var sequence = data.sequence
 
     lpdb.transaction(function(tx){
         // alert("standards: " + standards + " subject: " + subject)
-        var executeQuery = 'UPDATE lessonplans SET teachername = ?, school = ?, startdate = ?, enddate = ?, grade = ?, quarter = ?, section = ?, subject = ?, standards = ?, objectives = ?, indicators = ?, resources = ?, notes = ?, subobjective = ? WHERE ID = "'+ id +'"'
+        var executeQuery = 'UPDATE lessonplans SET teachername = ?, school = ?, startdate = ?, enddate = ?, grade = ?, quarter = ?, section = ?, subject = ?, standards = ?, objectives = ?, indicators = ?, resources = ?, notes = ?, subobjective = ?, sequence = ? WHERE ID = "'+ id +'"'
         // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
-        tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives],
+        tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
             // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
                 myApp.formDeleteData('lessonForm')

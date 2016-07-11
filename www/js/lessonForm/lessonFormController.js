@@ -176,10 +176,10 @@ function getSelectedStandardsIDs(standards, callback){
     $$('.get-storage-data').on('click', function(){
         $(".navbar").removeClass("theme-pink")
         var storedData = myApp.formGetData('lessonForm')
+        // alert("here")
         // alert(JSON.stringify(storedData));
         if(state.isNew && storedData) {
-            // alert(JSON.stringify(storedData));
-            
+            alert(JSON.stringify(storedData));
             insertLPDB(storedData);   
         }
         else if (!state.isNew && storedData){
