@@ -68,12 +68,19 @@ function createFile(dirEntry, fileName){
 //Calls the filewriter to write downloaded csv to file
 //Uses getLessonsByData and jsonToCSV callback methods
 function writeFile(fileEntry, dataObj){
+    alert(JSON.stringify(fileEntry))
     //first, get all applicable lessons
     getLessonsByDate(function(items){
         var csvItems = jsonToCSV(items)
         fileEntry.createWriter(function(fileWriter){
             // alert("still in here")
             fileWriter.write(csvItems)
+            cordova.plugins.email.open({
+                subject: 'Lessons plans: ' + $('.startDateInput').val() + " - " + $('.endDateInput').val(),
+                body:    'Please find my lesson plans attached.',
+                attachments: fileEntry.nativeURL
+
+            });
             myApp.hidePreloader();
             myApp.alert("Records saved as log.csv in your app documents.", "My Planner")
         })
