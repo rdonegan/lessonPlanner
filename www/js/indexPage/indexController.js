@@ -102,9 +102,7 @@ function jsonToCSV(objArray){
             }
             else{
                 line += array[i][index];
-            }
-
-           
+            }  
             
         }
 

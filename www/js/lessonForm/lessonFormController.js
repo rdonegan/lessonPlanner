@@ -179,7 +179,7 @@ function getSelectedStandardsIDs(standards, callback){
         // alert("here")
         // alert(JSON.stringify(storedData));
         if(state.isNew && storedData) {
-            alert(JSON.stringify(storedData));
+            // alert(JSON.stringify(storedData));
             insertLPDB(storedData);   
         }
         else if (!state.isNew && storedData){
