@@ -1,4 +1,6 @@
 myApp.onPageInit('index', function (page) {
+
+ 
   //index page is initialized
   getCurrentLessons(function(items){
 
@@ -32,13 +34,36 @@ myApp.onPageInit('index', function (page) {
     }  
 
   })
+
+
+
+
 });
 
-
+var sendEmail = false;
 
 //****
 //Sharing lesson plans
 //****
+
+
+$$(document).on('click', '.emailShare', function(e){
+    sendEmail = true;
+
+    //check that start and endate are both filled in, otherwise, show error
+    if($('.startDateInput').val()=="" || $('.endDateInput').val()=="" ){
+        myApp.alert("No lesson plans shared. Please fill in values for both to and from dates.")
+        return;
+    }
+    else{
+        myApp.showPreloader("Exporting your files");
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
+        // alert("got main dir: " + JSON.stringify(dir));
+        createFile(dir, "log.csv") 
+    });
+
+    } 
+})
 
 //Share popup is triggered when nav item is tapped
 $$(document).on('click', '.shareLink', function(e){
@@ -68,19 +93,22 @@ function createFile(dirEntry, fileName){
 //Calls the filewriter to write downloaded csv to file
 //Uses getLessonsByData and jsonToCSV callback methods
 function writeFile(fileEntry, dataObj){
-    alert(JSON.stringify(fileEntry))
+    // alert(JSON.stringify(fileEntry))
     //first, get all applicable lessons
     getLessonsByDate(function(items){
         var csvItems = jsonToCSV(items)
         fileEntry.createWriter(function(fileWriter){
             // alert("still in here")
             fileWriter.write(csvItems)
-            cordova.plugins.email.open({
-                subject: 'Lessons plans: ' + $('.startDateInput').val() + " - " + $('.endDateInput').val(),
-                body:    'Please find my lesson plans attached.',
-                attachments: fileEntry.nativeURL
+            if(sendEmail){
+                cordova.plugins.email.open({
+                    subject: 'Lessons plans: ' + $('.startDateInput').val() + " - " + $('.endDateInput').val(),
+                    body:    'Please find my lesson plans attached.',
+                    attachments: fileEntry.nativeURL
 
-            });
+                });
+            }
+            
             myApp.hidePreloader();
             myApp.alert("Records saved as log.csv in your app documents.", "My Planner")
         })
@@ -158,6 +186,7 @@ function getLessonsByDate(callback) {
         myApp.alert("Error exporting. No lesson plans saved.", "My Planner")
     }
 }
+
 
 
 
