@@ -93,11 +93,19 @@ function jsonToCSV(objArray){
     for (var i = 0; i < array.length; i++) {
         var line = '';
         for (var index in array[i]) {
+            // alert("index = " + index)
             if (line != ''){ line += ','}
 
             if (jQuery.type(array[i][index])=="string" && array[i][index].charAt(0) == "["){
                 // alert(array[i][index].charAt(0))
                 var newStr = array[i][index].replace(/,/g, "")
+                line += newStr
+            }
+            else if(index=="notes" || index =="sequence"){
+                // alert(array[i][index])
+                var newStr = "[" + array[i][index] + "]"
+                newStr = newStr.replace(/,/g, "")
+                newStr = newStr.replace(/\r?\n|\r/g, " ")
                 line += newStr
             }
             else{
@@ -127,7 +135,7 @@ function getLessonsByDate(callback) {
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                 // items.push(results.rows.item(i).subject);
-                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence:": results.rows.item(i).sequence }
+                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence": results.rows.item(i).sequence }
                 items.push(row)
             }
             if (items.length==0){
