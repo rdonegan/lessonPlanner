@@ -67,3 +67,7 @@
 .panel h3{
 	color:#03d1f4;
 }
+
+.hidden{
+	display:none;
+}

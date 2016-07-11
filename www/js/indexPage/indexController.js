@@ -1,6 +1,11 @@
 myApp.onPageInit('index', function (page) {
 
  
+    //only show export to email option if device is configured with email
+    if (cordova.plugins.email.isAvailable){
+        $('.emailShare').removeClass("hidden");
+    }
+
   //index page is initialized
   getCurrentLessons(function(items){
 

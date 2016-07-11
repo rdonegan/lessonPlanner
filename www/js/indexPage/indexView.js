@@ -5,4 +5,6 @@
 myApp.onPageBeforeAnimation('index', function(page){
     //toggle the styles applied if coming from the edit page
   $('.navbar').removeClass("theme-pink");
+
+  
 })
