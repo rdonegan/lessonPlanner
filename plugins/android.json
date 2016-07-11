@@ -18,6 +18,9 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "com.lessonPlanner.app"
+        },
+        "cordova-plugin-email-composer": {
+            "PACKAGE_NAME": "com.lessonPlanner.app"
         }
     },
     "dependent_plugins": {
