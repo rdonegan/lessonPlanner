@@ -40,6 +40,16 @@ myApp.onPageInit('index', function (page) {
                                         '<p>'+ ((item.sequence) ? item.sequence:"No class sequence added. Tap 'edit' to add one now.") +'</p>' +
                                         '<p>' + JSON.parse(item.resources) + '</p>' +
                                     '</div>' +
+                                  '</div>' +
+                                '</div>' +
+                                '<div class="card">' +
+                                  '<div class="card-header">Curriculum Goals</div>' +
+                                  '<div class="card-content">' +
+                                    '<div class="card-content-inner"> ' + 
+                                        '<p>Standards: '+ ((JSON.parse(item.standards).length > 0) ? JSON.parse(item.standards):"No standards added.") +'</p>' +
+                                        '<p>Objectives: '+ ((JSON.parse(item.objectives).length > 0) ? JSON.parse(item.objectives):"No objectives added.") +'</p>' +
+                                        '<p>Indicators: '+ ((JSON.parse(item.indicators).length > 0) ? JSON.parse(item.indicators):"No indicators added.") +'</p>' +
+                                    '</div>' +
                                     '<div class="card-footer">' +
                                     '<a href="lessonForm.html?id='+ item.id+'" class="button button-big button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a>' +
                                     '</div>' +
