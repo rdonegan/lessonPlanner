@@ -1,12 +1,25 @@
-var state = {isNew: false};
 myApp.onPageInit('lessonForm', function(page){
-
-    
+    var state = {isNew: false}; //if creating, isNew=true; if editing, isNew= false
     var lessonData; //for storing data while editing
     var schools = ('Aimeliik Airai Angaur GB Harris Ibobang PJF Koror Melekeok Meyuns Ngaraard Ngarchelong Ngardmau Ngeremlengui Peleliu Pulo Anna Sonsorol').split(' ');
 
+    //If editing, pre-fills sections of the form. If creating new record, no pre-fill
+    if (page.query && page.query.id){
+        state.isNew = false;
+        $(".formTitle").html("Edit Lesson")
+        $(".navbar").addClass("theme-pink")
+        lessonData = getRecord(page.query.id, function(record){
+            populateForm(record)
+            return record;
+        })
+    }
+    else{
+        state.isNew = true;
+        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter());
+        upDateStartAndEndDates()
+    }
 
-
+    //School autocomplete dropdown
     var autocompleteDropdownSimple = myApp.autocomplete({
     input: '#autocomplete-dropdown',
     openIn: 'dropdown',
@@ -25,48 +38,22 @@ myApp.onPageInit('lessonForm', function(page){
         }
     });
 
+    //queries the database to get the data for the record being edited
     function getRecord(id, callback){
         var record;
         lpdb.transaction(function(tx){
             tx.executeSql('SELECT * FROM lessonplans WHERE ID= "' + id + '"', [], function(tx, results){
-                // alert('happened')
                 if (results){
-                    // alert(JSON.stringify(results.rows.item(0)))
-                    // alert(JSON.parse(results.rows.item(0).standards)[0])
                     record = results.rows.item(0)
-                    // alert(JSON.parse(record.standards)[0])
                 }
                 callback(record)
-
             })
         })
-     
     };
     
-
-    if (page.query && page.query.id){
-        state.isNew = false;
-        $(".formTitle").html("Edit Lesson")
-        $(".navbar").addClass("theme-pink")
-        lessonData = getRecord(page.query.id, function(record){
-            // alert(JSON.parse(record.standards)[0])
-            //probs have to set everything up in here too
-            populateForm(record)
-            return record;
-        })
-
-    }
-    else{
-        state.isNew = true;
-        // $('.startDateIn').val('2020-04-04')
-        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter());
-        upDateStartAndEndDates()
-        
-      
-    }
-    
-
-    // //Update standards on field changes
+    //****
+    //Listeners to update fields on change
+    //****
     $(".subjIn").on('change', function(){
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
     })
@@ -85,101 +72,80 @@ myApp.onPageInit('lessonForm', function(page){
             updateResourcesField(getSelectedSubject(), getSelectedGrade(), standardIDs)
             updateObjectiveField(getSelectedSubject(), getSelectedGrade(), standardIDs)
         })
-
     })
 
     //update subobjectives and indicators
     $("#objectives").on('change', function(){
-        // alert('objective changed')
         getStandardsAndObjectivesIDs(getSelectedStandards(), getSelectedObjectives(), function(ids){
             updateIndicatorsField(getSelectedSubject(), getSelectedGrade(), ids)
             updateSubObjectivesField(getSelectedSubject(), getSelectedGrade(), ids)
         })
     })
 
+    //Used when objectives changes to update subobjectives and indicators
+    //return array where items in array[0] are standards, and array[1] are objectives
+    function getStandardsAndObjectivesIDs(standards, objectives, callback){
+        var IDs= [[],[]];
+        var allStds
+        if(standards.length>1){
+          allStds = "'"+standards.join("', '") +"'"
+        
+        }
+        else{
+            allStds = "'"+standards.join()+"'"
+        }
 
-//return array where items in array[0] are standards, and array[1] are objectives
-function getStandardsAndObjectivesIDs(standards, objectives, callback){
-    // alert("in stands and objectives")
-    var IDs= [[],[]];
-
-    var allStds
-    if(standards.length>1){
-      allStds = "'"+standards.join("', '") +"'"
-    
-    }
-    else{
-        allStds = "'"+standards.join()+"'"
-    }
-
-    var allObjectives
-    if(standards.length>1){
-      allObjectives = "'"+objectives.join("', '") +"'"
-    
-    }
-    else{
-        allObjectives = "'"+objectives.join()+"'"
-    }
-
-    
-    formdb.transaction(function(tx){
-        tx.executeSql("SELECT STANDARDID, GRADEOBJID FROM CURRICULUM WHERE STANDARD IN (" + allStds + ") AND OBJECTIVE IN (" + allObjectives + ")", [], function(tx,res){
-            var len = res.rows.length, i;
-            // alert(JSON.stringify(res.rows.item(0).standardID))
-            // alert('length of all results=: ' + len)
-            for (i = 0; i < len; i++){
-                    IDs[0].push(res.rows.item(i).standardID)
-                    IDs[1].push(res.rows.item(i).gradeObjID)
-
-               }
-               // alert(IDs.toString())
-               callback(IDs)
-            
-        })
-    })
-}
-
-    //identifies checked standards and returns array of coresponding id in database
-function getSelectedStandardsIDs(standards, callback){
-
-    var standardIDs= [];
-    // alert("1")
-    var allStds
-    if(standards.length>1){
-      allStds = "'"+standards.join("', '") +"'"
-    
-    }
-    else{
-        allStds = "'"+standards.join()+"'"
-    }
-
-    formdb.transaction(function(tx) {
-            tx.executeSql("SELECT STANDARDID FROM CURRICULUM WHERE STANDARD IN (" + allStds +")", [], function(tx, res) {
-               var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
-                 
-               for (i = 0; i < len; i++){
-                    standardIDs.push(res.rows.item(i).standardID)  
-
-               }
-                // alert("ssdf: " + standardIDs)
-               // return standardIDs
-               callback(standardIDs)
-               
+        var allObjectives
+        if(standards.length>1){
+          allObjectives = "'"+objectives.join("', '") +"'"
+        
+        }
+        else{
+            allObjectives = "'"+objectives.join()+"'"
+        }
+        formdb.transaction(function(tx){
+            tx.executeSql("SELECT STANDARDID, GRADEOBJID FROM CURRICULUM WHERE STANDARD IN (" + allStds + ") AND OBJECTIVE IN (" + allObjectives + ")", [], function(tx,res){
+                var len = res.rows.length, i;
+                for (i = 0; i < len; i++){
+                        IDs[0].push(res.rows.item(i).standardID)
+                        IDs[1].push(res.rows.item(i).gradeObjID)
+                   }
+                   callback(IDs)
             })
-    })
-}
+        })
+    }
 
+    //Used to update objectives when standards change
+    //identifies checked standards and returns array of coresponding id's in database
+    function getSelectedStandardsIDs(standards, callback){
 
+        var standardIDs= [];
+        var allStds
+        if(standards.length>1){
+          allStds = "'"+standards.join("', '") +"'"
+        
+        }
+        else{
+            allStds = "'"+standards.join()+"'"
+        }
 
-    // save data when SUBMIT clicked
-    // WILL NEED TO ADD VALIDATION
+        formdb.transaction(function(tx) {
+                tx.executeSql("SELECT STANDARDID FROM CURRICULUM WHERE STANDARD IN (" + allStds +")", [], function(tx, res) {
+                   var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
+                     
+                   for (i = 0; i < len; i++){
+                        standardIDs.push(res.rows.item(i).standardID)  
+                   }
+                   callback(standardIDs)
+                })
+        })
+    }
+
+    //Save data when 'save' clicked
     $$('.get-storage-data').on('click', function(){
         $(".navbar").removeClass("theme-pink")
         var storedData = myApp.formGetData('lessonForm')
-        // alert("here")
-        // alert(JSON.stringify(storedData));
         if(state.isNew && storedData) {
-            // alert(JSON.stringify(storedData));
             insertLPDB(storedData);   
         }
         else if (!state.isNew && storedData){
@@ -194,7 +160,9 @@ function getSelectedStandardsIDs(standards, callback){
 });
 
 
-
+//****
+//Helper methods to get values from the form
+//***
 function getSelectedSubject(){
     return $(".subjIn").val();
 };
@@ -213,10 +181,8 @@ function getSelectedStandards(){
 
     $("#standards option:selected").each(function()
     {
-       
         selectedStandards.push($(this).val())
     })
-        
         return selectedStandards;      
 };
 
@@ -229,6 +195,3 @@ function getSelectedObjectives(){
         
     return selectedObjectives;
 }
-
-
-
