@@ -34,10 +34,10 @@ myApp.onPageInit('index', function (page) {
                             '</a>' +
                             '<div class="accordion-item-content">' +
                                 '<div class="card">' +
-                                  '<div class="card-header">Sequence</div>' +
+                                  '<div class="card-header">Lesson Sequence</div>' +
                                   '<div class="card-content">' +
                                     '<div class="card-content-inner"> ' + 
-                                        '<p>'+ item.sequence +'</p>' +
+                                        '<p>'+ ((item.sequence) ? item.sequence:"No class sequence added. Tap 'edit' to add one now.") +'</p>' +
                                         '<p>' + JSON.parse(item.resources) + '</p>' +
                                     '</div>' +
                                     '<div class="card-footer">' +
