@@ -18,8 +18,9 @@ myApp.onPageInit('index', function (page) {
             var currentPlansList= myApp.virtualList('.currentLessons', {
                 items: items,
                 renderItem: function(index,item){
-                    return '<li>' +
-                            '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+                    return '<li class="accordion-item">' +
+                            // '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+                             '<a href="#" class="item-link item-content">' + 
                               '<div class="item-inner">' +
                                 '<div class="item-title-row">' +
                                   '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
@@ -31,6 +32,20 @@ myApp.onPageInit('index', function (page) {
                                 '<div class="chip bg-indigo"><div class="chip-label">Performance Indicators: '+JSON.parse(item.indicators).length+'</div></div>'+
                               '</div>' +
                             '</a>' +
+                            '<div class="accordion-item-content">' +
+                                '<div class="card">' +
+                                  '<div class="card-header">Sequence</div>' +
+                                  '<div class="card-content">' +
+                                    '<div class="card-content-inner"> ' + 
+                                        '<p>'+ item.sequence +'</p>' +
+                                        '<p>' + JSON.parse(item.resources) + '</p>' +
+                                    '</div>' +
+                                    '<div class="card-footer">' +
+                                    '<a href="lessonForm.html?id='+ item.id+'" class="button button-big button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a>' +
+                                    '</div>' +
+                                  '</div>' +
+                                '</div>' +
+                            '</div>'+
                           '</li>';
                 },
                 height:115
@@ -225,7 +240,7 @@ function getCurrentLessons(callback) {
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                 // items.push(results.rows.item(i).subject);
-                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence": results.rows.item(i).sequence }
+                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence": results.rows.item(i).sequence, "subobjectives": results.rows.item(i).subobjective }
                 items.push(row)
             }
             
