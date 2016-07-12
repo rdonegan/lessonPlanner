@@ -1,98 +1,48 @@
-//Everytime subject or grade fields are updated, reload contents of Standards select options
+//****
+//Update the dynamic smart select fields each time a relevant change occurs
+//****
 function updateStandardField(subject, grade, quarter){
     $("#standards").empty()
     $("#objectives").empty()
     $("#subObjectives").empty()
     $("#resources").empty()
     $("#indicators").empty() 
-   
-    
-    
-    var dup = [] // To check if duplicate strands have been added
+    var dup = ["", " "] // To check if duplicate strands have been added
 
     formdb.transaction(function(tx) {
             tx.executeSql("SELECT STANDARD FROM CURRICULUM WHERE GRADE = '" + grade + "' AND SUBJECT= '" + subject.toLowerCase() +"' AND QUARTER = '"+ quarter + "'", [], function(tx, res) {
-                var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
+                var len = res.rows.length, i;   
                   
                for (i = 0; i < len; i++){
-                
                     if($.inArray(res.rows.item(i).standard, dup)==-1 && res.rows.item(i).standard != ""){
-                        // $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
                         myApp.smartSelectAddOption('#standards', '<option value="'+res.rows.item(i).standard+'">'+res.rows.item(i).standard+'</option>');
                         dup.push(res.rows.item(i).standard)
-                        
-                        // alert(JSON.stringify(res.rows.item(i).standardID))
-                    } 
-                          
+                    }          
                }
                toggleVisibility()
             })
-        })
-          
+        })       
 };
 
-//used when updating from a prior record
-function addObjectives(subject, grade, standards){
 
-    //convert standards to usable form
-    var allStds
-    if(standards.length>1){
-      allStds = "'"+standards.join("', '") +"'"
-    
-    }
-    else{
-        allStds = "'"+standards.join()+"'"
-    }
-    
-
-
-    var dup = ["", " "]
-    formdb.transaction(function(tx) {
-
-        tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() + "'AND STANDARD IN (" + allStds +")", [], function(tx, res) {
-            var len = res.rows.length, i;
-               for (i = 0; i < len; i++){
-            
-                if($.inArray(res.rows.item(i).objective, dup)==-1){
-                    myApp.smartSelectAddOption('#objectives', '<option value="'+res.rows.item(i).objective+'">'+res.rows.item(i).objective+'</option>');
-                    dup.push(res.rows.item(i).objective)
-                }           
-           }
-           toggleVisibility()
-           
-        })
-    })
-}
-
-
-
-// Update objective field
 function updateObjectiveField(subject, grade, standards){
-
     $("#objectives").empty()
     $("#subObjectives").empty()
     $("#indicators").empty()
-
     var dup = ["", " "]
     formdb.transaction(function(tx) {
 
         tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
             var len = res.rows.length, i;
-            // alert(len)
            for (i = 0; i < len; i++){
-            
                 if($.inArray(res.rows.item(i).objective, dup)==-1){
-                    // $("#objectives").append("<option>"+res.rows.item(i).objective + "</option>")
                     myApp.smartSelectAddOption('#objectives', '<option value="'+res.rows.item(i).objective+'">'+res.rows.item(i).objective+'</option>');
                     dup.push(res.rows.item(i).objective)
                 }           
            }
-           toggleVisibility()
-           
+           toggleVisibility() 
         })
-    })
-
-   
+    }) 
 };
 
 
@@ -102,10 +52,8 @@ function updateSubObjectivesField(subject, grade, ids){
     formdb.transaction(function(tx){
         tx.executeSql("SELECT SUBOBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") AND GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
             var len=res.rows.length, i;
-            // alert("got subobj length here: " + len)
             for (i = 0; i < len; i++){
                 if($.inArray(res.rows.item(i).subobjective, dup)==-1){
-                    // $("#subObjectives").append("<option>"+res.rows.item(i).subobjective + "</option>")
                     myApp.smartSelectAddOption('#subObjectives', '<option value="'+res.rows.item(i).subobjective+'">'+res.rows.item(i).subobjective+'</option>');
                     dup.push(res.rows.item(i).subobjective)
                 }           
@@ -122,10 +70,8 @@ function updateIndicatorsField(subject, grade, ids){
     formdb.transaction(function(tx){
         tx.executeSql("SELECT INDICATOR FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") and GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
             var len=res.rows.length, i;
-            // alert("got indicators length here: " + len)
             for (i = 0; i < len; i++){
                 if($.inArray(res.rows.item(i).indicator, dup)==-1){
-                    // $("#indicators").append("<option>"+res.rows.item(i).indicator + "</option>")
                     myApp.smartSelectAddOption('#indicators', '<option value="'+res.rows.item(i).indicator+'">'+res.rows.item(i).indicator+'</option>');
                     dup.push(res.rows.item(i).indicator)
                 }           
@@ -139,16 +85,13 @@ function updateIndicatorsField(subject, grade, ids){
 
 function updateResourcesField(subject, grade, standards){
     $("#resources").empty()
-
     var dup = ["", " "]
     formdb.transaction(function(tx) {
-
         tx.executeSql("SELECT RESOURCES FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
             var len = res.rows.length, i;
            for (i = 0; i < len; i++){
             
                 if($.inArray(res.rows.item(i).resources, dup)==-1){
-                    // $("#resources").append("<option>"+res.rows.item(i).resources + "</option>")
                     myApp.smartSelectAddOption('#resources', '<option value="'+res.rows.item(i).resources+'">'+res.rows.item(i).resources+'</option>');
                     dup.push(res.rows.item(i).objective)
                 }           
@@ -160,8 +103,7 @@ function updateResourcesField(subject, grade, standards){
 
 }
 
-//Iterate through all conditional fields and toggle disabled
-//depending on if its populated
+//Iterate through all conditional fields and toggle disabled depending on if its populated
 function toggleVisibility(){
     if($(".standardSelect").has('option').length ==0){
         $(".standardSelect").addClass("disabled");
@@ -196,30 +138,22 @@ function toggleVisibility(){
 };
 
 
-
+//****
+//For pre-populating the form with data
+//
 function upDateStartAndEndDates(){
     var now = new Date();
-
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
-
     var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-
     $('.startDateIn').val(today);
     $('.endDateIn').val(today);
-
 }
-// uses JSON data to populate form from record
+// uses JSON data to pre-populate form from record
 function populateForm(data){
 //data.{field} ,for everything except arrays
 //JSON.parse(data.{field}[i] ,for arrays
 
-    //YOU KNOW WHAT. DON'T EVEN TRY TO BE CLEVER. JUST WRITE SEPARATE, UNIQUE FUNCTIONS FOR
-    //WHEN YOU'RE UPDATING OBJECTIVES/RESOURCES/ETC FROM A PRE-POPULATED RECORD. BC ITS ASYNC
-    //YOU'LL HAVE TO JUST USE DATA GROM THE 'DATA' VARIABLE PASSED TO THE FUNCTION. IT'LL BE 
-    //DIRTY BUT IT'LL WORK
-
-    // alert(data.subject);
     if (data.subject){
         $(".subjIn").val(data.subject)
     }
@@ -268,7 +202,6 @@ function populateForm(data){
         standards = JSON.parse(data.standards)
         var len = standards.length;
         for (var i=0; i<len; i++){
-            // $("#standards").prepend("<option selected>"+standards[i] + "</option>")
             myApp.smartSelectAddOption('#standards', '<option value="'+standards[i]+'" selected>'+standards[i]+'</option>');
         }
     }
@@ -277,7 +210,6 @@ function populateForm(data){
         objectives = JSON.parse(data.objectives)
         var len = objectives.length;
         for (var i=0; i<len; i++){
-            // $("#objectives").prepend("<option selected>"+objectives[i] + "</option>")
             myApp.smartSelectAddOption('#objectives', '<option value="'+objectives[i]+'" selected>'+objectives[i]+'</option>');
         }
     }
@@ -286,7 +218,6 @@ function populateForm(data){
         indicators = JSON.parse(data.indicators)
         var len = indicators.length;
         for (var i=0; i<len; i++){
-            // $("#indicators").prepend("<option selected>"+indicators[i] + "</option>")
             myApp.smartSelectAddOption('#indicators', '<option value="'+indicators[i]+'" selected>'+indicators[i]+'</option>');
         }
     }
@@ -295,7 +226,6 @@ function populateForm(data){
         resources = JSON.parse(data.resources)
         var len = resources.length;
         for (var i=0; i<len; i++){
-            // $("#resources").prepend("<option selected>"+resources[i] + "</option>")
             myApp.smartSelectAddOption('#resources', '<option value="'+resources[i]+'" selected>'+resources[i]+'</option>');
         }
     }
@@ -304,7 +234,6 @@ function populateForm(data){
         subobjectives = JSON.parse(data.subobjective)
         var len = subobjectives.length;
         for (var i=0; i<len; i++){
-            // $("#subObjectives").prepend("<option selected>"+subobjectives[i] + "</option>")
             myApp.smartSelectAddOption('#subObjectives', '<option value="'+subobjectives[i]+'" selected>'+subobjectives[i]+'</option>');
         }
     }
@@ -316,6 +245,34 @@ function populateForm(data){
     if(data.sequence){
         $('.sequenceIn').val(data.sequence)
     }
-    // alert(data.sequence)
+}
 
+//used when updating from a prior record
+function addObjectives(subject, grade, standards){
+
+    //convert standards to usable form
+    var allStds
+    if(standards.length>1){
+      allStds = "'"+standards.join("', '") +"'"
+    
+    }
+    else{
+        allStds = "'"+standards.join()+"'"
+    }
+    var dup = ["", " "]
+    formdb.transaction(function(tx) {
+
+        tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() + "'AND STANDARD IN (" + allStds +")", [], function(tx, res) {
+            var len = res.rows.length, i;
+               for (i = 0; i < len; i++){
+            
+                if($.inArray(res.rows.item(i).objective, dup)==-1){
+                    myApp.smartSelectAddOption('#objectives', '<option value="'+res.rows.item(i).objective+'">'+res.rows.item(i).objective+'</option>');
+                    dup.push(res.rows.item(i).objective)
+                }           
+           }
+           toggleVisibility()
+           
+        })
+    })
 }
