@@ -49,22 +49,65 @@ var logOb; //file object
   // Wait for Cordova to load
   document.addEventListener("deviceready", onDeviceReady, false);
 
-//FOR TESTING ONLY. DELETE BEFORE PRODUCTION
-function showTable(){
-    
-    $(".dailyLessons").html("")
-    lpdb.transaction(function(tx) {
-      tx.executeSql('SELECT * FROM lessonplans', [], function (tx, results) {
-       
-           var len = results.rows.length, i;
-           for (i = 0; i < len; i++){
-              $(".dailyLessons").append("id: "+results.rows.item(i).id+" teacher: "+results.rows.item(i).teachername+" school: "+results.rows.item(i).school+" subject: "+results.rows.item(i).subject+ " standards: " + (JSON.parse(results.rows.item(i).standards))[0] + " objectives: " + results.rows.item(i).objectives + " section: "+ results.rows.item(i).section + " SEQUENCE: " + results.rows.item(i).sequence); //+ "standards: " + result.rows.item(i).standards + " OBJECTIVES: " + result.rows.item(i).objectives);
-            // $(".dailyLessons").append(results.rows.item(i).subject)
-           }
 
-        }, null);
-      });
-}    
+  //for testing only DELETE ON PRODUCTION
+  function testInsert(){
+    // alert("success")
+
+    if (window.localStorage.getItem("loggedIn") != 1){
+      window.localStorage.setItem("loggedIn", 1)
+
+      var startArray = ["", "2016-07-10", "2016-08-20", "2016-10-10","2016-11-04", "2016-03-06"]
+      var endArray = ["","2016-07-18", "2016-09-04", "2016-10-10", "2016-11-04", "2016-03-06"]
+      var gradeArray = [1,1,2,3,4]
+      var subjectArray=["","english","math","science"]
+
+
+      lpdb.transaction(function(tx){
+
+
+        for(var i=0; i <30; i++){
+          var teachername = "Ryan Donegan"
+          var school = "Koror Elementary"
+          var startdate = startArray[Math.floor((Math.random() * 5)+1)]//"2016-07-13"
+          var enddate = endArray[Math.floor((Math.random() * 5)+1)]//"2016-07-14"
+          var grade = gradeArray[Math.floor((Math.random() * 4) + 1)]//3
+          var quarter = 1
+          var section = "A"
+          var subject = subjectArray[Math.floor((Math.random() * 3) + 1)]//"english"
+          var standards = "[\"1sample standard\", \"2sample standard\"]"
+          var objectives = "[\"1sample object\", \"2sample objective\"]"
+          var indicators = "[]"
+          var resources = "[\"1sample resource\", \"2sample resources\"]"
+          var notes = "Note here"
+          var subobjectives = "[]"
+          var sequence = "sequence here"
+            // alert("standards: " + standards + " subject: " + subject)
+            // alert("lpdb right now: " + JSON.stringify(lpdb))
+            var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective, sequence) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
+            tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
+                // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
+                function(tx, result){
+                 // alert("success")
+                    
+                },
+                function(error){
+                    // alert("Error occurred. Couldn't save lesson plan.")
+                    myApp.alert("Error occurred. Couldn't save lesson plan.", "Lesson Planner")
+                })
+
+        }
+        
+      })
+    }
+    else{
+      alert("not running not for first time")
+
+    }
+
+
+  }    
 
 // Add view
 var mainView = myApp.addView('.view-main', {
