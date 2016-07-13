@@ -18,9 +18,9 @@ myApp.onPageInit('index', function (page) {
             var currentPlansList= myApp.virtualList('.currentLessons', {
                 items: items,
                 renderItem: function(index,item){
-                    return '<li>' +
-                            '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
-                             // '<a href="#" class="item-link item-content">' + 
+                    return '<li class="accordion-item">' +
+                            // '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+                             '<a href="#" class="item-link item-content">' + 
                               '<div class="item-inner">' +
                                 '<div class="item-title-row">' +
                                   '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
@@ -32,6 +32,19 @@ myApp.onPageInit('index', function (page) {
                                 '<div class="chip bg-indigo"><div class="chip-label">Performance Indicators: '+JSON.parse(item.indicators).length+'</div></div>'+
                               '</div>' +
                             '</a>' +
+                            '<div class="accordion-item-content">' +
+                                '<div class="card">' +
+                                  '<div class="card-header">Lesson Sequence</div>' +
+                                  '<div class="card-content">' +
+                                    '<div class="card-content-inner"> ' + 
+                                        '<p>'+ ((item.sequence) ? item.sequence:"No class sequence added. Tap 'edit' to add one now.") +'</p>' +
+                                    '</div>' +
+                                    '<div class="card-footer">' +
+                                        '<a href="lessonForm.html?id='+ item.id+'" class="button button-big button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a>' +
+                                    '</div>' +
+                                  '</div>' +
+                                '</div>' +
+                            '</div>'+
                           '</li>';
                 },
                 height:115
@@ -42,9 +55,13 @@ myApp.onPageInit('index', function (page) {
   })
 
 
-// '<li class="accordion-item">' +
-//                             // '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
-//                              '<a href="#" class="item-link item-content">' + 
+
+
+
+
+// '<li>' +
+//                             '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+//                              // '<a href="#" class="item-link item-content">' + 
 //                               '<div class="item-inner">' +
 //                                 '<div class="item-title-row">' +
 //                                   '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
@@ -56,31 +73,10 @@ myApp.onPageInit('index', function (page) {
 //                                 '<div class="chip bg-indigo"><div class="chip-label">Performance Indicators: '+JSON.parse(item.indicators).length+'</div></div>'+
 //                               '</div>' +
 //                             '</a>' +
-//                             '<div class="accordion-item-content">' +
-//                                 '<div class="card">' +
-//                                   '<div class="card-header">Lesson Sequence</div>' +
-//                                   '<div class="card-content">' +
-//                                     '<div class="card-content-inner"> ' + 
-//                                         '<p>'+ ((item.sequence) ? item.sequence:"No class sequence added. Tap 'edit' to add one now.") +'</p>' +
-//                                         '<p>' + JSON.parse(item.resources) + '</p>' +
-//                                     '</div>' +
-//                                   '</div>' +
-//                                 '</div>' +
-//                                 '<div class="card">' +
-//                                   '<div class="card-header">Curriculum Goals</div>' +
-//                                   '<div class="card-content">' +
-//                                     '<div class="card-content-inner"> ' + 
-//                                         '<p>Standards: '+ ((JSON.parse(item.standards).length > 0) ? JSON.parse(item.standards):"No standards added.") +'</p>' +
-//                                         '<p>Objectives: '+ ((JSON.parse(item.objectives).length > 0) ? JSON.parse(item.objectives):"No objectives added.") +'</p>' +
-//                                         '<p>Performance Indicators: '+ ((JSON.parse(item.indicators).length > 0) ? JSON.parse(item.indicators):"No indicators added.") +'</p>' +
-//                                     '</div>' +
-//                                     '<div class="card-footer">' +
-//                                     '<a href="lessonForm.html?id='+ item.id+'" class="button button-big button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a>' +
-//                                     '</div>' +
-//                                   '</div>' +
-//                                 '</div>' +
-//                             '</div>'+
 //                           '</li>';
+
+
+
 
 
 
