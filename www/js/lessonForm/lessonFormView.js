@@ -240,10 +240,13 @@ function populateForm(data){
 
     if (data.notes){
         $('.notesIn').val(data.notes)
+        $('.notesIn').trigger('change')
+
     }
 
     if(data.sequence){
         $('.sequenceIn').val(data.sequence)
+        $('textarea').trigger('change')
     }
 }
 
