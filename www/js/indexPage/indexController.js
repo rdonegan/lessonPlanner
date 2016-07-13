@@ -29,7 +29,7 @@ myApp.onPageInit('index', function (page) {
                                 '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
                                 '<div class="chip bg-teal"><div class="chip-label">Standards: '+JSON.parse(item.standards).length+'</div></div>'+
                                 '<div class="chip bg-amber"><div class="chip-label">Objectives: '+JSON.parse(item.objectives).length+'</div></div>'+
-                                '<div class="chip bg-indigo"><div class="chip-label">Performance Indicators: '+JSON.parse(item.indicators).length+'</div></div>'+
+                                '<div class="chip bg-indigo"><div class="chip-label">Resources: '+JSON.parse(item.resources).length+'</div></div>'+
                               '</div>' +
                             '</a>' +
                             '<div class="accordion-item-content">' +
@@ -84,7 +84,7 @@ myApp.onPageInit('index', function (page) {
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
                     // items.push(results.rows.item(i).subject);
-                    items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence })
+                    items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives, "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence })
                     
                 }
                 
