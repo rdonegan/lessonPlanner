@@ -10,7 +10,6 @@ myApp.onPageInit('lessonForm', function(page){
         $(".navbar").addClass("theme-pink")
         lessonData = getRecord(page.query.id, function(record){
             populateForm(record)
-            $('textarea').trigger('change')
             return record;
         })
     }
@@ -152,10 +151,14 @@ myApp.onPageInit('lessonForm', function(page){
         else if (!state.isNew && storedData){
             updateLPDB(page.query.id, storedData)
         }
-        else {
+        else if (state.isNew) {
             myApp.alert("Did you mean to save? Try to add or change something before saving.", 'Lesson Planner')
         }
-          myApp.formDeleteData('lessonForm')
+        else{
+            //go back
+            mainView.router.back()
+        }
+          
     })
 
 });

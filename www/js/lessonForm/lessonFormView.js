@@ -172,14 +172,7 @@ function populateForm(data){
         $('.startDateIn').val(data.startdate)
     }
     else{
-        var now = new Date();
-
-        var day = ("0" + now.getDate()).slice(-2);
-        var month = ("0" + (now.getMonth() + 1)).slice(-2);
-
-        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-
-        $('.startDateIn').val(today);
+        upDateStartAndEndDates()
     }
     if (data.enddate){
         $('.endDateIn').val(data.enddate)
@@ -234,7 +227,8 @@ function populateForm(data){
         }
     }
 
-    $('textarea').trigger('change')
+    // $('textarea').trigger('change')
+   
 
   
 }
