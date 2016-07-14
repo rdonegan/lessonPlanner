@@ -154,24 +154,35 @@ function populateForm(data){
 //data.{field} ,for everything except arrays
 //JSON.parse(data.{field}[i] ,for arrays
 
-    if (data.subject){
-        $(".subjIn").val(data.subject)
+    var formData = {
+        'school':data.school,
+        'teachername': data.teachername,
+        'subject' : data.subject,
+        'grade' : data.grade,
+        'quarter' : data.quarter,
+        'section' : data.section
     }
-    if (data.grade){
-        $('.gradeIn').val(data.grade)
-    }
-    if (data.quarter){
-        $('.quarterIn').val(data.quarter)
-    }
-    if (data.section){
-        $('.sectionIn').val(data.section)
-    }
-    if (data.school){
-        $('.schoolIn').val(data.school)
-    }
-    if (data.teachername){
-        $('.teacherIn').val(data.teachername)
-    }
+
+    myApp.formFromJSON('#lessonForm', formData);
+
+    // if (data.subject){
+    //     $(".subjIn").val(data.subject)
+    // }
+    // if (data.grade){
+    //     $('.gradeIn').val(data.grade)
+    // }
+    // if (data.quarter){
+    //     $('.quarterIn').val(data.quarter)
+    // }
+    // if (data.section){
+    //     $('.sectionIn').val(data.section)
+    // }
+    // if (data.school){
+    //     $('.schoolIn').val(data.school)
+    // }
+    // if (data.teachername){
+    //     $('.teacherIn').val(data.teachername)
+    // }
     if (data.startdate){
         $('.startDateIn').val(data.startdate)
     }
@@ -240,9 +251,12 @@ function populateForm(data){
 
     if (data.notes){
         $('.notesIn').val(data.notes)
-        $('.notesIn').trigger('change')
+        // $('.notesIn').trigger('change')
 
     }
+        if(true){
+            $('textarea').trigger('change')
+        }
 
     if(data.sequence){
         $('.sequenceIn').val(data.sequence)
