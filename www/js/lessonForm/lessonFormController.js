@@ -10,6 +10,7 @@ myApp.onPageInit('lessonForm', function(page){
         $(".navbar").addClass("theme-pink")
         lessonData = getRecord(page.query.id, function(record){
             populateForm(record)
+            $('textarea').trigger('change')
             return record;
         })
     }
