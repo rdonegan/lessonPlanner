@@ -54,6 +54,12 @@ myApp.onPageInit('lessonForm', function(page){
     //****
     //Listeners to update fields on change
     //****
+ 
+    // //move cursor to end of text in textarea
+    // $("textarea").focus(function(){
+        
+
+    // })
     $(".subjIn").on('change', function(){
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
     })
@@ -199,3 +205,4 @@ function getSelectedObjectives(){
         
     return selectedObjectives;
 }
+
