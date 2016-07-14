@@ -257,7 +257,8 @@ $$(document).on('click','.updateApp', function(e){
         store = cordova.file.dataDirectory;
         //URL of our asset
         // var assetURL = "http://owncloud.moe/index.php/s/LUoPOp7UqLImIED/download"
-        var assetURL = "http://owncloud.moe/index.php/s/cbE5NlR7kAl3IOW/download"
+        // var assetURL = "http://owncloud.moe/index.php/s/cbE5NlR7kAl3IOW/download"
+        var assetURL= 'http://downloads.moe/test/sampleData.csv'
 
         //var assetURL= "https://dl.dropbox.com/s/f6982zuwz18t51x/updated-curric-database.csv?dl=1";
         //File name of our important data file we didn't ship with the app
