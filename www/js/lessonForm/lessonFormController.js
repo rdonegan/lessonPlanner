@@ -74,9 +74,9 @@ myApp.onPageInit('lessonForm', function(page){
 
     //Update objectives if standard changes
     $("#standards").on('change', function(){
-        getSelectedStandardsIDs(getSelectedStandards(), function(standardIDs){
-            updateResourcesField(getSelectedSubject(), getSelectedGrade(), standardIDs)
-            updateObjectiveField(getSelectedSubject(), getSelectedGrade(), standardIDs)
+        getSelectedStandardsIDs(getSelectedStandards(), getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), function(standardIDs){
+            updateResourcesField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter() ,standardIDs)
+            updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter() ,standardIDs)
         })
     })
 
@@ -123,8 +123,8 @@ myApp.onPageInit('lessonForm', function(page){
 
     //Used to update objectives when standards change
     //identifies checked standards and returns array of coresponding id's in database
-    function getSelectedStandardsIDs(standards, callback){
-
+    function getSelectedStandardsIDs(standards, subject, grade, quarter, callback){
+        
         var standardIDs= [];
         var allStds
         if(standards.length>1){
@@ -136,7 +136,7 @@ myApp.onPageInit('lessonForm', function(page){
         }
 
         formdb.transaction(function(tx) {
-                tx.executeSql("SELECT STANDARDID FROM CURRICULUM WHERE STANDARD IN (" + allStds +")", [], function(tx, res) {
+                tx.executeSql("SELECT STANDARDID FROM CURRICULUM WHERE SUBJECT = '"+ subject.toLowerCase() +"' AND GRADE = '" + grade + "' AND QUARTER = '" + quarter + "' AND STANDARD IN (" + allStds +")", [], function(tx, res) {
                    var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
                      
                    for (i = 0; i < len; i++){

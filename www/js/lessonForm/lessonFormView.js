@@ -25,14 +25,14 @@ function updateStandardField(subject, grade, quarter){
 };
 
 
-function updateObjectiveField(subject, grade, standards){
+function updateObjectiveField(subject, grade, quarter, standards){
     $("#objectives").empty()
     $("#subObjectives").empty()
     $("#indicators").empty()
     var dup = ["", " "]
     formdb.transaction(function(tx) {
 
-        tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
+        tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = '" + grade + "' AND QUARTER = '"+ quarter +"' AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
             var len = res.rows.length, i;
            for (i = 0; i < len; i++){
                 if($.inArray(res.rows.item(i).objective, dup)==-1){
@@ -83,11 +83,11 @@ function updateIndicatorsField(subject, grade, ids){
 }
 
 
-function updateResourcesField(subject, grade, standards){
+function updateResourcesField(subject, grade, quarter, standards){
     $("#resources").empty()
     var dup = ["", " "]
     formdb.transaction(function(tx) {
-        tx.executeSql("SELECT RESOURCES FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
+        tx.executeSql("SELECT RESOURCES FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = "+ quarter +" AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
             var len = res.rows.length, i;
            for (i = 0; i < len; i++){
             
