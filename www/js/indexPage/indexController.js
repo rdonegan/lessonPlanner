@@ -33,17 +33,13 @@ myApp.onPageInit('index', function (page) {
                               '</div>' +
                             '</a>' +
                             '<div class="accordion-item-content">' +
-                                '<div class="card">' +
-                                  '<div class="card-header">Lesson Sequence</div>' +
-                                  '<div class="card-content">' +
-                                    '<div class="card-content-inner"> ' + 
+                                '<div class="content-block tablet-inset">' +
+                                    '<h4>Lesson Sequence</h4>'+
+                                    '<div class="content-block-inner">'+
                                         '<p>'+ ((item.sequence) ? item.sequence:"No class sequence added. Tap 'edit' to add one now.") +'</p>' +
-                                    '</div>' +
-                                    '<div class="card-footer">' +
-                                        '<a href="lessonForm.html?id='+ item.id+'" class="button button-big button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a>' +
-                                    '</div>' +
-                                  '</div>' +
-                                '</div>' +
+                                        '<div class="row"><a href="lessonForm.html?id='+ item.id+'" class="col-20 button button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a></div>' +
+                                    '</div>'+
+                                '</div>'+ 
                             '</div>'+
                           '</li>';
                 },
