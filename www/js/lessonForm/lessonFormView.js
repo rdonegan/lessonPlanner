@@ -227,14 +227,6 @@ function populateForm(data){
         }
     }
 
-    
-    // alert($('textarea.sequenceIn').val())
-    // $('textarea.sequenceIn').trigger('touchstart')
-    // $('textarea').trigger('change')
-   
-   
-
-  
 }
 
 //used when updating from a prior record
