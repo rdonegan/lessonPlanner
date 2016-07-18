@@ -252,7 +252,8 @@ $$(document).on('click','.updateApp', function(e){
         var store;
         store = cordova.file.dataDirectory;
         //URL of our asset
-        var assetURL= 'http://downloads.moe/test/sampleData.csv'
+        var assetURL= 'http://downloads.moe/test/lessonPlanning/updated-curric-database.csv'
+        
         //File name of our important data file we didn't ship with the app
         var fileName = "curriculum.csv";
         var fileTransfer = new FileTransfer();
