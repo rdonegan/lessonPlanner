@@ -2938,6 +2938,8 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 .list-block.inputs-list .floating-label {
   width: 100%;
   font-size: 12px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .list-block .input-item .floating-label,
 .list-block.inputs-list .floating-label {

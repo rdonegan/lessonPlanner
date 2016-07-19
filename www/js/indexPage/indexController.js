@@ -34,9 +34,10 @@ myApp.onPageInit('index', function (page) {
                             '</a>' +
                             '<div class="accordion-item-content">' +
                                 '<div class="content-block tablet-inset">' +
-                                    '<h4>Lesson Sequence</h4>'+
                                     '<div class="content-block-inner">'+
-                                        '<p>'+ ((item.sequence) ? item.sequence:"No class sequence added. Tap 'edit' to add one now.") +'</p>' +
+                                        '<p>Standards: '+JSON.parse(item.standards)+'</p>' +
+                                        '<p>Objectives: '+JSON.parse(item.objectives)+'</p>' +
+                                        '<p>Resources: '+ ((item.sequence) ? item.sequence:"No additional resources added. Tap 'edit' to add some now.") +'</p>' +
                                         '<div class="row"><a href="lessonForm.html?id='+ item.id+'" class="col-20 button button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a></div>' +
                                     '</div>'+
                                 '</div>'+ 
