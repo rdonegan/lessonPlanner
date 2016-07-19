@@ -2445,7 +2445,7 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   max-width: 100%;
 }
 .list-block .item-after {
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   color: #757575;
   -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
@@ -2456,12 +2456,12 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  max-height: 28px;
+  /*max-height: 28px;*/
   font-size: 14px;
 }
 .list-block .smart-select .item-after,
 .list-block .autocomplete-opener .item-after {
-  max-width: 70%;
+  max-width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
