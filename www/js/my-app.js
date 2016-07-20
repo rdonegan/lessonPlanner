@@ -33,7 +33,7 @@ var logOb; //file object
         }, function(){
             // alert("transaction ok");
             //run testInsert() here
-            testInsert()
+            // testInsert()
             
         });
 

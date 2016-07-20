@@ -13,8 +13,6 @@ myApp.onPageInit('index', function (page) {
         return
     }
     else{
-        
-        // alert(items[i].standards)
         var currentPlansList= myApp.virtualList('.currentLessons', {
             items: items,
             renderItem: function(index,item){
@@ -76,9 +74,6 @@ myApp.onPageInit('index', function (page) {
         else{
             return "<li>None. Tap edit to add more.</li>"
         }
-        
-      
-
     }
 
     //****
