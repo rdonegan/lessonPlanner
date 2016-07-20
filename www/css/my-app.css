@@ -86,3 +86,9 @@ ul .itemList{
 .itemList li{
 	padding: 8px;
 }
+
+.openingPrompt{
+	text-align: center;
+	top: 100px;
+	color:#ebebeb ;
+}
