@@ -13,53 +13,53 @@ myApp.onPageInit('index', function (page) {
         return
     }
     else{
-        for(var i in items){
+        
         // alert(items[i].standards)
-            var currentPlansList= myApp.virtualList('.currentLessons', {
-                items: items,
-                renderItem: function(index,item){
-                    return '<li class="accordion-item">' +
-                            // '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
-                             '<a href="#" class="item-link item-content">' + 
-                              '<div class="item-inner">' +
-                                '<div class="item-title-row">' +
-                                  '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
-                                  '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
-                                '</div>' +
-                                '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
-                                '<div class="chip bg-teal"><div class="chip-label">Standards: '+JSON.parse(item.standards).length+'</div></div>'+
-                                '<div class="chip bg-amber"><div class="chip-label">Objectives: '+JSON.parse(item.objectives).length+'</div></div>'+
-                                '<div class="chip bg-indigo"><div class="chip-label">Resources: '+JSON.parse(item.resources).length+'</div></div>'+
-                              '</div>' +
-                            '</a>' +
-                            '<div class="accordion-item-content">' +
-                                '<div class="content-block tablet-inset">' +
-                                    '<div class="content-block-inner">'+
-                                        '<div class="row">'+
-                                            '<div class="col-20"><div class="chip bg-teal"><div class="chip-label">Standards</div></div></div>'+
-                                            '<div class="col-80"><ul class="itemList">'+getListHTML(item.standards)+'</ul></div>' +
-                                        '</div>'+
-                                        '<div class="row">'+
-                                            '<div class="col-20"><div class="chip bg-amber"><div class="chip-label">Objectives</div></div></div>'+
-                                            '<div class="col-80"><ul class="itemList">'+getListHTML(item.objectives)+'</ul></div>' +
-                                        '</div>'+
-                                        '<div class="row">'+
-                                            '<div class="col-20"><div class="chip bg-indigo"><div class="chip-label">Resources</div></div></div>'+
-                                            '<div class="col-80"><ul class="itemList">'+getListHTML(item.resources)+'</ul></div>' +
-                                        '</div>'+
-                                        '<div class="row">'+
-                                            '<div class="col-20"><div class="chip bg-deeppurple"><div class="chip-label">Resource Details</div></div></div>'+
-                                            '<div class="col-80"><ul class="itemList"><li>'+((item.sequence) ? item.sequence:"No additional resources added. Tap 'edit' to add some now.")+'</li></ul></div>' +
-                                        '</div>'+
-                                        '<div class="row"><a href="lessonForm.html?id='+ item.id+'" class="col-20 button button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a></div>' +
+        var currentPlansList= myApp.virtualList('.currentLessons', {
+            items: items,
+            renderItem: function(index,item){
+                return '<li class="accordion-item">' +
+                        // '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+                         '<a href="#" class="item-link item-content">' + 
+                          '<div class="item-inner">' +
+                            '<div class="item-title-row">' +
+                              '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
+                              '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
+                            '</div>' +
+                            '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
+                            '<div class="chip bg-teal"><div class="chip-label">Standards: '+JSON.parse(item.standards).length+'</div></div>'+
+                            '<div class="chip bg-amber"><div class="chip-label">Objectives: '+JSON.parse(item.objectives).length+'</div></div>'+
+                            '<div class="chip bg-indigo"><div class="chip-label">Resources: '+JSON.parse(item.resources).length+'</div></div>'+
+                          '</div>' +
+                        '</a>' +
+                        '<div class="accordion-item-content">' +
+                            '<div class="content-block tablet-inset">' +
+                                '<div class="content-block-inner">'+
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-teal"><div class="chip-label">Standards</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList">'+getListHTML(item.standards)+'</ul></div>' +
                                     '</div>'+
-                                '</div>'+ 
-                            '</div>'+
-                          '</li>';
-                },
-                height:115
-            });
-        }
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-amber"><div class="chip-label">Objectives</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList">'+getListHTML(item.objectives)+'</ul></div>' +
+                                    '</div>'+
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-indigo"><div class="chip-label">Resources</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList">'+getListHTML(item.resources)+'</ul></div>' +
+                                    '</div>'+
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-deeppurple"><div class="chip-label">Resource Details</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList"><li>'+((item.sequence) ? item.sequence:"No additional resources added. Tap 'edit' to add some now.")+'</li></ul></div>' +
+                                    '</div>'+
+                                    '<div class="row"><a href="lessonForm.html?id='+ item.id+'" class="col-20 button button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a></div>' +
+                                '</div>'+
+                            '</div>'+ 
+                        '</div>'+
+                      '</li>';
+            },
+            height:115
+        });
+        
     }  
 
   })

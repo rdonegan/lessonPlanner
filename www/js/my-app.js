@@ -32,6 +32,8 @@ var logOb; //file object
             myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
         }, function(){
             // alert("transaction ok");
+            //run testInsert() here
+            testInsert()
             
         });
 
@@ -54,8 +56,8 @@ var logOb; //file object
     if (window.localStorage.getItem("loggedIn") != 1){
       window.localStorage.setItem("loggedIn", 1)
 
-      var startArray = ["", "2016-07-10", "2016-08-20", "2016-10-10","2016-11-04", "2016-03-06"]
-      var endArray = ["","2016-07-18", "2016-09-04", "2016-10-10", "2016-11-04", "2016-03-06"]
+      var startArray = ["", "2016-07-19", "2016-08-20", "2016-10-10","2016-11-04", "2016-03-06"]
+      var endArray = ["","2016-07-22", "2016-09-04", "2016-10-10", "2016-11-04", "2016-03-06"]
       var gradeArray = [1,1,2,3,4]
       var subjectArray=["","english","math","science"]
 
@@ -63,7 +65,7 @@ var logOb; //file object
       lpdb.transaction(function(tx){
 
 
-        for(var i=0; i <30; i++){
+        for(var i=0; i <80; i++){
           var teachername = "Ryan Donegan"
           var school = "Koror Elementary"
           var startdate = startArray[Math.floor((Math.random() * 5)+1)]//"2016-07-13"
