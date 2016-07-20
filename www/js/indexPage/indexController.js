@@ -5,14 +5,14 @@ myApp.onPageInit('index', function (page) {
     if (window.localStorage.getItem("firstOpen") != 1){
         window.localStorage.setItem("firstOpen", 1)
         var options = {
-          'bgcolor': '#0da6ec',
+          'bgcolor': '#1976D2',
           'fontcolor': '#fff'
         }
 
         var welcomescreen_slides = [
           {
             id: 'slide0',
-            picture: '<div class="tutorialicon">♥</div>',
+            picture: '<div class="tutorialicon"><img class="tutorialimage" src="img/screen.png"></div>',
             text: '<strong>Alii!</strong><br><br>The Lesson Planner will help guide the planning, creation, and sharing of your lesson plans. Swipe left to learn more about how Lesson Planner can be used as a resource in the classroom.'
           },
           {
