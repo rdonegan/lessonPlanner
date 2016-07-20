@@ -35,9 +35,22 @@ myApp.onPageInit('index', function (page) {
                             '<div class="accordion-item-content">' +
                                 '<div class="content-block tablet-inset">' +
                                     '<div class="content-block-inner">'+
-                                        '<p>Standards: '+JSON.parse(item.standards)+'</p>' +
-                                        '<p>Objectives: '+JSON.parse(item.objectives)+'</p>' +
-                                        '<p>Resources: '+ ((item.sequence) ? item.sequence:"No additional resources added. Tap 'edit' to add some now.") +'</p>' +
+                                        '<div class="row">'+
+                                            '<div class="col-20"><div class="chip bg-teal"><div class="chip-label">Standards</div></div></div>'+
+                                            '<div class="col-80"><ul class="itemList">'+getListHTML(item.standards)+'</ul></div>' +
+                                        '</div>'+
+                                        '<div class="row">'+
+                                            '<div class="col-20"><div class="chip bg-amber"><div class="chip-label">Objectives</div></div></div>'+
+                                            '<div class="col-80"><ul class="itemList">'+getListHTML(item.objectives)+'</ul></div>' +
+                                        '</div>'+
+                                        '<div class="row">'+
+                                            '<div class="col-20"><div class="chip bg-indigo"><div class="chip-label">Resources</div></div></div>'+
+                                            '<div class="col-80"><ul class="itemList">'+getListHTML(item.resources)+'</ul></div>' +
+                                        '</div>'+
+                                        '<div class="row">'+
+                                            '<div class="col-20"><div class="chip bg-deeppurple"><div class="chip-label">Resource Details</div></div></div>'+
+                                            '<div class="col-80"><ul class="itemList"><li>'+((item.sequence) ? item.sequence:"No additional resources added. Tap 'edit' to add some now.")+'</li></ul></div>' +
+                                        '</div>'+
                                         '<div class="row"><a href="lessonForm.html?id='+ item.id+'" class="col-20 button button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a></div>' +
                                     '</div>'+
                                 '</div>'+ 
@@ -50,6 +63,23 @@ myApp.onPageInit('index', function (page) {
     }  
 
   })
+
+    //format array into list
+    function getListHTML(items){
+        if(JSON.parse(items).length > 0){
+            var str= ""
+            for (var i=0; i < JSON.parse(items).length; i++){
+                str += "<li>" + (JSON.parse(items))[i] + "</li>"
+            }
+            return str
+        }
+        else{
+            return "<li>None. Tap edit to add more.</li>"
+        }
+        
+      
+
+    }
 
     //****
     //Get Today's Plans - a callback
