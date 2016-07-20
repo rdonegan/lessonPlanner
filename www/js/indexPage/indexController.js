@@ -2,8 +2,8 @@ myApp.onPageInit('index', function (page) {
 
 
     //if it's the first run of the app, open welcomescreen
-    if (window.localStorage.getItem("loggedIn") != 1){
-        window.localStorage.setItem("loggedIn", 1)
+    if (window.localStorage.getItem("firstOpen") != 1){
+        window.localStorage.setItem("firstOpen", 1)
         var options = {
           'bgcolor': '#0da6ec',
           'fontcolor': '#fff'
@@ -21,7 +21,7 @@ myApp.onPageInit('index', function (page) {
             text: '<a class="tutorial-close-btn" href="#">End Tutorial</a>'
           }
         ];
-        
+
         var welcomescreen = myApp.welcomescreen(welcomescreen_slides, options);
     }
 
