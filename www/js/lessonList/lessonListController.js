@@ -117,7 +117,7 @@ myApp.onPageInit('lessonList', function (page) {
 
         
         if(items.length==0){
-            $('.editLessons').html('<div class="content-block-title">No Lesson Plans Created :(</div>');
+            $('.editLessons').html('<h2 class="openingPrompt">No Lesson Plans Created :(</h2>');
         }
         else{
             virtualList= myApp.virtualList('.editLessons', {
