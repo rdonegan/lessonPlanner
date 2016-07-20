@@ -60,3 +60,11 @@
 html.with-statusbar-overlay .welcomescreen-container{
     top: 20px;
 }
+
+.tutorial-close-btn {
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    color: #0da6ec !important;
+    text-decoration: none !important;
+}
