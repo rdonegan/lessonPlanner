@@ -13,32 +13,32 @@ myApp.onPageInit('index', function (page) {
           {
             id: 'slide0',
             picture: '<div class="tutorialicon">♥</div>',
-            text: 'Welcome to the Palau Lesson Planner! This app will help guide the planning, creation, and sharing of your lesson plans. Swipe left to learn more about how Lesson Planner can be used as a resource in the classroom.'
+            text: '<strong>Alii!</strong><br><br>The Lesson Planner will help guide the planning, creation, and sharing of your lesson plans. Swipe left to learn more about how Lesson Planner can be used as a resource in the classroom.'
           },
           {
             id: 'slide1',
             picture: '<div class="tutorialicon">♥</div>',
-            text: "Create your plans all at once, or start and make changes later. It's all up to you! Start by entering general details about yourself and your class. From there, Lesson Planner automatically walks you through the standards, objectives, and resources available for your lesson."
+            text: "<strong>Create</strong><br><br>Create your plans all at once, or start and make changes later. It's all up to you! Start by entering general details about yourself and your class. From there, Lesson Planner automatically walks you through the standards, objectives, and resources available for your lesson."
           },
           {
             id: 'slide2',
             picture: '<div class="tutorialicon">♥</div>',
-            text: "Not enough time to finish a plan? Need to make any last-minute changes? You can update your lesson plans by searching for them in the edit list. Here, all your lesson plans are sorted by subject and date. Tap one to edit or update."
+            text: "<strong>Edit</strong><br><br>Not enough time to finish a plan? Need to make any last-minute changes? You can update your lesson plans by searching for them in the edit list. Here, all your lesson plans are sorted by subject and date. Tap one to edit or update."
           },
           {
             id: 'slide3',
             picture: '<div class="tutorialicon">♥</div>',
-            text: "You can even use Lesson Planner to quickly share any lessons you've saved! From the share menu, select the interval of plans you'd like to share by date, and then export to your device or send by email."
+            text: "<strong>Share</strong><br><br>You can even use Lesson Planner to quickly share any lessons you've saved! From the share menu, select the interval of plans you'd like to share by date, and then export to your device or send by email."
           },
           {
             id: 'slide4',
             picture: '<div class="tutorialicon">♥</div>',
-            text: "What do you have to do to make sure this all runs smoothly? Nothing (almost)! Ok, before each quarter, it's a good idea to connect to the internet and tap Update on the homescreen. Other than a little patience (Lesson Planner is still a work in progress), that's all you need! "
+            text: "<strong>Update</strong><br><br>What do you have to do to make sure this all runs smoothly? Nothing (almost)! Ok, before each quarter, it's a good idea to connect to the internet and tap Update on the homescreen. Other than a little patience (Lesson Planner is still a work in progress), that's all you need! "
           },
           {
             id: 'slide5',
             picture: '<div class="tutorialicon">✲</div>',
-            text: "That's it! Over time, Lesson Planner can simplify your lesson planning, leaving you more time to focus on other areas of class preparation. Thanks for reading and good luck!<br><br> <a class='tutorial-close-btn' href='#''>Show Me the Home Screen</a>"
+            text: "<strong>That's it!</strong><br><br>Over time, Lesson Planner can simplify your lesson planning, leaving you more time to focus on other areas of class preparation. Thanks for reading and good luck!<br><br> <a class='tutorial-close-btn' href='#''>Show Me the Home Screen</a>"
           }
         ];
 
