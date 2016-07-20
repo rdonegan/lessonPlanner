@@ -28,12 +28,17 @@ myApp.onPageInit('index', function (page) {
           {
             id: 'slide3',
             picture: '<div class="tutorialicon">♥</div>',
-            text: "You can even use Lesson Planner to quickly share any lessons you've saved. From the share menu, select the interval of plans you'd like to share by date, and then export to your device or send by email."
+            text: "You can even use Lesson Planner to quickly share any lessons you've saved! From the share menu, select the interval of plans you'd like to share by date, and then export to your device or send by email."
           },
           {
             id: 'slide4',
+            picture: '<div class="tutorialicon">♥</div>',
+            text: "What do you have to do to make sure this all runs smoothly? Nothing (almost)! Ok, before each quarter, it's a good idea to connect to the internet and tap Update on the homescreen. Other than a little patience (Lesson Planner is still a work in progress), that's all you need! "
+          },
+          {
+            id: 'slide5',
             picture: '<div class="tutorialicon">✲</div>',
-            text: "That's it! Over time, Lesson Planner can simplify your lesson planning, leaving you more time to focus on other areas of class preparation. Thanks for reading and good luck!<br><br> <a class='tutorial-close-btn' href='#''>End Tutorial</a>"
+            text: "That's it! Over time, Lesson Planner can simplify your lesson planning, leaving you more time to focus on other areas of class preparation. Thanks for reading and good luck!<br><br> <a class='tutorial-close-btn' href='#''>Show Me the Home Screen</a>"
           }
         ];
 
