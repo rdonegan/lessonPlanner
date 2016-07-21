@@ -77,8 +77,8 @@ myApp.onPageInit('lessonForm', function(page){
     //update subobjectives and indicators
     $("#objectives").on('change', function(){
         getStandardsAndObjectivesIDs(getSelectedStandards(), getSelectedObjectives(), function(ids){
-            updateIndicatorsField(getSelectedSubject(), getSelectedGrade(), ids)
-            updateSubObjectivesField(getSelectedSubject(), getSelectedGrade(), ids)
+            updateIndicatorsField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), ids)
+            updateSubObjectivesField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), ids)
         })
     })
 
@@ -96,7 +96,7 @@ myApp.onPageInit('lessonForm', function(page){
         }
 
         var allObjectives
-        if(standards.length>1){
+        if(objectives.length>1){
           allObjectives = "'"+objectives.join("', '") +"'"
         
         }
@@ -251,11 +251,11 @@ myApp.onPageInit('lessonForm', function(page){
     };
 
 
-    function updateSubObjectivesField(subject, grade, ids){
+    function updateSubObjectivesField(subject, grade, quarter, ids){
         $("#subObjectives").empty()
         var dup = ["", " "]
         formdb.transaction(function(tx){
-            tx.executeSql("SELECT SUBOBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") AND GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
+            tx.executeSql("SELECT SUBOBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = '"+quarter+"' AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") AND GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
                 var len=res.rows.length, i;
                 for (i = 0; i < len; i++){
                     if($.inArray(res.rows.item(i).subobjective, dup)==-1){
@@ -269,11 +269,11 @@ myApp.onPageInit('lessonForm', function(page){
     }
 
 
-    function updateIndicatorsField(subject, grade, ids){
+    function updateIndicatorsField(subject, grade, quarter, ids){
         $("#indicators").empty()
         var dup = ["", " "]
         formdb.transaction(function(tx){
-            tx.executeSql("SELECT INDICATOR FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") and GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
+            tx.executeSql("SELECT INDICATOR FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = '"+ quarter +"' AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") and GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
                 var len=res.rows.length, i;
                 for (i = 0; i < len; i++){
                     if($.inArray(res.rows.item(i).indicator, dup)==-1){
