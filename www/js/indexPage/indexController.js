@@ -10,7 +10,7 @@ myApp.onPageInit('index', function (page) {
     var welcomescreen_slides = [
       {
         id: 'slide0',
-        picture: '<div class="tutorialicon"><img class="tutorialimage" src="img/welcomescreen.svg"></div>',
+        picture: '<div class="tutorialicon"><img src="img/welcomescreen.svg"></div>',
         text: '<strong>Alii!</strong><br><br>The Lesson Planner will help guide the planning, creation, and sharing of your lesson plans. Swipe left to learn more about how Lesson Planner can be used as a resource in the classroom.'
       },
       {
@@ -40,7 +40,7 @@ myApp.onPageInit('index', function (page) {
       },
       {
         id: 'slide6',
-        picture: '<div class="tutorialicon"><img class="tutorialimage" src="img/smile.svg"></div>',
+        picture: '<div class="tutorialicon"><img src="img/smile.svg"></div>',
         text: "<strong>That's it!</strong><br><br>Over time, Lesson Planner can simplify your lesson planning, leaving you more time to focus on other areas of class preparation. Thanks for reading and good luck!<br><br> <a class='tutorial-close-btn' href='#''>Show Me the Home Screen</a>"
       }
     ];
