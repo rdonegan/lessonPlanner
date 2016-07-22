@@ -46,7 +46,11 @@ myApp.onPageInit('index', function (page) {
                                     '</div>'+
                                     '<div class="row">'+
                                         '<div class="col-20"><div class="chip bg-deeppurple"><div class="chip-label">Resource Details</div></div></div>'+
-                                        '<div class="col-80"><ul class="itemList"><li>'+((item.sequence) ? item.sequence:"No additional resources added. Tap edit to add more.")+'</li></ul></div>' +
+                                        '<div class="col-80"><ul class="itemList"><li>'+((item.sequence) ? item.sequence:"No additional resources. Tap edit to add more.")+'</li></ul></div>' +
+                                    '</div>'+
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-deeppurple"><div class="chip-label">Notes</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList"><li>'+((item.notes) ? item.notes:"No notes. Tap edit to add more.")+'</li></ul></div>' +
                                     '</div>'+
                                     '<br>'+
                                     '<div class="row"><a href="lessonForm.html?id='+ item.id+'" class="col-20 button button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a></div>' +
@@ -106,7 +110,7 @@ myApp.onPageInit('index', function (page) {
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
                     // items.push(results.rows.item(i).subject);
-                    items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives, "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence })
+                    items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives, "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence, "notes": results.rows.item(i).notes })
                     
                 }
                 
