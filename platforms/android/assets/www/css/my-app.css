@@ -1,15 +1,24 @@
 .sectionHeader{
-	background-color: #e3e3e3;
+	background-color: #ebebeb;
+	padding-bottom: 10px;
+
 	/*height*/
 }
+
+.subSection{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	
+}
+
 
 .toolbar{
 	bottom:0;
 }
 
-h2{
+/*h2{
 	color: white;
-}
+}*/
 
 /*.navbar, .subnavbar, .toolbar{
 	background: #1976D2;
@@ -17,4 +26,75 @@ h2{
 
 .profileHeader{
 	background-color: #1976D2;
+	color:#ffffff;
+}
+
+.helpLink{
+	color:#03a9f4;
+	font-size: 1.2em;
+}
+
+.profileHeader h2, .profileHeader h1{
+	margin-left:5px;
+	color:#ffffff;
+	display: inline-block;
+}
+
+.introText{
+	font-weight: 900;
+}
+
+.helpText{
+	font-weight: 100;
+}
+
+.icon-img{
+	width: 24px;
+  	height: 24px;
+  	font-size: 0;
+}
+
+/*.profileInfo i{
+	float:left;
+	display:inline;
+}*/
+
+.panel{
+	background-color: #1976D2;
+	color:#ffffff;
+}
+
+.panel h3{
+	color:#03d1f4;
+}
+
+.hidden{
+	display:none;
+}
+
+.disabled{
+	display:none;
+}
+
+ul .itemList{
+	background-color: #ebebeb;
+	border-radius: 10px;
+	margin:5px;
+
+}
+
+.itemList li{
+	padding: 8px;
+}
+
+.openingPrompt{
+	text-align: center;
+	top: 100px;
+	color:#ebebeb ;
+}
+
+/**/
+.tutorialicon img{
+	width: 70%;
+	height:auto;
 }

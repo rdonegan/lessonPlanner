@@ -1931,6 +1931,16 @@ i.icon.icon-form-url {
   height: 24px;
   background-image: url("../img/i-form-url-material.svg");
 }
+i.icon.icon-share{
+  width:24px;
+  height: 24px;
+  background-image: url("../img/share-icon.svg");
+}
+i.icon.icon-edit{
+  width:24px;
+  height: 20px;
+  background-image: url("../img/edit-icon.svg");
+}
 i.icon.icon-next,
 i.icon.icon-prev {
   width: 24px;
@@ -1977,7 +1987,8 @@ i.icon.icon-close {
 .chip {
   font-size: 13px;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.87);
+  /*color: rgba(0, 0, 0, 0.87);*/
+  color: #ffffff;
   background: rgba(0, 0, 0, 0.12);
   display: inline-block;
   height: 32px;
@@ -2184,7 +2195,7 @@ html.pixel-ratio-3 .content-block-inner:after {
 }
 /* === Lists === */
 .list-block {
-  margin: 32px 0;
+  /*margin: 32px 0;*/
   font-size: 16px;
 }
 .list-block ul {
@@ -2427,14 +2438,14 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   -webkit-flex-shrink: 1;
   -ms-flex: 0 1 auto;
   flex-shrink: 1;
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
 }
 .list-block .item-after {
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   color: #757575;
   -webkit-box-flex: 0;
   -webkit-flex-shrink: 0;
@@ -2445,12 +2456,12 @@ html.pixel-ratio-3 .list-block .item-inner:after {
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  max-height: 28px;
+  /*max-height: 28px;*/
   font-size: 14px;
 }
 .list-block .smart-select .item-after,
 .list-block .autocomplete-opener .item-after {
-  max-width: 70%;
+  max-width: 90%;
   overflow: hidden;
   text-overflow: ellipsis;
   position: relative;
@@ -2927,6 +2938,8 @@ html.pixel-ratio-3 .list-block li:last-child li .item-inner:after {
 .list-block.inputs-list .floating-label {
   width: 100%;
   font-size: 12px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .list-block .input-item .floating-label,
 .list-block.inputs-list .floating-label {

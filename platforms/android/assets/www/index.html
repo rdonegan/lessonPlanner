@@ -10,11 +10,12 @@
     <!-- Your app title -->
     <title>My App</title>
     <!-- Path to Framework7 Library CSS, Material Theme -->
-    <link rel="stylesheet" href="css/framework7.material.min.css">
+    <link rel="stylesheet" href="css/framework7.material.css">
     <!-- Path to Framework7 color related styles, Material Theme -->
     <link rel="stylesheet" href="css/framework7.material.colors.min.css">
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="css/my-app.css">
+    <link rel="stylesheet" href="css/welcomescreen.css">
     <!-- Path to test JSON data-->
    
     <link rel="stylesheet" type="text/css" href="data">
@@ -25,12 +26,203 @@
 
   <!-- Left panel -->
   <div class="panel panel-left panel-reveal">
+
+
       <div class="content-block">
-        <p>Left Panel content here</p>
+        <h3>Getting Started</h3>
         <!-- Click on link with "close-panel" class will close panel -->
-        <p><a href="#" class="close-panel">Close me</a></p>
+        <p>Tap a topic below to learn more. To close this panel, tap anywhere to the right.</p>
+      </div>
+
+      <div class="list-block">
+        <ul>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Create Lesson Plans</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>Add a lesson plan by tapping "+" on the nav bar, or the action button at the bottom right of the home page. Tap a field in each section to edit. Some fields can only be edited if prior fields have been selected. Tap "Save" at the bottom to save the lesson plan.</p>
+
+                <p>If no fields have been changed, the page will exit without saving.</p>
+              </div>
+            </div>
+          </li>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">View Lesson Plans</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>The home screen displays all current lesson plans. Tapping a lesson plan on the homescreen will reveal details about the lesson sequence, standards, objectives, and performance indicators. 
+                <p>By tapping "edit", you can scroll through all lesson plans previously created and currently stored. Tapping a lesson plan brings you to its edit page where you can view more details. By pressing the back button or "cancel" from this page, you can view lesson plan details without changing the plan.</p>
+              </div>
+            </div>
+          </li>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Edit Lesson Plans</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>To edit a lesson plan, simply tap on it on the homescreen or on the edit list page.</p>
+                <p>From a lesson plan's edit page you can view all previously input information, as well as make any changes you like. Press "Save" to save your edits, or "Cancel" to return to the home screen without saving.</p>
+                <p>On the edit page, fields are updated with prior selected standards, objectives, resources, etc. In some cases, you may need to check and uncheck one of these selected items to load applicable standards, objectives, resources, etc.</p>
+              </div>
+            </div>
+          </li>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Delete Lesson Plans</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>Deleting can be done from the edit list. Deleting is a permanent action and cannot be undone.</p>
+                <p>To delete, swipe left on the item you wish to delete. This will reveal the delete option. Tap "delete" to remove from the list and database.</p>
+                <p>In most cases, deleting is unnecessary. Instead, edit the lesson plan to reflect the changes you'd like to see.</p>
+              </div>
+            </div>
+          </li>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Share Lesson Plans</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>Currently, you can share lesson plans by tapping "Share" on the upper right navigation bar.</p>
+                <p>Follow the instructions on the Share popup: choose the range of lesson plans to export by selecting the desired time interval. Then, tap "Share".</p>
+                <p>If sharing is successful, a file called "log.csv" will be saved on your device. You can access the file and transfer to USB, computer, or SD card by connecting your tablet to the desired device and transferring the file.</p>
+                <p>If you have set up email on your device, you will also see the option to email your lesson plans. This will create the "log.csv" file as normal, and then add the file as an attachment to an email.</p>
+                <p>Note that "log.csv" is overwritten each time you share.</p>
+                <p>If you experience issues while trying to share your lesson plans, check that you've correctly filled in the desired "start date" and "end date" fields in the Share popup.</p>
+              </div>
+            </div>
+          </li>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Update Application</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>To update the app with the most recent standards, objectives, resources, and performance indicators, tap the "Update App" button on the homescreen. Wait for the update process to complete.</p>
+                <p>It is good to check for updates at least quarterly by tapping "Update App". This will ensure you're working from the most up-to-date information.</p>
+                <p>To update, you must be connected to an MOE wireless network.</p>
+                <p>If you experience issues creating lesson plans or accessing standards/objectives/resources/etc., please notify the MOE app admins immediately. They will have to look into the problem and fix the update.</p>
+              </div>
+            </div>
+          </li>
+         
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h3>Help & Support</h3>
+        <p>Use for guidance on errors and issues that may occur.</p>
+      </div>
+      <div class="list-block">
+        <ul>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Errors and Troubleshooting</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>It is possible that issues may occur while using the app. To help, it is recommended that you frequently share and save your lesson plans on another personal device in the event that the database is erased or you need to reinstall the app.</p> 
+                <p>Some recommended troubleshooting actions: close and restart the app, check your internet connection, rollback to the previous update, reset the database and wait for improved update.</p>
+                <p>If you experience problems after updating (e.g. you can't access standards and objectives when creating lesson plans), alert the app administrator to the issue. It is likely a database problem. Give them time to correct the issue, and then update the app again when instructed.</p>
+              </div>
+            </div>
+          </li>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Rollback to Previous Update</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>If you experience issues with the app after an update, your best option is to try rolling back to the previous working update. Your app automatically stores the previous update and can reload that content for you. This works as a temporary solution to an update that may have an error.</p> 
+                <p>After rolling back, you can try updating the app at a later time to see if the problem has been fixed. If not, please contact the app administrators at the MOE to let them know of the problem.</p>
+                <p>Rolling back to the last update will not affect your saved lesson plans.</p>
+                
+                <div class="button button-big button-fill color-red rollbackData">Rollback</div>
+              
+              </div>
+            </div>
+          </li>
+          <li class="accordion-item"><a href="#" class="item-content item-link">
+              <div class="item-inner">
+                <div class="item-title">Reset the Database</div>
+              </div></a>
+            <div class="accordion-item-content">
+              <div class="content-block">
+                <p>You should only reset the application database when you suspect there is an issue with the most recent update. Doing so will restore the app's standards, objectives, resources, performance indicators, and sub-objective data to its original form when the app was installed. Your saved lesson plans will not be affected.</p> 
+                <p>To ensure your app is up-to-date after resetting, "Update App" from the home screen as normal. You may have to wait until the app administrators are able to upload a working update.</p> 
+                <p>To reset your app to the original, installed standards, tap "Reset" below.</p>
+                <div class="button button-big button-fill color-red resetData">Reset</div>
+              
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="content-block">
+        <h3>About the App</h3>
+        <p>The lesson planning app is intended to aid specifically in English and Math for grades 1-8. The first version is to be released to teachers in Palau during the 2016-2017 school year. </p>
       </div>
   </div>
+
+    <!-- About Popup -->
+    <div class="popup popup-share">
+      <div class="content-block">
+        <h2>Choose interval of lesson plans to share.</h2>
+        <p>Lesson plans will be saved to your tablet's documents as "log.csv".</p>
+        <div class="list-block">
+          <ul>
+            <li>
+              <div class="item-content">
+                <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                  <div class="item-inner">
+                     <div class="item-title label">From (Start date)</div>
+                    <div class="item-input">
+                      <input type="date" class="startDateInput" name="startdate">
+                    </div>
+                  </div>
+              </div>
+            </li>
+            <li>
+              <div class="item-content">
+                <div class="item-media"><i class="icon icon-form-calendar"></i></div>
+                  <div class="item-inner">
+                     <div class="item-title label">To (End date)</div>
+                    <div class="item-input">
+                      <input type="date" class="endDateInput" name="enddate" >
+                    </div>
+                  </div>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+        
+      </div>
+
+      <div class="content-block">
+        <div class="row">
+          <div class="col-50"><a href="#" class="button button-big button-fill color-red close-popup">Cancel</a></div>
+
+          <div class="col-50"><a href="#" class="button button-big button-fill color-green shareLink close-popup">Share</a></div>
+        </div>
+      </div>
+       <div class="content-block">
+        <div class="row">
+          <div class="col-50"></div>
+          
+          <div class="col-50"><a href="#" class="button button-big button-fill color-teal emailShare hidden close-popup">Share and Email</a></div>
+        </div>
+        
+      </div>
+    </div>
+
     <!-- Views -->
     <div class="views">
       <!-- Your main view, should have "view-main" class -->
@@ -43,7 +235,7 @@
 
  
             <!-- Top Navbar. In Material theme it should be inside of the page-->
-            <div class="navbar">
+            <div class="navbar theme-blue">
               <div class="navbar-inner">   
                 <div class="left">
                   <a href="#" class="link">
@@ -52,60 +244,60 @@
                 </div> 
                 <div class="center">Lesson Planner</div>
                 <div class="right">
-                  <div class="left"><a href="lessonForm.html" class="back link"> <i class="icon icon-plus"></i><span>Create</span></a></div>
-                  <div class="left"><a href="#" class="back link"> <i class="icon icon-plus"></i><span>Edit</span></a></div>
-                  <div class="left"><a href="#" class="back link"> <i class="icon icon-plus"></i><span>Share</span></a></div>
+                  
+                  <a href="lessonForm.html" class="link"> <i class="icon icon-plus"></i><span>Create</span></a>
+                  <a href="lessonList.html" class="link"><i class="icon icon-edit"></i><span>Edit</span></a>
+                  <a href="#" data-popup=".popup-share" class="link open-popup"> <i class="icon icon-share"></i><span>Share</span></a>
+                 
 
                 </div>
                 
               </div>
             </div>
- 
-            <!-- Bottom Toolbar. In Material theme it should be inside of the page-->
-            <!-- <div class="toolbar tabbar">
-              <div class="toolbar-inner"> -->
-                <!-- Toolbar links -->
-                <!-- <a href="#" class="link">Link 1</a>
-                <a href="#" class="link">Link 2</a>
-              </div>
-            </div> -->
- 
-            <!-- Scrollable page content -->
 
+ 
+            
+
+            <a href="lessonForm.html" class="floating-button floating-button-to-popover open-popover color-pink">
+                <i class="icon icon-plus"></i>
+            </a>
+            <!-- Scrollable page content -->
             <div class="page-content">
               <div class="row profileHeader">
-                <div class="col-100">
+                <div class="col-80">
                    <div class="content-block">
-                    <h2>Alii, [teacher name].</h2>
+                    <a href="#" class="profileInfo">
+                      <h2 class="introText">Alii,</h2>
+                      <h2 class="helpText">tap here for help getting started.</h2>
+                      <!-- <a href="" class="helpLink"><h5>Tap here for help</h5></a> -->
+                    </a>
+                    
                    </div>
 
                 </div>
+                
+                <div class="col-20">
+                  <div class="content-block">
+                    <div class="button button-fill color-cyan updateApp">Update App</div>
+                  </div>
+                </div>
 
               </div>
+
              
               
-              <div class="content-block">
-                <div class="row">
-                  <div class = "col-30">
-                      <p>Today's Date</p>
-                  </div>
-                  <div class="col-70">
-                    <p>My upcoming lessons</p>
-
-                  </div>
-
-                </div>
-                
+            <div class="row sectionHeader">
+              <div class="content-block-title">
+                Today's Plans. Tap a plan below for details.
               </div>
+            </div>
 
-              <!-- Adding a form -->
-               
-              
-              <a href="lessonForm.html" class="floating-button floating-button-to-popover open-popover color-pink">
-                <i class="icon icon-plus"></i>
-              </a>
 
-              
+            <div class="list-block media-list currentLessons">
+              <h1 class="openingPrompt">+ Create to add plan</h1>
+
+            </div>
+
             </div>
           </div>
         </div>
@@ -121,14 +313,21 @@
     <script type="text/javascript" src="js/framework7.min.js"></script>
     <!-- Path to your app js-->
     <script type="text/javascript" src="js/my-app.js"></script>
+    <script type="text/javascript" src="js/plansDatabase.js"></script>
+    <script type="text/javascript" src="js/indexPage/indexController.js"></script>
+     <script type="text/javascript" src="js/indexPage/indexView.js"></script>
+    <script type="text/javascript" src="js/lessonForm/lessonFormController.js"></script>
+    <script type="text/javascript" src="js/lessonList/lessonListController.js"></script>
+    <script type="text/javascript" src="js/lessonList/lessonListView.js"></script>
+    <script type="text/javascript" src="js/papaparse.min.js"></script>
+    <script type="text/javascript" src="js/welcomescreen.js"></script>
     <!-- Path to jquery csv-->
     <script src="js/jquery-csv.js"></script>
-
-    
-
-
 
 
 
   </body>
+
+   
+
 </html> 

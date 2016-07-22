@@ -1,8 +1,12 @@
 // Initialize your app
 var myApp = new Framework7({
+    init:false,
     material: true,
-    swipePanel: 'left'
+    swipePanel: 'left',
+    template7Pages: true,
+    precompileTemplates: true
 });
+
 
 // Export selectors engine
 var $$ = Dom7;
@@ -13,232 +17,100 @@ var formdb;
 //Initialize database for all saved lesson plans
 var lpdb;
 
-
+var logOb; //file object
 
 // Cordova is ready
   function onDeviceReady() {
-    formdb = window.sqlitePlugin.openDatabase({name: "test.db", location: 'default', createFromLocation: 1});
-   
+    //curriculum.db is only pre-populated if that database doesn't already exist (AKA on first run)
+    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
+    //initialize lesson plan database 
+    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
+        lpdb.transaction(function(tx){
+            tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text, sequence text)', [])
+        }, function(error){
+            // alert("transaction error: " + error.message);
+            myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
+        }, function(){
+            // alert("transaction ok");
+            //run testInsert() here
+            // testInsert()
+            
+        });
+
+
+    }, function (error){
+        alert('Open database ERROR: ' + JSON.stringify(error));
+    }); 
+    
+    myApp.init() //now you should be able to create databases from within because the deviceisready
   };
-
-
 
   // Wait for Cordova to load
   document.addEventListener("deviceready", onDeviceReady, false);
 
 
-// Add standards to the html
-function appendStandards(subject, grade){
-    var dup = [] // To check if duplicate strands have been added
+  //for testing only DELETE ON PRODUCTION
+  function testInsert(){
+    // alert("success")
 
-    formdb.transaction(function(tx) {
-            tx.executeSql("SELECT STANDARD FROM ENGLISH WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"'", [], function(tx, res) {
-                var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
-                
-               for (i = 0; i < len; i++){
-                
-                    if($.inArray(res.rows.item(i).standard, dup)==-1){
-                        $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
-                        dup.push(res.rows.item(i).standard)
-                    }           
-               }
-               
-            })
-        })
-}
+    if (window.localStorage.getItem("loggedIn") != 1){
+      window.localStorage.setItem("loggedIn", 1)
+
+      var startArray = ["", "2016-07-19", "2016-08-20", "2016-10-10","2016-11-04", "2016-03-06"]
+      var endArray = ["","2016-07-22", "2016-09-04", "2016-10-10", "2016-11-04", "2016-03-06"]
+      var gradeArray = [1,1,2,3,4]
+      var subjectArray=["","english","math","science"]
 
 
-
-//Everytime subject or grade fields are updated, reload contents of Standards select options
-function updateStandardField(subject, grade){
-
-    var dup = [] // To check if duplicate strands have been added
-
-    formdb.transaction(function(tx) {
-            tx.executeSql("SELECT STANDARD FROM ENGLISH WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"'", [], function(tx, res) {
-                var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
-                
-               for (i = 0; i < len; i++){
-                
-                    if($.inArray(res.rows.item(i).standard, dup)==-1){
-                        $("#standards").append("<option>"+res.rows.item(i).standard + "</option>")
-                        dup.push(res.rows.item(i).standard)
-                    }           
-               }
-               
-            })
-        })
-          
-};
+      lpdb.transaction(function(tx){
 
 
-function updateObjectiveField(subject, grade, standards){
+        for(var i=0; i <80; i++){
+          var teachername = "Ryan Donegan"
+          var school = "Koror Elementary"
+          var startdate = startArray[Math.floor((Math.random() * 5)+1)]//"2016-07-13"
+          var enddate = endArray[Math.floor((Math.random() * 5)+1)]//"2016-07-14"
+          var grade = gradeArray[Math.floor((Math.random() * 4) + 1)]//3
+          var quarter = 1
+          var section = "A"
+          var subject = subjectArray[Math.floor((Math.random() * 3) + 1)]//"english"
+          var standards = "[\"1sample standard\", \"2sample standard\"]"
+          var objectives = "[\"1sample object\", \"2sample objective\"]"
+          var indicators = "[]"
+          var resources = "[\"1sample resource\", \"2sample resources\"]"
+          var notes = "Note here"
+          var subobjectives = "[]"
+          var sequence = "sequence here"
+            // alert("standards: " + standards + " subject: " + subject)
+            // alert("lpdb right now: " + JSON.stringify(lpdb))
+            var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective, sequence) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+            // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
+            tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
+                // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
+                function(tx, result){
+                 // alert("success")
+                    
+                },
+                function(error){
+                    // alert("Error occurred. Couldn't save lesson plan.")
+                    myApp.alert("Error occurred. Couldn't save lesson plan.", "Lesson Planner")
+                })
 
-    //convert standards to usable form
-    var allStds
-    if(standards.length>1){
-      allStds = "'"+standards.join("', '") +"'"
-    
+        }
+        
+      })
     }
     else{
-        allStds = "'"+standards.join()+"'"
+      alert("not running not for first time")
+
     }
 
-     var dup = []
-    formdb.transaction(function(tx) {
-            tx.executeSql("SELECT OBJECTIVE FROM ENGLISH WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARD IN (" + allStds +")", [], function(tx, res) {
-                var len = res.rows.length, i;
-                
-               for (i = 0; i < len; i++){
-                
-                    if($.inArray(res.rows.item(i).objective, dup)==-1){
-                        $("#objectives").append("<option>"+res.rows.item(i).objective + "</option>")
-                        dup.push(res.rows.item(i).objective)
-                    }           
-               }
-               
-            })
-        })
 
-
-}
-
-function getSelectedSubject(){
-    return $(".subjIn").val();
-};
-
-function getSelectedGrade(){
-    return $(".gradeIn").val();
-};
-
-function getSelectedStandards(){
-    //return all selected standards, as array
-    selectedStandards=[]
-
-    $("#standards option:selected").each(function()
-    {
-        // var v = $(this)
-        // console.log(v.val())
-        selectedStandards.push($(this).val())
-    })
-        
-        return selectedStandards;
-
-        
-}
-    
-
-
-// Read CSV and return object array
-function readCSV(subject){
-    $.ajax({
-    url: "data/" + subject + ".csv",
-    async: false,
-    success: function (csvd) {
-        var curricSpecs = $.csv.toObjects(csvd);
-        // console.log(curricSpecs);
-        // console.log(items[0].eval)
-        console.log(curricSpecs)
-        return curricSpecs;
-        //var jsonobject = JSON.stringify(items);
-        //alert(jsonobject);
-    },
-    dataType: "text",
-    complete: function () {
-        // call a function on complete 
-        // console.log(items);
-    }
-})
-}
-
-
+  }    
 
 // Add view
 var mainView = myApp.addView('.view-main', {
     // Because we use fixed-through navbar we can enable dynamic navbar
     dynamicNavbar: true
+    
 });
-
-// Callbacks to run specific code for specific pages, for example for About page:
-myApp.onPageInit('about', function (page) {
-    // run createContentPage func after link was clicked
-    $$('.create-page').on('click', function () {
-        createContentPage();
-
-    });
-});
-
-myApp.onPageInit('lessonForm', function(page){
-    // //Update standards when grade or subject changes
-    $(".subjIn").on('change', function(){
-        //CLEAR STANDARDS FIRST
-        $("#standards").empty(),
-        //update standards
-        updateStandardField(getSelectedSubject(), getSelectedGrade()),
-        $(".standardSelect").removeClass("disabled");
-        //clear objectives and deactivate
-        $("#objectives").empty()
-
-    })
-
-    $(".gradeIn").on('change', function(){
-        //CLEAR STANDARDS FIRST
-        $("#standards").empty(),
-        //update standards
-        updateStandardField(getSelectedSubject(), getSelectedGrade()),
-        $(".standardSelect").removeClass("disabled");
-        //clear objectives and deactivate
-        $("#objectives").empty()
-
-    })
-
-    //Update objectives if standard changes
-    $("#standards").on('change', function(){
-        //CLEAR objectives FIRST
-        $("#objectives").empty()
-        //update standards
-        updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedStandards())
-        if(getSelectedStandards().length==0){
-            $(".objectiveSelect").addClass("disabled");
-        }
-        else{
-            $(".objectiveSelect").removeClass("disabled");
-        }
-
-    })
-
-
-});
-
-// Generate dynamic page
-var dynamicPageIndex = 0;
-function createContentPage() {
-	mainView.router.loadContent(
-        '<!-- Top Navbar-->' +
-        '<div class="navbar">' +
-        '  <div class="navbar-inner">' +
-        '    <div class="left"><a href="#" class="back link"><i class="icon icon-back"></i><span>Back</span></a></div>' +
-        '    <div class="center sliding">Dynamic Page ' + (++dynamicPageIndex) + '</div>' +
-        '  </div>' +
-        '</div>' +
-        '<div class="pages">' +
-        '  <!-- Page, data-page contains page name-->' +
-        '  <div data-page="dynamic-pages" class="page">' +
-        '    <!-- Scrollable page content-->' +
-        '    <div class="page-content">' +
-        '      <div class="content-block">' +
-        '        <div class="content-block-inner">' +
-        '          <p>Here is a dynamic page created on ' + new Date() + ' !</p>' +
-        '          <p>Go <a href="#" class="back">back</a> or go to <a href="services.html">Services</a>.</p>' +
-        '        </div>' +
-        '      </div>' +
-        '    </div>' +
-        '  </div>' +
-        '</div>'
-    );
-	return;
-
-
-
-}
-

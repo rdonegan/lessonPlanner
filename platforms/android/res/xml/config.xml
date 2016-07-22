@@ -12,8 +12,15 @@
     <feature name="SQLitePlugin">
         <param name="android-package" value="io.sqlc.SQLitePlugin" />
     </feature>
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+    <feature name="EmailComposer">
+        <param name="android-package" value="de.appplant.cordova.emailcomposer.EmailComposer" />
+    </feature>
     <allow-intent href="market:*" />
-    <name>PalauPlanner</name>
+    <icon src="www/plannerIcon.png" />
+    <name>Palau Planner</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>

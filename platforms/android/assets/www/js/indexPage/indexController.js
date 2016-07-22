@@ -1,0 +1,509 @@
+myApp.onPageInit('index', function (page) {
+
+        
+    var options = {
+      'bgcolor': '#1976D2',
+      'fontcolor': '#fff',
+      'open': false
+    }
+
+    var welcomescreen_slides = [
+      {
+        id: 'slide0',
+        picture: '<div class="tutorialicon"><img src="img/welcomescreen.svg"></div>',
+        text: '<strong>Alii!</strong><br><br>The Lesson Planner will help guide the planning, creation, and sharing of your lesson plans. Swipe left to learn more about how Lesson Planner can be used as a resource in the classroom.'
+      },
+      {
+        id: 'slide1',
+        picture: '<div class="tutorialicon"><img class="tutorialimage" src="img/home.png"></div>',
+        text: "<strong>Home</strong><br><br>The homescreen can get you to all important parts of the app: create a plan, edit a plan, share, or update the app. You can also view today's lesson plans. By swiping right from any screen, you'll get access to the help bar."
+      },
+      {
+        id: 'slide2',
+        picture: '<div class="tutorialicon"><img class="tutorialimage" src="img/create.png"></div>',
+        text: "<strong>Create</strong><br><br>Create your plans all at once, or start and make changes later. It's all up to you! Start by entering general details about yourself and your class. From there, Lesson Planner automatically walks you through the standards, objectives, and resources available for your lesson."
+      },
+      {
+        id: 'slide3',
+        picture: '<div class="tutorialicon"><img class="tutorialimage" src="img/edit.png"></div>',
+        text: "<strong>Edit</strong><br><br>Not enough time to finish a plan? Need to make any last-minute changes? You can update your lesson plans by searching for them in the edit list. Here, all your lesson plans are sorted by subject and date. Tap one to edit or update."
+      },
+      {
+        id: 'slide4',
+        picture: '<div class="tutorialicon"><img class="tutorialimage" src="img/share.png"></div>',
+        text: "<strong>Share</strong><br><br>You can even use Lesson Planner to quickly share any lessons you've saved! From the share menu, select the interval of plans you'd like to share by date, and then export to your device or send by email."
+      },
+      {
+        id: 'slide5',
+        picture: '<div class="tutorialicon"><img class="tutorialimage" src="img/update.png"></div>',
+        text: "<strong>Update</strong><br><br>What do you have to do to make sure this all runs smoothly? Nothing (almost)! Ok, before each quarter, it's a good idea to connect to the internet and tap Update on the homescreen. Other than a little patience (Lesson Planner is still a work in progress), that's all you need! "
+      },
+      {
+        id: 'slide6',
+        picture: '<div class="tutorialicon"><img src="img/smile.svg"></div>',
+        text: "<strong>That's it!</strong><br><br>Over time, Lesson Planner can simplify your lesson planning, leaving you more time to focus on other areas of class preparation. Thanks for reading and good luck!<br><br> <a class='tutorial-close-btn' href='#''>Show Me the Home Screen</a>"
+      }
+    ];
+
+    var welcomescreen = myApp.welcomescreen(welcomescreen_slides, options);
+   
+
+    $$(document).on('click', '.helpText', function () {
+      welcomescreen.open();
+    });
+    
+
+    $$(document).on('click', '.tutorial-close-btn', function () {
+      welcomescreen.close();
+    });
+
+    //only show export to email option if device is configured with email
+    if (cordova.plugins.email.isAvailable){
+        $('.emailShare').removeClass("hidden");
+    }
+
+  //index page is initialized
+  getCurrentLessons(function(items){
+    if (items.length==0){
+        return
+    }
+    else{
+        $('.openingPrompt').addClass("hidden");
+        var currentPlansList= myApp.virtualList('.currentLessons', {
+            items: items,
+            renderItem: function(index,item){
+                return '<li class="accordion-item">' +
+                        // '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
+                         '<a href="#" class="item-link item-content">' + 
+                          '<div class="item-inner">' +
+                            '<div class="item-title-row">' +
+                              '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
+                              '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
+                            '</div>' +
+                            '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
+                            '<div class="chip bg-teal"><div class="chip-label">Standards: '+JSON.parse(item.standards).length+'</div></div>'+
+                            '<div class="chip bg-amber"><div class="chip-label">Objectives: '+JSON.parse(item.objectives).length+'</div></div>'+
+                            '<div class="chip bg-indigo"><div class="chip-label">Resources: '+JSON.parse(item.resources).length+'</div></div>'+
+                          '</div>' +
+                        '</a>' +
+                        '<div class="accordion-item-content">' +
+                            '<div class="content-block tablet-inset">' +
+                                '<div class="content-block-inner">'+
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-teal"><div class="chip-label">Standards</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList">'+getListHTML(item.standards)+'</ul></div>' +
+                                    '</div>'+
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-amber"><div class="chip-label">Objectives</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList">'+getListHTML(item.objectives)+'</ul></div>' +
+                                    '</div>'+
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-indigo"><div class="chip-label">Resources</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList">'+getListHTML(item.resources)+'</ul></div>' +
+                                    '</div>'+
+                                    '<div class="row">'+
+                                        '<div class="col-20"><div class="chip bg-deeppurple"><div class="chip-label">Resource Details</div></div></div>'+
+                                        '<div class="col-80"><ul class="itemList"><li>'+((item.sequence) ? item.sequence:"No additional resources added. Tap edit to add more.")+'</li></ul></div>' +
+                                    '</div>'+
+                                    '<br>'+
+                                    '<div class="row"><a href="lessonForm.html?id='+ item.id+'" class="col-20 button button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a></div>' +
+                                '</div>'+
+                            '</div>'+ 
+                        '</div>'+
+                      '</li>';
+            },
+            height:115
+        });
+        
+    }  
+
+  })
+
+    //format array into list
+    function getListHTML(items){
+        if(JSON.parse(items).length > 0){
+            var str= ""
+            for (var i=0; i < JSON.parse(items).length; i++){
+                str += "<li>" + (JSON.parse(items))[i] + "</li>"
+            }
+            return str
+        }
+        else{
+            return "<li>None. Tap edit to add more.</li>"
+        }
+    }
+
+    //****
+    //Get Today's Plans - a callback
+    //****
+
+    //Returns array of current lesson plans (based on start and end date)
+    //Used to populate the list of Today's Plans on the homescreen
+    function getCurrentLessons(callback) {
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        if(mm<10) {
+            mm='0'+mm
+        } 
+
+        today =  yyyy+'-'+mm+'-'+dd;
+        // alert("today's date: " + today)
+            
+        var items = new Array();
+        lpdb.transaction(function(tx) {
+            tx.executeSql('SELECT * FROM lessonplans WHERE startdate <= "' + today + '" AND enddate >= "' + today +'" ORDER BY date(startdate)', [], function(tx, results) {
+                
+                var len = results.rows.length;
+                for (var i=0; i<len; i++){
+                    // items.push(results.rows.item(i).subject);
+                    items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives, "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence })
+                    
+                }
+                
+                callback(items)
+            });
+        });
+    }
+
+});
+
+var sendEmail = false;
+
+//****
+//Sharing lesson plans
+//****
+
+
+$$(document).on('click', '.emailShare', function(e){
+    sendEmail = true;
+
+    //check that start and endate are both filled in, otherwise, show error
+    if($('.startDateInput').val()=="" || $('.endDateInput').val()=="" ){
+        myApp.alert("No lesson plans shared. Please fill in values for both to and from dates.")
+        return;
+    }
+    else{
+        myApp.showPreloader("Exporting your files");
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
+        // alert("got main dir: " + JSON.stringify(dir));
+        createFile(dir, "log.csv") 
+    });
+
+    } 
+})
+
+//Share popup is triggered when nav item is tapped
+$$(document).on('click', '.shareLink', function(e){
+    //check that start and endate are both filled in, otherwise, show error
+    if($('.startDateInput').val()=="" || $('.endDateInput').val()=="" ){
+        myApp.alert("No lesson plans shared. Please fill in values for both to and from dates.")
+        return;
+    }
+    else{
+        myApp.showPreloader("Exporting your files");
+        window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
+        // alert("got main dir: " + JSON.stringify(dir));
+        createFile(dir, "log.csv") 
+    });
+
+    }   
+});
+
+
+function createFile(dirEntry, fileName){
+    dirEntry.getFile(fileName, {create: true, exclusive: false}, function(fileEntry){
+        writeFile(fileEntry, null)
+    })
+}
+
+
+//Calls the filewriter to write downloaded csv to file
+//Uses getLessonsByData and jsonToCSV callback methods
+function writeFile(fileEntry, dataObj){
+    // alert(JSON.stringify(fileEntry))
+    //first, get all applicable lessons
+    getLessonsByDate(function(items){
+        var csvItems = jsonToCSV(items)
+        fileEntry.createWriter(function(fileWriter){
+            // alert("still in here")
+            fileWriter.write(csvItems)
+            if(sendEmail){
+                cordova.plugins.email.open({
+                    subject: 'Lessons plans: ' + $('.startDateInput').val() + " - " + $('.endDateInput').val(),
+                    body:    'Please find my lesson plans attached.',
+                    attachments: fileEntry.nativeURL
+
+                });
+            }
+            
+            myApp.hidePreloader();
+            myApp.alert("Records saved as log.csv in your app documents.", "My Planner")
+        })
+    })  
+}
+
+//Helper method that converts JSON results from db query to csv
+//For arrays of strings (e.g. standards, objectives, etc.) it removes commas
+function jsonToCSV(objArray){
+    var header = Object.keys(objArray[0])
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    // var str = '';
+    var str = header + '\r\n';
+
+    // alert(JSON.stringify(array))
+
+    for (var i = 0; i < array.length; i++) {
+        var line = '';
+        for (var index in array[i]) {
+            // alert("index = " + index)
+            if (line != ''){ line += ','}
+
+            if (jQuery.type(array[i][index])=="string" && array[i][index].charAt(0) == "["){
+                // alert(array[i][index].charAt(0))
+                var newStr = array[i][index].replace(/,/g, "")
+                line += newStr
+            }
+            else if(index=="notes" || index =="sequence"){
+                // alert(array[i][index])
+                var newStr = "[" + array[i][index] + "]"
+                newStr = newStr.replace(/,/g, "")
+                newStr = newStr.replace(/\r?\n|\r/g, " ")
+                line += newStr
+            }
+            else{
+                line += array[i][index];
+            }  
+            
+        }
+
+        str += line + '\r\n';
+    }
+
+    // alert(str)
+    return str;
+}
+
+//Helper method that reads input in the start and end date fields
+//and returns all lesson plans that fall within that interval
+function getLessonsByDate(callback) {
+        
+    var startDate= $('.startDateInput').val() //get from input
+    var endDate= $('.endDateInput').val() //get from input
+
+    var items = new Array();
+    lpdb.transaction(function(tx) {
+        tx.executeSql('SELECT * FROM lessonplans WHERE startdate >= "' + startDate + '" AND enddate <= "' + endDate +'"', [], function(tx, results) {
+            // alert(results.rows.length)
+            var len = results.rows.length;
+            for (var i=0; i<len; i++){
+                // items.push(results.rows.item(i).subject);
+                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence": results.rows.item(i).sequence }
+                items.push(row)
+            }
+            if (items.length==0){
+                myApp.hidePreloader();
+                myApp.alert("Error exporting. No lesson plans saved.", "My Planner")
+
+            }
+            callback(items)
+        }, errorHandler);
+    });
+    function errorHandler(){
+        myApp.hidePreloader();
+        myApp.alert("Error exporting. No lesson plans saved.", "My Planner")
+    }
+}
+
+//****
+//Update CURRICULUM db
+//****
+
+//initiate update process and backup
+$$(document).on('click','.updateApp', function(e){
+    myApp.showPreloader("Updating");
+    //Create a backup if hasn't been done already with update version
+    createBackup(function(){
+
+        //The directory to store data
+        var store;
+        store = cordova.file.dataDirectory;
+        //URL of our asset
+        var assetURL= 'http://downloads.moe/test/lessonPlanning/updated-curric-database.csv'
+        
+        //File name of our important data file we didn't ship with the app
+        var fileName = "curriculum.csv";
+        var fileTransfer = new FileTransfer();
+        fileTransfer.download(assetURL, store + fileName, 
+            function(entry) {
+                // Successfully downloaded file
+                appStart(entry);
+            }, 
+            function(err) {
+                myApp.hidePreloader()
+                myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
+            });
+
+        //Only called when the file exists or has been downloaded.
+        function appStart(fileEntry) {           
+            fileEntry.file(function (file) {
+                        var reader = new FileReader();
+                        reader.onloadend = function(){
+                            Papa.parse(this.result, {
+                                header: true,
+                                dynamicTyping: true,
+                                complete:function(results){
+                                    formdb.transaction(function(transaction){
+                                        transaction.executeSql('DELETE FROM CURRICULUM', [], 
+                                            function(tx, result){
+                                                updateFormTable(results.data, tx)
+                                            })
+                                    })
+                                }
+                            })
+                        }
+                        reader.readAsBinaryString(file);
+                    })           
+        }
+    })       
+})
+
+//Called on update. Backs up current form database to new table and then continues update process
+//The update process is continued even if there is an error in backing up the database
+function createBackup(callback){
+    //First, check that the version being backed up isn't a duplicate
+    compareVersions(function(newVersion){
+        if(newVersion){
+            //1. Drop table if exists, CURRICULUM_OLD
+            //2. Create table CURRICULUM_OLD
+            //3. Insert rows from CURRICULUM into CURRICULUM_OLD
+            //4. Update curriculum with data from downloaded file
+            formdb.transaction(function(tx){
+                tx.executeSql('DROP TABLE IF EXISTS CURRICULUM_OLD', []);
+                tx.executeSql('CREATE TABLE IF NOT EXISTS CURRICULUM_OLD (subject text, quarter integer, grade integer, standardID integer, standard text, gradeObjID integer, objective text, subobjective text, indicator text, resources text)', []);
+                tx.executeSql('INSERT INTO CURRICULUM_OLD SELECT * FROM CURRICULUM', [])
+            }, function(){
+                callback();
+            }, function(err){
+                callback();
+            })
+        }
+        else{
+            callback();
+        }
+    })
+}
+
+//Helper method that compares the version of Curriculum vs curriculum_old
+//version is stored as a string in the first row and cell in each database
+function compareVersions(callback){
+    // alert("comparing")
+    var curriculum_version= "";
+    var old_curriculum_version = "";
+
+    formdb.transaction(function(tx){
+        tx.executeSql('SELECT SUBJECT FROM CURRICULUM ORDER BY ROWID ASC LIMIT 1', [], function(tx,result){
+             // alert("curriculum versionn: " + result.rows.item(0).subject)
+            curriculum_version = result.rows.item(0).subject
+        })
+        tx.executeSql('SELECT SUBJECT FROM CURRICULUM_OLD ORDER BY ROWID ASC LIMIT 1', [], function(tx, result){
+            // alert("old curric version: " + result.rows.item(0).subject)
+            old_curriculum_version = result.rows.item(0).subject
+        })
+
+    }, function(){
+        callback(curriculum_version != old_curriculum_version)
+    }, function(error){
+        callback(curriculum_version != old_curriculum_version)
+    })
+}
+
+function updateFormTable(results, tx){
+    // alert(results[0].subject)
+    var sql = "INSERT INTO CURRICULUM (subject, quarter, grade, standardID, standard, gradeObjID, objective, subobjective, indicator, resources) VALUES (?,?,?,?,?,?,?,?,?,?)"
+    for (var i in results){
+        var params = [results[i].subject, results[i].quarter, results[i].grade, results[i].standardID, results[i].standard, results[i].gradeObjID, results[i].objective, results[i].subobjective, results[i].indicator, results[i].resources]
+        // alert(JSON.stringify(results[i]))
+        tx.executeSql(sql, params)
+        myApp.hidePreloader()
+        myApp.alert("Update Complete", "My Planner")
+
+    }
+}
+
+
+//****
+//Rollback database to previously stored update if available
+//****
+
+$$(document).on('click', '.rollbackData', function(e){
+    myApp.confirm("Are you sure you want to rollback to the last update? This will not affect your saved lesson plans.", "Update Rollback", function(){
+
+        //check if old_curriculum table exists - if it does, and has data, delete data from curriculum
+        //copy rows from curriculum-old to curriculum, then refresh page
+        myApp.showPreloader("Rollback to last update");
+        formdb.transaction(function(tx){
+            tx.executeSql('SELECT name FROM sqlite_master WHERE type="table" AND name = "CURRICULUM_OLD"', [], function(tx, res){
+                // alert("success! result: " + JSON.stringify(res))
+                if(res.rows.length == 1){
+                    //delete curriculum and replace with old curriculum
+                    formdb.transaction(function(tx){
+                        tx.executeSql('DELETE FROM CURRICULUM', [], function(tx,res){
+                        })
+                        tx.executeSql('INSERT INTO CURRICULUM SELECT * FROM CURRICULUM_OLD',[], function(tx,res){
+                        })
+                    }, function(err){
+                        mainView.router.refreshPage()
+                        myApp.hidePreloader();
+                        myApp.alert("Rollback failed. Try updating and then rollback again. If this doesn't work, you may need to wait for the next update or reset the database.", "Lesson Planner")
+                    }, function(){
+                        mainView.router.refreshPage()
+                        myApp.hidePreloader();
+                        myApp.alert("Rollback succeeded! You are now using the previous update.", "Lesson Planner")
+                    })
+                }
+                else{
+                    myApp.hidePreloader();
+                    myApp.alert("No backup data available. Update rollback aborted.")
+                    return
+                }
+            }, function(err){
+                myApp.hidePreloader();
+                myApp.alert("No backup data available. Update rollback aborted.")
+                return
+            })
+        })
+    })
+})
+
+//****
+//Reset database to install state from preloaded db
+//****
+
+//deletes update from file system and reverts to default db shipped with install
+$$(document).on('click', '.resetData', function(e){
+    myApp.confirm("Are you sure you want to reset the curriculum database? This will restore all standards, objectives, resources, indicators, and sub-objectives to their original options. Your saved lesson plans will not be affected.", "Curriculum Reset", function(){
+        var store = cordova.file.dataDirectory;
+        var fileName = "curriculum.csv";
+
+        window.resolveLocalFileSystemURL(store + fileName, function(file){
+            
+            file.remove(function(){
+                // alert("file deleted")
+                window.sqlitePlugin.deleteDatabase({name: 'curriculum.db', location: 'default'}, function(){
+                    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, function(){
+                        myApp.alert("Standards, objectives, resources, and indicator data successfully reset", "Lesson Planner")
+                        mainView.router.refreshPage()
+                    });
+                });
+                 
+            })
+        })
+    })
+})
