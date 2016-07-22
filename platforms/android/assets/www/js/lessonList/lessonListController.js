@@ -128,7 +128,7 @@ myApp.onPageInit('lessonList', function (page) {
                               '<div class="item-inner">' +
                                 '<div class="item-title-row">' +
                                   '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
-                                  '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
+                                  '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + toDay((item.startdate.substr(5,5)).substr(3,4)) + ' - ' + toMonth((item.enddate.substr(5,5)).substr(0,2)) + ' ' + toDay((item.enddate.substr(5,5)).substr(3,4)) + ', ' + item.startdate.substr(0,4) +  '</div>' +
                                 '</div>' +
                                 '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
                               '</div>' +
@@ -156,7 +156,7 @@ myApp.onPageInit('lessonList', function (page) {
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
                     // items.push(results.rows.item(i).subject);
-                    items.push({"id": results.rows.item(i).id ,"startdate": results.rows.item(i).startdate ,"grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes })
+                    items.push({"id": results.rows.item(i).id ,"startdate": results.rows.item(i).startdate ,"enddate": results.rows.item(i).enddate, "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes })
                 }
                 // lessonPlans=items;
                 callback(items);

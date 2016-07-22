@@ -1,9 +1,9 @@
 function toMonth(month){
 	if (month=="01") {
-		return "January"
+		return "Jan"
 	}
 	else if (month=="02") {
-		return "February"
+		return "Feb"
 	}
 	else if (month=="03") {
 		return "March"
@@ -24,16 +24,26 @@ function toMonth(month){
 		return "August"
 	}
 	else if (month=="09") {
-		return "September"
+		return "Sept"
 	}
 	else if (month=="10") {
-		return "October"
+		return "Oct"
 	}
 	else if (month=="11") {
-		return "November"
+		return "Nov"
 	}
 	else if (month=="12") {
-		return "December"
+		return "Dec"
 	}
 
+}
+
+//remove leading 0, if exists, and return
+function toDay(date){
+	if(date.substr(0,1) == "0"){
+		return (date.substr(1))
+	}
+	else{
+		return date
+	}
 }
