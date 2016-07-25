@@ -1,10 +1,8 @@
 myApp.onPageInit('lessonList', function (page) {
 
     var virtualList;
-    // var lessonPlans;
-
-
-
+   
+   //**** Filter virtual list
     $$(document).on('click', '.noFilter', function(){
 
         virtualList.resetFilter();
@@ -12,8 +10,6 @@ myApp.onPageInit('lessonList', function (page) {
     })
 
     $$(document).on('click', '.englishFilter', function(){
-        //create array with indexes of id's of items with english subject
-        //filter virtualList
         var lessonPlans=virtualList.items;
         var englishPlans=[]
         var l = lessonPlans.length;
@@ -31,8 +27,6 @@ myApp.onPageInit('lessonList', function (page) {
     })
 
     $$(document).on('click', '.mathFilter', function(){
-        //create array with indexes of id's of items with english subject
-        //filter virtualList
         var lessonPlans=virtualList.items;
         var englishPlans=[]
         var l = lessonPlans.length;
@@ -50,8 +44,7 @@ myApp.onPageInit('lessonList', function (page) {
     })
 
         $$(document).on('click', '.socialFilter', function(){
-        //create array with indexes of id's of items with english subject
-        //filter virtualList
+
         var lessonPlans=virtualList.items;
         var englishPlans=[]
         var l = lessonPlans.length;
@@ -69,8 +62,7 @@ myApp.onPageInit('lessonList', function (page) {
     })
 
     $$(document).on('click', '.scienceFilter', function(){
-        //create array with indexes of id's of items with english subject
-        //filter virtualList
+
         var lessonPlans=virtualList.items;
         var englishPlans=[]
         var l = lessonPlans.length;
@@ -88,8 +80,7 @@ myApp.onPageInit('lessonList', function (page) {
     })
 
     $$(document).on('click', '.palauanFilter', function(){
-        //create array with indexes of id's of items with english subject
-        //filter virtualList
+
         var lessonPlans=virtualList.items;
         var englishPlans=[]
         var l = lessonPlans.length;
@@ -106,16 +97,16 @@ myApp.onPageInit('lessonList', function (page) {
 
     })
 
+
+    //**** Delete lesson plan from database
     $('.list-block').on("click", ".swipeout-delete", function(e){
         // alert(this.id)
         deleteFromLPDB(this.id)
     })  
     
     
-
+    //Create virtual list of all lesson plans
     getLessons(function(items){
-
-        
         if(items.length==0){
             $('.editLessons').html('<h2 class="openingPrompt">No Lesson Plans Created :(</h2>');
         }
@@ -141,10 +132,7 @@ myApp.onPageInit('lessonList', function (page) {
                 },
                 height:70
             });
-
-        }
-        
-        
+        }  
     })
 
     function getLessons(callback) {
@@ -155,10 +143,8 @@ myApp.onPageInit('lessonList', function (page) {
                 
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
-                    // items.push(results.rows.item(i).subject);
                     items.push({"id": results.rows.item(i).id ,"startdate": results.rows.item(i).startdate ,"enddate": results.rows.item(i).enddate, "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes })
                 }
-                // lessonPlans=items;
                 callback(items);
             });
         });
