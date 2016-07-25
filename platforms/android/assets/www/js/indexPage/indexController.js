@@ -2,7 +2,8 @@
 myApp.onPageInit('index', function (page) {
 
 
-    $('.navbar').removeClass("theme-pink");
+    $('.navbar').removeClass("theme-pink"); //remove pink navbar when returning from edit page
+    
     //only show export to email option if device is configured with email
     if (cordova.plugins.email.isAvailable){
         $('.emailShare').removeClass("hidden");
