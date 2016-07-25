@@ -1,3 +1,4 @@
+//index page is initialized
 myApp.onPageInit('index', function (page) {
 
     //only show export to email option if device is configured with email
@@ -5,7 +6,8 @@ myApp.onPageInit('index', function (page) {
         $('.emailShare').removeClass("hidden");
     }
 
-  //index page is initialized
+  
+  //create a dynamic list of all lesson plans for today
   getCurrentLessons(function(items){
     if (items.length==0){
         return
@@ -66,7 +68,7 @@ myApp.onPageInit('index', function (page) {
 
   })
 
-    //format array into list
+    //format items array as html output to display in virtual list
     function getListHTML(items){
         if(JSON.parse(items).length > 0){
             var str= ""
@@ -174,22 +176,18 @@ function createFile(dirEntry, fileName){
 //Calls the filewriter to write downloaded csv to file
 //Uses getLessonsByData and jsonToCSV callback methods
 function writeFile(fileEntry, dataObj){
-    // alert(JSON.stringify(fileEntry))
     //first, get all applicable lessons
     getLessonsByDate(function(items){
         var csvItems = jsonToCSV(items)
         fileEntry.createWriter(function(fileWriter){
-            // alert("still in here")
             fileWriter.write(csvItems)
             if(sendEmail){
                 cordova.plugins.email.open({
                     subject: 'Lessons plans: ' + $('.startDateInput').val() + " - " + $('.endDateInput').val(),
                     body:    'Please find my lesson plans attached.',
                     attachments: fileEntry.nativeURL
-
                 });
             }
-            
             myApp.hidePreloader();
             myApp.alert("Records saved as log.csv in your app documents.", "My Planner")
         })
@@ -201,24 +199,20 @@ function writeFile(fileEntry, dataObj){
 function jsonToCSV(objArray){
     var header = Object.keys(objArray[0])
     var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-    // var str = '';
     var str = header + '\r\n';
-
-    // alert(JSON.stringify(array))
 
     for (var i = 0; i < array.length; i++) {
         var line = '';
         for (var index in array[i]) {
-            // alert("index = " + index)
             if (line != ''){ line += ','}
 
+            //format arrays so they fit in one cell
             if (jQuery.type(array[i][index])=="string" && array[i][index].charAt(0) == "["){
-                // alert(array[i][index].charAt(0))
                 var newStr = array[i][index].replace(/,/g, "")
                 line += newStr
             }
+            //remove newlines from notes and sequence to fit in one cell
             else if(index=="notes" || index =="sequence"){
-                // alert(array[i][index])
                 var newStr = "[" + array[i][index] + "]"
                 newStr = newStr.replace(/,/g, "")
                 newStr = newStr.replace(/\r?\n|\r/g, " ")
@@ -226,14 +220,11 @@ function jsonToCSV(objArray){
             }
             else{
                 line += array[i][index];
-            }  
-            
+            }    
         }
 
         str += line + '\r\n';
     }
-
-    // alert(str)
     return str;
 }
 
@@ -251,13 +242,12 @@ function getLessonsByDate(callback) {
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                 // items.push(results.rows.item(i).subject);
-                var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence": results.rows.item(i).sequence }
-                items.push(row)
+                // var row = {"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence": results.rows.item(i).sequence }
+                items.push({"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence": results.rows.item(i).sequence })
             }
             if (items.length==0){
                 myApp.hidePreloader();
                 myApp.alert("Error exporting. No lesson plans saved.", "My Planner")
-
             }
             callback(items)
         }, errorHandler);
@@ -372,11 +362,9 @@ function compareVersions(callback){
 }
 
 function updateFormTable(results, tx){
-    // alert(results[0].subject)
     var sql = "INSERT INTO CURRICULUM (subject, quarter, grade, standardID, standard, gradeObjID, objective, subobjective, indicator, resources) VALUES (?,?,?,?,?,?,?,?,?,?)"
     for (var i in results){
         var params = [results[i].subject, results[i].quarter, results[i].grade, results[i].standardID, results[i].standard, results[i].gradeObjID, results[i].objective, results[i].subobjective, results[i].indicator, results[i].resources]
-        // alert(JSON.stringify(results[i]))
         tx.executeSql(sql, params)
         myApp.hidePreloader()
         myApp.alert("Update Complete", "My Planner")
@@ -442,7 +430,6 @@ $$(document).on('click', '.resetData', function(e){
         window.resolveLocalFileSystemURL(store + fileName, function(file){
             
             file.remove(function(){
-                // alert("file deleted")
                 window.sqlitePlugin.deleteDatabase({name: 'curriculum.db', location: 'default'}, function(){
                     formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1}, function(){
                         myApp.alert("Standards, objectives, resources, and indicator data successfully reset", "Lesson Planner")
