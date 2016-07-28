@@ -1,28 +1,17 @@
 .sectionHeader{
 	background-color: #ebebeb;
 	padding-bottom: 10px;
-
-	/*height*/
 }
 
 .subSection{
 	margin-top: 10px;
 	margin-bottom: 10px;
-	
 }
-
 
 .toolbar{
 	bottom:0;
 }
 
-/*h2{
-	color: white;
-}*/
-
-/*.navbar, .subnavbar, .toolbar{
-	background: #1976D2;
-}*/
 
 .profileHeader{
 	background-color: #1976D2;
@@ -54,10 +43,6 @@
   	font-size: 0;
 }
 
-/*.profileInfo i{
-	float:left;
-	display:inline;
-}*/
 
 .panel{
 	background-color: #1976D2;
@@ -93,7 +78,6 @@ ul .itemList{
 	color:#ebebeb ;
 }
 
-/**/
 .tutorialicon img{
 	width: 70%;
 	height:auto;
