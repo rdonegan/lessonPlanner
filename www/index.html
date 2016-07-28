@@ -16,19 +16,15 @@
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="css/my-app.css">
     <link rel="stylesheet" href="css/welcomescreen.css">
-
   </head>
   <body>
-    <!-- First, we need to add Panel's overlay that will overlays app while panel is opened -->
+    <!--Panel's overlay that will overlays app while panel is opened -->
   <div class="panel-overlay"></div>
 
   <!-- Left panel -->
   <div class="panel panel-left panel-reveal">
-
-
       <div class="content-block">
         <h3>Getting Started</h3>
-        <!-- Click on link with "close-panel" class will close panel -->
         <p>Tap a topic below to learn more. To close this panel, tap anywhere to the right.</p>
       </div>
 
@@ -169,7 +165,7 @@
       </div>
   </div>
 
-    <!-- About Popup -->
+    <!-- Share Popup -->
     <div class="popup popup-share">
       <div class="content-block">
         <h2>Choose interval of lesson plans to share.</h2>
@@ -198,10 +194,8 @@
                   </div>
               </div>
             </li>
-
           </ul>
         </div>
-        
       </div>
 
       <div class="content-block">
@@ -214,10 +208,8 @@
        <div class="content-block">
         <div class="row">
           <div class="col-50"></div>
-          
           <div class="col-50"><a href="#" class="button button-big button-fill color-teal emailShare hidden close-popup">Share and Email</a></div>
         </div>
-        
       </div>
     </div>
 
@@ -229,9 +221,6 @@
         <div class="pages navbar-fixed">
           <!-- Page, "data-page" contains page name -->
           <div data-page="index" class="page">
-
-
- 
             <!-- Top Navbar. In Material theme it should be inside of the page-->
             <div class="navbar theme-blue">
               <div class="navbar-inner">   
@@ -242,20 +231,12 @@
                 </div> 
                 <div class="center">Lesson Planner</div>
                 <div class="right">
-                  
                   <a href="lessonForm.html" class="link"> <i class="icon icon-plus"></i><span>Create</span></a>
                   <a href="lessonList.html" class="link"><i class="icon icon-edit"></i><span>Edit</span></a>
                   <a href="#" data-popup=".popup-share" class="link open-popup"> <i class="icon icon-share"></i><span>Share</span></a>
-                 
-
-                </div>
-                
+                </div>  
               </div>
             </div>
-
- 
-            
-
             <a href="lessonForm.html" class="floating-button floating-button-to-popover open-popover color-pink">
                 <i class="icon icon-plus"></i>
             </a>
@@ -267,49 +248,32 @@
                     <a href="#" class="profileInfo">
                       <h2 class="introText">Alii,</h2>
                       <h2 class="helpText">tap here for help getting started.</h2>
-                      <!-- <a href="" class="helpLink"><h5>Tap here for help</h5></a> -->
                     </a>
-                    
                    </div>
-
                 </div>
-                
                 <div class="col-20">
                   <div class="content-block">
                     <div class="button button-fill color-cyan updateApp">Update App</div>
                   </div>
                 </div>
-
               </div>
-
-             
-              
             <div class="row sectionHeader">
               <div class="content-block-title">
                 Today's Plans. Tap a plan below for details.
               </div>
             </div>
-
-
             <div class="list-block media-list currentLessons">
               <h1 class="openingPrompt">+ Create to add plan</h1>
-
             </div>
-
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    
-    <!-- Path to JQuery-->
     <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
-    <!-- CordovaJS/ -->
     <script type="text/javascript" src="cordova.js"></script>
-    <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="js/framework7.min.js"></script>
-    <!-- Path to your app js-->
     <script type="text/javascript" src="js/my-app.js"></script>
     <script type="text/javascript" src="js/plansDatabase.js"></script>
     <script type="text/javascript" src="js/indexPage/indexController.js"></script>
@@ -318,13 +282,6 @@
     <script type="text/javascript" src="js/papaparse.min.js"></script>
     <script type="text/javascript" src="js/welcomescreen.js"></script>
     <script type="text/javascript" src="js/jquery.scrollTo.min.js"></script>
-    <!-- Path to jquery csv-->
     <script src="js/jquery-csv.js"></script>
-
-
-
   </body>
-
-   
-
 </html> 
