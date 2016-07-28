@@ -466,28 +466,34 @@ myApp.onPageInit('lessonForm', function(page){
 
     //**** Hacky way for scrolling page so keyboard doesn't cover text areas
     $(".sequenceIn").focus(function(e) {
-        setTimeout((function() {
-            var deviceHeight = window.screen.height;
-            var divHTML = "<div style='height:" + deviceHeight + "px;'></div>"
-            $(".extraSpace").append(divHTML)
-            $(".page-content").scrollTo(document.getElementById("sequenceGO"), {offset: -60});
-        }), 500);
+        //Places cursor at end of text, if any. This is a bug fix
+        var tempStr = $(".sequenceIn").val()
+        $(".sequenceIn").val('')
+        $(".sequenceIn").val(tempStr)
+        //scroll to top of text area
+        var deviceHeight = window.screen.height;
+        var divHTML = "<div style='height:" + deviceHeight + "px;'></div>"
+        $(".extraSpace").append(divHTML)
+        $(".page-content").scrollTo(document.getElementById("sequenceGO"), {offset: -60});  
 
     });
 
     $(".notesIn").focus(function(e) {
-
-        setTimeout((function() {
-            var deviceHeight = window.screen.height;
-            var divHTML = "<div class='emptyDiv' style='height:" + deviceHeight + "px;'></div>"
-            var element = document.getElementById("notesGO")
-            
-            $(".extraSpace").append(divHTML)
-            $(".page-content").scrollTo(document.getElementById("notesGO"), {offset: -60});
-        }), 500);
+        //Places cursor at end of text, if any. This is a bug fix
+        var tempStr = $(".notesIn").val()
+        $(".notesIn").val('')
+        $(".notesIn").val(tempStr)
+        //scroll to top of text area
+        var deviceHeight = window.screen.height;
+        var divHTML = "<div class='emptyDiv' style='height:" + deviceHeight + "px;'></div>"
+        var element = document.getElementById("notesGO")
+        
+        $(".extraSpace").append(divHTML)
+        $(".page-content").scrollTo(document.getElementById("notesGO"), {offset: -60});
 
     });
 
+    //remove empty div 
     $(".notesIn").focusout(function(){
         $(".extraSpace").empty()
     })
