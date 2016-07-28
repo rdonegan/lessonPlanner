@@ -1,15 +1,14 @@
 //index page is initialized
 myApp.onPageInit('index', function (page) {
 
-
-    $('.navbar').removeClass("theme-pink"); //remove pink navbar when returning from edit page
+    //remove pink navbar when returning from edit page
+    $('.navbar').removeClass("theme-pink"); 
     
     //only show export to email option if device is configured with email
     if (cordova.plugins.email.isAvailable){
         $('.emailShare').removeClass("hidden");
     }
 
-  
   //create a dynamic list of all lesson plans for today
   getCurrentLessons(function(items){
     if (items.length==0){
@@ -21,7 +20,6 @@ myApp.onPageInit('index', function (page) {
             items: items,
             renderItem: function(index,item){
                 return '<li class="accordion-item">' +
-                        // '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
                          '<a href="#" class="item-link item-content">' + 
                           '<div class="item-inner">' +
                             '<div class="item-title-row">' +
@@ -65,8 +63,7 @@ myApp.onPageInit('index', function (page) {
                       '</li>';
             },
             height:115
-        });
-        
+        });  
     }  
 
   })
@@ -85,7 +82,7 @@ myApp.onPageInit('index', function (page) {
         }
     }
 
-    //**** Format lesson plans in virtual list
+    //**** Format lesson plan month in virtual list
     function toMonth(month){
         if (month=="01") {
             return "Jan"
@@ -147,36 +144,29 @@ myApp.onPageInit('index', function (page) {
         } 
 
         today =  yyyy+'-'+mm+'-'+dd;
-        // alert("today's date: " + today)
             
         var items = new Array();
         lpdb.transaction(function(tx) {
             tx.executeSql('SELECT * FROM lessonplans WHERE startdate <= "' + today + '" AND enddate >= "' + today +'" ORDER BY date(startdate)', [], function(tx, results) {
-                
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
-                    // items.push(results.rows.item(i).subject);
                     items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives, "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence, "notes": results.rows.item(i).notes })
-                    
                 }
-                
                 callback(items)
             });
         });
     }
-
 });
 
+//var only set to true if email is available
 var sendEmail = false;
 
 //****
 //Sharing lesson plans
 //****
 
-
 $$(document).on('click', '.emailShare', function(e){
     sendEmail = true;
-
     //check that start and endate are both filled in, otherwise, show error
     if($('.startDateInput').val()=="" || $('.endDateInput').val()=="" ){
         myApp.alert("No lesson plans shared. Please fill in values for both to and from dates.")
@@ -185,7 +175,6 @@ $$(document).on('click', '.emailShare', function(e){
     else{
         myApp.showPreloader("Exporting your files");
         window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
-        // alert("got main dir: " + JSON.stringify(dir));
         createFile(dir, "log.csv") 
     });
 
@@ -202,7 +191,6 @@ $$(document).on('click', '.shareLink', function(e){
     else{
         myApp.showPreloader("Exporting your files");
         window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
-        // alert("got main dir: " + JSON.stringify(dir));
         createFile(dir, "log.csv") 
     });
 
@@ -266,7 +254,6 @@ function jsonToCSV(objArray){
                 line += array[i][index];
             }    
         }
-
         str += line + '\r\n';
     }
     return str;
@@ -278,7 +265,6 @@ function getLessonsByDate(callback) {
         
     var startDate= $('.startDateInput').val() //get from input
     var endDate= $('.endDateInput').val() //get from input
-
     var items = new Array();
     lpdb.transaction(function(tx) {
         tx.executeSql('SELECT * FROM lessonplans WHERE startdate >= "' + startDate + '" AND enddate <= "' + endDate +'"', [], function(tx, results) {
