@@ -7,7 +7,6 @@ var myApp = new Framework7({
     precompileTemplates: true
 });
 
-
 // Export selectors engine
 var $$ = Dom7;
 
@@ -16,7 +15,6 @@ var formdb;
 
 //Initialize database for all saved lesson plans
 var lpdb;
-
 var logOb; //file object
 
 // Cordova is ready
@@ -28,7 +26,6 @@ var logOb; //file object
         lpdb.transaction(function(tx){
             tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text, sequence text)', [])
         }, function(error){
-            // alert("transaction error: " + error.message);
             myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
         }, function(){
             // testInsert() 
@@ -103,8 +100,6 @@ var logOb; //file object
 
   //for testing only DELETE ON PRODUCTION
   function testInsert(){
-    // alert("success")
-
     if (window.localStorage.getItem("loggedIn") != 1){
       window.localStorage.setItem("loggedIn", 1)
 
@@ -113,9 +108,7 @@ var logOb; //file object
       var gradeArray = [1,1,2,3,4]
       var subjectArray=["","english","math","science"]
 
-
       lpdb.transaction(function(tx){
-
 
         for(var i=0; i <80; i++){
           var teachername = "Ryan Donegan"
@@ -133,21 +126,14 @@ var logOb; //file object
           var notes = "Note here"
           var subobjectives = "[]"
           var sequence = "sequence here"
-            // alert("standards: " + standards + " subject: " + subject)
-            // alert("lpdb right now: " + JSON.stringify(lpdb))
             var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective, sequence) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
             tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
                 // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
                 function(tx, result){
-                 // alert("success")
-                    
                 },
                 function(error){
-                    // alert("Error occurred. Couldn't save lesson plan.")
                     myApp.alert("Error occurred. Couldn't save lesson plan.", "Lesson Planner")
                 })
-
         }
         
       })
@@ -156,8 +142,6 @@ var logOb; //file object
       alert("not running not for first time")
 
     }
-
-
   }    
 
 // Add view
