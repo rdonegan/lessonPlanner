@@ -3,10 +3,9 @@ myApp.onPageInit('lessonList', function (page) {
     var virtualList;
    
    //**** Filter virtual list
+
     $$(document).on('click', '.noFilter', function(){
-
         virtualList.resetFilter();
-
     })
 
     $$(document).on('click', '.englishFilter', function(){
@@ -16,14 +15,11 @@ myApp.onPageInit('lessonList', function (page) {
         var filterIndex = new Array();
         
         for (var i=0; i<l; i++){
-            // alert(lessonPlans[i].id)
             if(lessonPlans[i].subject == "english"){
                 filterIndex.push(i);
             }
         }
-
         virtualList.filterItems(filterIndex)
-
     })
 
     $$(document).on('click', '.mathFilter', function(){
@@ -33,12 +29,10 @@ myApp.onPageInit('lessonList', function (page) {
         var filterIndex = new Array();
         
         for (var i=0; i<l; i++){
-            // alert(lessonPlans[i].id)
             if(lessonPlans[i].subject == "math"){
                 filterIndex.push(i);
             }
         }
-
         virtualList.filterItems(filterIndex)
 
     })
@@ -51,14 +45,11 @@ myApp.onPageInit('lessonList', function (page) {
         var filterIndex = new Array();
         
         for (var i=0; i<l; i++){
-            // alert(lessonPlans[i].id)
             if(lessonPlans[i].subject == "socialStudies"){
                 filterIndex.push(i);
             }
         }
-
         virtualList.filterItems(filterIndex)
-
     })
 
     $$(document).on('click', '.scienceFilter', function(){
@@ -69,14 +60,11 @@ myApp.onPageInit('lessonList', function (page) {
         var filterIndex = new Array();
         
         for (var i=0; i<l; i++){
-            // alert(lessonPlans[i].id)
             if(lessonPlans[i].subject == "science"){
                 filterIndex.push(i);
             }
         }
-
         virtualList.filterItems(filterIndex)
-
     })
 
     $$(document).on('click', '.palauanFilter', function(){
@@ -87,20 +75,15 @@ myApp.onPageInit('lessonList', function (page) {
         var filterIndex = new Array();
         
         for (var i=0; i<l; i++){
-            // alert(lessonPlans[i].id)
             if(lessonPlans[i].subject == "palauan"){
                 filterIndex.push(i);
             }
         }
-
         virtualList.filterItems(filterIndex)
-
     })
-
 
     //**** Delete lesson plan from database
     $('.list-block').on("click", ".swipeout-delete", function(e){
-        // alert(this.id)
         deleteFromLPDB(this.id)
     })  
     
@@ -140,7 +123,6 @@ myApp.onPageInit('lessonList', function (page) {
         var items = new Array();
         lpdb.transaction(function(tx) {
             tx.executeSql('SELECT * FROM lessonplans ORDER BY date(startdate) DESC', [], function(tx, results) {
-                
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
                     items.push({"id": results.rows.item(i).id ,"startdate": results.rows.item(i).startdate ,"enddate": results.rows.item(i).enddate, "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes })
@@ -189,7 +171,6 @@ myApp.onPageInit('lessonList', function (page) {
         else if (month=="12") {
             return "Dec"
         }
-
     }
 
     //remove leading 0, if exists, and return
@@ -203,5 +184,3 @@ myApp.onPageInit('lessonList', function (page) {
     }
 
 });
-
-
