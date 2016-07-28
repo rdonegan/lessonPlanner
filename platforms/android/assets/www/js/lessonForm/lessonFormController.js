@@ -464,17 +464,36 @@ myApp.onPageInit('lessonForm', function(page){
         })
     }
 
-    $("#textarea").focus(function(e) {
-        var container = $('#container'),
-            scrollTo = $('#textarea');
-
+    //**** Hacky way for scrolling page so keyboard doesn't cover text areas
+    $(".sequenceIn").focus(function(e) {
         setTimeout((function() {
-            container.animate({
-            scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
-            });
+            var deviceHeight = window.screen.height;
+            var divHTML = "<div style='height:" + deviceHeight + "px;'></div>"
+            $(".extraSpace").append(divHTML)
+            $(".page-content").scrollTo(document.getElementById("sequenceGO"), {offset: -60});
         }), 500);
 
     });
+
+    $(".notesIn").focus(function(e) {
+
+        setTimeout((function() {
+            var deviceHeight = window.screen.height;
+            var divHTML = "<div class='emptyDiv' style='height:" + deviceHeight + "px;'></div>"
+            var element = document.getElementById("notesGO")
+            
+            $(".extraSpace").append(divHTML)
+            $(".page-content").scrollTo(document.getElementById("notesGO"), {offset: -60});
+        }), 500);
+
+    });
+
+    $(".notesIn").focusout(function(){
+        $(".extraSpace").empty()
+    })
+    $(".sequenceIn").focusout(function(){
+        $(".extraSpace").empty()
+    })
 
 });
 
