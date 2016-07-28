@@ -155,10 +155,8 @@ myApp.onPageInit('lessonForm', function(page){
             myApp.alert("Did you mean to save? Try to add or change something before saving.", 'Lesson Planner')
         }
         else{
-            //go back
             mainView.router.back()
-        }
-          
+        }  
     })
 
 
@@ -202,7 +200,6 @@ myApp.onPageInit('lessonForm', function(page){
     //VIEW FUNCTIONS
     //****
 
-
     //****
     //Update the dynamic smart select fields each time a relevant change occurs
     //****
@@ -229,7 +226,6 @@ myApp.onPageInit('lessonForm', function(page){
             })       
     };
 
-
     function updateObjectiveField(subject, grade, quarter, standards){
         $("#objectives").empty()
         $("#subObjectives").empty()
@@ -250,7 +246,6 @@ myApp.onPageInit('lessonForm', function(page){
         }) 
     };
 
-
     function updateSubObjectivesField(subject, grade, quarter, ids){
         $("#subObjectives").empty()
         var dup = ["", " "]
@@ -268,7 +263,6 @@ myApp.onPageInit('lessonForm', function(page){
         })
     }
 
-
     function updateIndicatorsField(subject, grade, quarter, ids){
         $("#indicators").empty()
         var dup = ["", " "]
@@ -284,9 +278,7 @@ myApp.onPageInit('lessonForm', function(page){
                toggleVisibility()
             })
         })
-
     }
-
 
     function updateResourcesField(subject, grade, quarter, standards){
         $("#resources").empty()
@@ -302,10 +294,8 @@ myApp.onPageInit('lessonForm', function(page){
                     }           
                }
                toggleVisibility()
-               
             })
         })
-
     }
 
     //Iterate through all conditional fields and toggle disabled depending on if its populated
@@ -431,17 +421,14 @@ myApp.onPageInit('lessonForm', function(page){
                 myApp.smartSelectAddOption('#subObjectives', '<option value="'+subobjectives[i]+'" selected>'+subobjectives[i]+'</option>');
             }
         }
-
     }
 
     //used when updating from a prior record
     function addObjectives(subject, grade, standards){
-
         //convert standards to usable form
         var allStds
         if(standards.length>1){
           allStds = "'"+standards.join("', '") +"'"
-        
         }
         else{
             allStds = "'"+standards.join()+"'"
@@ -459,7 +446,6 @@ myApp.onPageInit('lessonForm', function(page){
                     }           
                }
                toggleVisibility()
-               
             })
         })
     }
@@ -493,7 +479,7 @@ myApp.onPageInit('lessonForm', function(page){
 
     });
 
-    //remove empty div 
+    //remove empty div when focusout on text areas
     $(".notesIn").focusout(function(){
         $(".extraSpace").empty()
     })
