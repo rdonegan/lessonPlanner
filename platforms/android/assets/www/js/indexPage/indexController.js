@@ -1,15 +1,14 @@
 //index page is initialized
 myApp.onPageInit('index', function (page) {
 
-
-    $('.navbar').removeClass("theme-pink"); //remove pink navbar when returning from edit page
+    //remove pink navbar when returning from edit page
+    $('.navbar').removeClass("theme-pink"); 
     
     //only show export to email option if device is configured with email
     if (cordova.plugins.email.isAvailable){
         $('.emailShare').removeClass("hidden");
     }
 
-  
   //create a dynamic list of all lesson plans for today
   getCurrentLessons(function(items){
     if (items.length==0){
@@ -21,7 +20,6 @@ myApp.onPageInit('index', function (page) {
             items: items,
             renderItem: function(index,item){
                 return '<li class="accordion-item">' +
-                        // '<a href="lessonForm.html?id='+ item.id+'" class="item-link item-content" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>' +
                          '<a href="#" class="item-link item-content">' + 
                           '<div class="item-inner">' +
                             '<div class="item-title-row">' +
@@ -65,8 +63,7 @@ myApp.onPageInit('index', function (page) {
                       '</li>';
             },
             height:115
-        });
-        
+        });  
     }  
 
   })
@@ -85,7 +82,7 @@ myApp.onPageInit('index', function (page) {
         }
     }
 
-    //**** Format lesson plans in virtual list
+    //**** Format lesson plan month in virtual list
     function toMonth(month){
         if (month=="01") {
             return "Jan"
@@ -147,36 +144,78 @@ myApp.onPageInit('index', function (page) {
         } 
 
         today =  yyyy+'-'+mm+'-'+dd;
-        // alert("today's date: " + today)
             
         var items = new Array();
         lpdb.transaction(function(tx) {
             tx.executeSql('SELECT * FROM lessonplans WHERE startdate <= "' + today + '" AND enddate >= "' + today +'" ORDER BY date(startdate)', [], function(tx, results) {
-                
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
-                    // items.push(results.rows.item(i).subject);
                     items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives, "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence, "notes": results.rows.item(i).notes })
-                    
                 }
-                
                 callback(items)
             });
         });
     }
 
+    //initiate update process and backup
+    $$(document).on('click','.updateApp', function(e){
+        myApp.showPreloader("Updating");
+        //Create a backup if hasn't been done already with update version
+        createBackup(function(){
+
+            //The directory to store data
+            var store;
+            store = cordova.file.dataDirectory;
+            //URL of our asset
+            var assetURL= 'http://downloads.moe/test/lessonPlanning/updated-curric-database.csv'
+            
+            //File name of our important data file we didn't ship with the app
+            var fileName = "curriculum.csv";
+            var fileTransfer = new FileTransfer();
+            fileTransfer.download(assetURL, store + fileName, 
+                function(entry) {
+                    // Successfully downloaded file
+                    appStart(entry);
+                }, 
+                function(err) {
+                    myApp.hidePreloader()
+                    myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
+                });
+
+            //Only called when the file exists or has been downloaded.
+            function appStart(fileEntry) {           
+                fileEntry.file(function (file) {
+                            var reader = new FileReader();
+                            reader.onloadend = function(){
+                                Papa.parse(this.result, {
+                                    header: true,
+                                    dynamicTyping: true,
+                                    complete:function(results){
+                                        formdb.transaction(function(transaction){
+                                            transaction.executeSql('DELETE FROM CURRICULUM', [], 
+                                                function(tx, result){
+                                                    updateFormTable(results.data, tx)
+                                                })
+                                        })
+                                    }
+                                })
+                            }
+                    reader.readAsBinaryString(file);
+                })           
+            }
+        })       
+    })
 });
 
+//var only set to true if email is available
 var sendEmail = false;
 
 //****
 //Sharing lesson plans
 //****
 
-
 $$(document).on('click', '.emailShare', function(e){
     sendEmail = true;
-
     //check that start and endate are both filled in, otherwise, show error
     if($('.startDateInput').val()=="" || $('.endDateInput').val()=="" ){
         myApp.alert("No lesson plans shared. Please fill in values for both to and from dates.")
@@ -185,7 +224,6 @@ $$(document).on('click', '.emailShare', function(e){
     else{
         myApp.showPreloader("Exporting your files");
         window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
-        // alert("got main dir: " + JSON.stringify(dir));
         createFile(dir, "log.csv") 
     });
 
@@ -202,7 +240,6 @@ $$(document).on('click', '.shareLink', function(e){
     else{
         myApp.showPreloader("Exporting your files");
         window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
-        // alert("got main dir: " + JSON.stringify(dir));
         createFile(dir, "log.csv") 
     });
 
@@ -266,7 +303,6 @@ function jsonToCSV(objArray){
                 line += array[i][index];
             }    
         }
-
         str += line + '\r\n';
     }
     return str;
@@ -278,7 +314,6 @@ function getLessonsByDate(callback) {
         
     var startDate= $('.startDateInput').val() //get from input
     var endDate= $('.endDateInput').val() //get from input
-
     var items = new Array();
     lpdb.transaction(function(tx) {
         tx.executeSql('SELECT * FROM lessonplans WHERE startdate >= "' + startDate + '" AND enddate <= "' + endDate +'"', [], function(tx, results) {
@@ -304,54 +339,7 @@ function getLessonsByDate(callback) {
 //Update CURRICULUM db
 //****
 
-//initiate update process and backup
-$$(document).on('click','.updateApp', function(e){
-    myApp.showPreloader("Updating");
-    //Create a backup if hasn't been done already with update version
-    createBackup(function(){
 
-        //The directory to store data
-        var store;
-        store = cordova.file.dataDirectory;
-        //URL of our asset
-        var assetURL= 'http://downloads.moe/test/lessonPlanning/updated-curric-database.csv'
-        
-        //File name of our important data file we didn't ship with the app
-        var fileName = "curriculum.csv";
-        var fileTransfer = new FileTransfer();
-        fileTransfer.download(assetURL, store + fileName, 
-            function(entry) {
-                // Successfully downloaded file
-                appStart(entry);
-            }, 
-            function(err) {
-                myApp.hidePreloader()
-                myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
-            });
-
-        //Only called when the file exists or has been downloaded.
-        function appStart(fileEntry) {           
-            fileEntry.file(function (file) {
-                        var reader = new FileReader();
-                        reader.onloadend = function(){
-                            Papa.parse(this.result, {
-                                header: true,
-                                dynamicTyping: true,
-                                complete:function(results){
-                                    formdb.transaction(function(transaction){
-                                        transaction.executeSql('DELETE FROM CURRICULUM', [], 
-                                            function(tx, result){
-                                                updateFormTable(results.data, tx)
-                                            })
-                                    })
-                                }
-                            })
-                        }
-                        reader.readAsBinaryString(file);
-                    })           
-        }
-    })       
-})
 
 //Called on update. Backs up current form database to new table and then continues update process
 //The update process is continued even if there is an error in backing up the database

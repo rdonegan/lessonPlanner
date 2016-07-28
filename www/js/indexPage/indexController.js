@@ -156,6 +156,55 @@ myApp.onPageInit('index', function (page) {
             });
         });
     }
+
+    //initiate update process and backup
+    $$(document).on('click','.updateApp', function(e){
+        myApp.showPreloader("Updating");
+        //Create a backup if hasn't been done already with update version
+        createBackup(function(){
+
+            //The directory to store data
+            var store;
+            store = cordova.file.dataDirectory;
+            //URL of our asset
+            var assetURL= 'http://downloads.moe/test/lessonPlanning/updated-curric-database.csv'
+            
+            //File name of our important data file we didn't ship with the app
+            var fileName = "curriculum.csv";
+            var fileTransfer = new FileTransfer();
+            fileTransfer.download(assetURL, store + fileName, 
+                function(entry) {
+                    // Successfully downloaded file
+                    appStart(entry);
+                }, 
+                function(err) {
+                    myApp.hidePreloader()
+                    myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
+                });
+
+            //Only called when the file exists or has been downloaded.
+            function appStart(fileEntry) {           
+                fileEntry.file(function (file) {
+                            var reader = new FileReader();
+                            reader.onloadend = function(){
+                                Papa.parse(this.result, {
+                                    header: true,
+                                    dynamicTyping: true,
+                                    complete:function(results){
+                                        formdb.transaction(function(transaction){
+                                            transaction.executeSql('DELETE FROM CURRICULUM', [], 
+                                                function(tx, result){
+                                                    updateFormTable(results.data, tx)
+                                                })
+                                        })
+                                    }
+                                })
+                            }
+                    reader.readAsBinaryString(file);
+                })           
+            }
+        })       
+    })
 });
 
 //var only set to true if email is available
@@ -290,54 +339,7 @@ function getLessonsByDate(callback) {
 //Update CURRICULUM db
 //****
 
-//initiate update process and backup
-$$(document).on('click','.updateApp', function(e){
-    myApp.showPreloader("Updating");
-    //Create a backup if hasn't been done already with update version
-    createBackup(function(){
 
-        //The directory to store data
-        var store;
-        store = cordova.file.dataDirectory;
-        //URL of our asset
-        var assetURL= 'http://downloads.moe/test/lessonPlanning/updated-curric-database.csv'
-        
-        //File name of our important data file we didn't ship with the app
-        var fileName = "curriculum.csv";
-        var fileTransfer = new FileTransfer();
-        fileTransfer.download(assetURL, store + fileName, 
-            function(entry) {
-                // Successfully downloaded file
-                appStart(entry);
-            }, 
-            function(err) {
-                myApp.hidePreloader()
-                myApp.alert("Error updating. Check your internet connection and retry.", "My Planner")
-            });
-
-        //Only called when the file exists or has been downloaded.
-        function appStart(fileEntry) {           
-            fileEntry.file(function (file) {
-                        var reader = new FileReader();
-                        reader.onloadend = function(){
-                            Papa.parse(this.result, {
-                                header: true,
-                                dynamicTyping: true,
-                                complete:function(results){
-                                    formdb.transaction(function(transaction){
-                                        transaction.executeSql('DELETE FROM CURRICULUM', [], 
-                                            function(tx, result){
-                                                updateFormTable(results.data, tx)
-                                            })
-                                    })
-                                }
-                            })
-                        }
-                        reader.readAsBinaryString(file);
-                    })           
-        }
-    })       
-})
 
 //Called on update. Backs up current form database to new table and then continues update process
 //The update process is continued even if there is an error in backing up the database
