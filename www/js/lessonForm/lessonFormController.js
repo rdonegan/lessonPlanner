@@ -195,10 +195,7 @@ myApp.onPageInit('lessonForm', function(page){
         return selectedObjectives;
     }
 
-
-    //****
-    //VIEW FUNCTIONS
-    //****
+    //****    VIEW FUNCTIONS  **** //
 
     //****
     //Update the dynamic smart select fields each time a relevant change occurs
