@@ -89,40 +89,45 @@ myApp.onPageInit('lessonForm', function(page){
     //Used when objectives changes to update subobjectives and indicators
     //return array where items in array[0] are standards, and array[1] are objectives
     function getStandardsAndObjectivesIDs(standards, objectives, callback){
-        var IDs= [[],[]];
-        var allStds
-        if(standards.length>1){
-          allStds = "'"+standards.join("', '") +"'"
-        
-        }
-        else{
-            allStds = "'"+standards.join()+"'"
-        }
+        if (standards.length > 0 && objectives.length > 0){
+            var IDs= [[],[]];
+            var allStds
+            if(standards.length>1){
+              allStds = "'"+standards.join("', '") +"'"
+            
+            }
+            else{
+                allStds = "'"+standards.join()+"'"
+            }
 
-        var allObjectives
-        if(objectives.length>1){
-          allObjectives = "'"+objectives.join("', '") +"'"
-        
+            var allObjectives
+            if(objectives.length>1){
+              allObjectives = "'"+objectives.join("', '") +"'"
+            
+            }
+            else{
+                allObjectives = "'"+objectives.join()+"'"
+            }
+            formdb.transaction(function(tx){
+                tx.executeSql("SELECT STANDARDID, GRADEOBJID FROM CURRICULUM WHERE OBJECTIVE IN (" + allObjectives + ")", [], function(tx,res){
+                    var len = res.rows.length, i;
+                    for (i = 0; i < len; i++){
+                            IDs[0].push(res.rows.item(i).standardID)
+                            IDs[1].push(res.rows.item(i).gradeObjID)
+                       }
+                       callback(IDs)
+                })
+            })
         }
         else{
-            allObjectives = "'"+objectives.join()+"'"
+            callback("none")
         }
-        formdb.transaction(function(tx){
-            tx.executeSql("SELECT STANDARDID, GRADEOBJID FROM CURRICULUM WHERE OBJECTIVE IN (" + allObjectives + ")", [], function(tx,res){
-                var len = res.rows.length, i;
-                for (i = 0; i < len; i++){
-                        IDs[0].push(res.rows.item(i).standardID)
-                        IDs[1].push(res.rows.item(i).gradeObjID)
-                   }
-                   callback(IDs)
-            })
-        })
+        
     }
 
     //Used to update objectives when standards change
     //identifies checked standards and returns array of coresponding id's in database
     function getSelectedStandardsIDs(standards, subject, grade, quarter, callback){
-        alert('in selected standards ids')
          //if there aren't any standards, return an empty array
          if(standards.length > 0){
             var standardIDs= [];
@@ -134,7 +139,6 @@ myApp.onPageInit('lessonForm', function(page){
             else{
                 allStds = "'"+standards.join()+"'"
             }
-            alert('all Stds: ' + JSON.stringify(allStds)) //it's getting all the empty standards, this wasn't a problem before because standards was always filled
             formdb.transaction(function(tx) {
                     tx.executeSql("SELECT STANDARDID FROM CURRICULUM WHERE SUBJECT = '"+ subject.toLowerCase() +"' AND GRADE = '" + grade + "' AND QUARTER = '" + quarter + "' AND STANDARD IN (" + allStds +")", [], function(tx, res) {
                        var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
@@ -143,7 +147,6 @@ myApp.onPageInit('lessonForm', function(page){
                             standardIDs.push(res.rows.item(i).standardID)  
                        }
                        callback(standardIDs)
-                       alert(JSON.parse(standardIDs))
                     })
             })
 
@@ -200,8 +203,6 @@ myApp.onPageInit('lessonForm', function(page){
         {
             selectedStandards.push($(this).val())
         })
-
-            alert('selected standards length:' + selectedStandards.length)
             return selectedStandards;      
     };
 
@@ -264,49 +265,58 @@ myApp.onPageInit('lessonForm', function(page){
 
     function updateSubObjectivesField(subject, grade, quarter, ids){
         $("#subObjectives").empty()
-        var dup = ["", " "]
-        formdb.transaction(function(tx){
-            tx.executeSql("SELECT SUBOBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = '"+quarter+"' AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") AND GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
-                var len=res.rows.length, i;
-                for (i = 0; i < len; i++){
-                    if($.inArray(res.rows.item(i).subobjective, dup)==-1){
-                        myApp.smartSelectAddOption('#subObjectives', '<option value="'+res.rows.item(i).subobjective+'">'+res.rows.item(i).subobjective+'</option>');
-                        dup.push(res.rows.item(i).subobjective)
-                    }           
-               }
-               toggleVisibility()
+        if (ids != "none"){
+            var dup = ["", " "]
+            formdb.transaction(function(tx){
+                tx.executeSql("SELECT SUBOBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = '"+quarter+"' AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") AND GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
+                    var len=res.rows.length, i;
+                    for (i = 0; i < len; i++){
+                        if($.inArray(res.rows.item(i).subobjective, dup)==-1){
+                            myApp.smartSelectAddOption('#subObjectives', '<option value="'+res.rows.item(i).subobjective+'">'+res.rows.item(i).subobjective+'</option>');
+                            dup.push(res.rows.item(i).subobjective)
+                        }           
+                   }
+                   toggleVisibility()
+                })
             })
-        })
+        }
+        else{
+            toggleVisibility();
+        }
+        
     }
 
     function updateIndicatorsField(subject, grade, quarter, ids){
         $("#indicators").empty()
-        var dup = ["", " "]
-        formdb.transaction(function(tx){
-            tx.executeSql("SELECT INDICATOR FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = '"+ quarter +"' AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") and GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
-                var len=res.rows.length, i;
-                for (i = 0; i < len; i++){
-                    if($.inArray(res.rows.item(i).indicator, dup)==-1){
-                        myApp.smartSelectAddOption('#indicators', '<option value="'+res.rows.item(i).indicator+'">'+res.rows.item(i).indicator+'</option>');
-                        dup.push(res.rows.item(i).indicator)
-                    }           
-               }
-               toggleVisibility()
+        if (ids != "none"){
+            var dup = ["", " "]
+            formdb.transaction(function(tx){
+                tx.executeSql("SELECT INDICATOR FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = '"+ quarter +"' AND SUBJECT = '" + subject.toLowerCase() + "' AND STANDARDID IN (" + ids[0] + ") and GRADEOBJID IN (" + ids[1] + ")", [], function(tx,res){
+                    var len=res.rows.length, i;
+                    for (i = 0; i < len; i++){
+                        if($.inArray(res.rows.item(i).indicator, dup)==-1){
+                            myApp.smartSelectAddOption('#indicators', '<option value="'+res.rows.item(i).indicator+'">'+res.rows.item(i).indicator+'</option>');
+                            dup.push(res.rows.item(i).indicator)
+                        }           
+                   }
+                   toggleVisibility()
+                })
             })
-        })
+        }
+        else{
+            toggleVisibility()
+        }
+        
     }
 
     function updateResourcesField(subject, grade, quarter, standards){
-        alert('in updating resource field')
         $("#resources").empty()
         if (standards != "none"){
-            alert('standards in resources: ' + JSON.stringify(standards))
             var dup = ["", " "]
             formdb.transaction(function(tx) {
                 tx.executeSql("SELECT RESOURCES FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = "+ quarter +" AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
                     var len = res.rows.length, i;
                    for (i = 0; i < len; i++){
-                    
                         if($.inArray(res.rows.item(i).resources, dup)==-1){
                             myApp.smartSelectAddOption('#resources', '<option value="'+res.rows.item(i).resources+'">'+res.rows.item(i).resources+'</option>');
                             dup.push(res.rows.item(i).objective)
