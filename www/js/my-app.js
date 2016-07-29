@@ -94,54 +94,7 @@ function onDeviceReady() {
     $$(document).on('click', '.tutorial-close-btn', function () {
       welcomescreen.close();
     });
-  }
-
-
-  //for testing only DELETE ON PRODUCTION
-  function testInsert(){
-    if (window.localStorage.getItem("loggedIn") != 1){
-      window.localStorage.setItem("loggedIn", 1)
-
-      var startArray = ["", "2016-07-19", "2016-08-20", "2016-10-10","2016-11-04", "2016-03-06"]
-      var endArray = ["","2016-07-22", "2016-09-04", "2016-10-10", "2016-11-04", "2016-03-06"]
-      var gradeArray = [1,1,2,3,4]
-      var subjectArray=["","english","math","science"]
-
-      lpdb.transaction(function(tx){
-
-        for(var i=0; i <80; i++){
-          var teachername = "Ryan Donegan"
-          var school = "Koror Elementary"
-          var startdate = startArray[Math.floor((Math.random() * 5)+1)]//"2016-07-13"
-          var enddate = endArray[Math.floor((Math.random() * 5)+1)]//"2016-07-14"
-          var grade = gradeArray[Math.floor((Math.random() * 4) + 1)]//3
-          var quarter = 1
-          var section = "A"
-          var subject = subjectArray[Math.floor((Math.random() * 3) + 1)]//"english"
-          var standards = "[\"1sample standard\", \"2sample standard\"]"
-          var objectives = "[\"1sample object\", \"2sample objective\"]"
-          var indicators = "[]"
-          var resources = "[\"1sample resource\", \"2sample resources\"]"
-          var notes = "Note here"
-          var subobjectives = "[]"
-          var sequence = "sequence here"
-            var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective, sequence) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
-                // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
-                function(tx, result){
-                },
-                function(error){
-                    myApp.alert("Error occurred. Couldn't save lesson plan.", "Lesson Planner")
-                })
-        }
-        
-      })
-    }
-    else{
-      alert("not running not for first time")
-
-    }
-  }    
+  }   
 
 // Add view
 var mainView = myApp.addView('.view-main', {
