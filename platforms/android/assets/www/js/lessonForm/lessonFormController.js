@@ -424,7 +424,7 @@ myApp.onPageInit('lessonForm', function(page){
             }
         }
         if(data.objectives){
-            addObjectives(data.subject, data.grade)
+            addObjectives(data.subject, data.grade, getSelectedQuarter())
             objectives = JSON.parse(data.objectives)
             var len = objectives.length;
             for (var i=0; i<len; i++){
@@ -458,13 +458,13 @@ myApp.onPageInit('lessonForm', function(page){
     }
 
     //used when updating from a prior record
-    function addObjectives(subject, grade){
+    function addObjectives(subject, grade, quarter){
         //convert standards to usable form
         
         var dup = ["", " "]
         formdb.transaction(function(tx) {
 
-            tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() + "'", [], function(tx, res) {
+            tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() + "' AND QUARTER= '" + quarter+ "'", [], function(tx, res) {
                 var len = res.rows.length, i;
                    for (i = 0; i < len; i++){
                 
