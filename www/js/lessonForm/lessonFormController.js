@@ -424,7 +424,7 @@ myApp.onPageInit('lessonForm', function(page){
             }
         }
         if(data.objectives){
-            addObjectives(data.subject, data.grade, JSON.parse(data.standards))
+            addObjectives(data.subject, data.grade)
             objectives = JSON.parse(data.objectives)
             var len = objectives.length;
             for (var i=0; i<len; i++){
@@ -458,19 +458,13 @@ myApp.onPageInit('lessonForm', function(page){
     }
 
     //used when updating from a prior record
-    function addObjectives(subject, grade, standards){
+    function addObjectives(subject, grade){
         //convert standards to usable form
-        var allStds
-        if(standards.length>1){
-          allStds = "'"+standards.join("', '") +"'"
-        }
-        else{
-            allStds = "'"+standards.join()+"'"
-        }
+        
         var dup = ["", " "]
         formdb.transaction(function(tx) {
 
-            tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() + "'AND STANDARD IN (" + allStds +")", [], function(tx, res) {
+            tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = " + grade + " AND SUBJECT= '" + subject.toLowerCase() + "'", [], function(tx, res) {
                 var len = res.rows.length, i;
                    for (i = 0; i < len; i++){
                 
