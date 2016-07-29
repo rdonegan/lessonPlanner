@@ -1,4 +1,3 @@
-// Initialize your app
 var myApp = new Framework7({
     init:false,
     material: true,
@@ -6,7 +5,6 @@ var myApp = new Framework7({
     template7Pages: true,
     precompileTemplates: true
 });
-
 
 // Export selectors engine
 var $$ = Dom7;
@@ -16,30 +14,31 @@ var formdb;
 
 //Initialize database for all saved lesson plans
 var lpdb;
-
 var logOb; //file object
 
+// Wait for Cordova to load
+document.addEventListener("deviceready", onDeviceReady, false);
+
 // Cordova is ready
-  function onDeviceReady() {
-    //curriculum.db is only pre-populated if that database doesn't already exist (AKA on first run)
-    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
-    //initialize lesson plan database 
-    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
-        lpdb.transaction(function(tx){
-            tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text, sequence text)', [])
-        }, function(error){
-            // alert("transaction error: " + error.message);
-            myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
-        }, function(){
-            // testInsert() 
-        });
-    }, function (error){
-        alert('Open database ERROR: ' + JSON.stringify(error));
-    }); 
-    
-    myApp.init() //now you should be able to create databases from within because the deviceisready
-    initWelcomeScreen()
-  };
+function onDeviceReady() {
+  //curriculum.db is only pre-populated if that database doesn't already exist (AKA on first run)
+  formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
+  //initialize lesson plan database 
+  lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
+      lpdb.transaction(function(tx){
+          tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text, sequence text)', [])
+      }, function(error){
+          myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
+      }, function(){
+          // testInsert() 
+      });
+  }, function (error){
+      alert('Open database ERROR: ' + JSON.stringify(error));
+  }); 
+  
+  myApp.init() //now you should be able to create databases from within because the deviceisready
+  initWelcomeScreen()
+};
 
   function initWelcomeScreen(){
     var options = {
@@ -97,14 +96,9 @@ var logOb; //file object
     });
   }
 
-  // Wait for Cordova to load
-  document.addEventListener("deviceready", onDeviceReady, false);
-
 
   //for testing only DELETE ON PRODUCTION
   function testInsert(){
-    // alert("success")
-
     if (window.localStorage.getItem("loggedIn") != 1){
       window.localStorage.setItem("loggedIn", 1)
 
@@ -113,9 +107,7 @@ var logOb; //file object
       var gradeArray = [1,1,2,3,4]
       var subjectArray=["","english","math","science"]
 
-
       lpdb.transaction(function(tx){
-
 
         for(var i=0; i <80; i++){
           var teachername = "Ryan Donegan"
@@ -133,21 +125,14 @@ var logOb; //file object
           var notes = "Note here"
           var subobjectives = "[]"
           var sequence = "sequence here"
-            // alert("standards: " + standards + " subject: " + subject)
-            // alert("lpdb right now: " + JSON.stringify(lpdb))
             var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective, sequence) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-            // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
             tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
                 // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
                 function(tx, result){
-                 // alert("success")
-                    
                 },
                 function(error){
-                    // alert("Error occurred. Couldn't save lesson plan.")
                     myApp.alert("Error occurred. Couldn't save lesson plan.", "Lesson Planner")
                 })
-
         }
         
       })
@@ -156,8 +141,6 @@ var logOb; //file object
       alert("not running not for first time")
 
     }
-
-
   }    
 
 // Add view

@@ -157,6 +157,8 @@ myApp.onPageInit('index', function (page) {
         });
     }
 
+    //**** UPDATE CURRICULUM HANDLER
+
     //initiate update process and backup
     $$(document).on('click','.updateApp', function(e){
         myApp.showPreloader("Updating");
@@ -317,7 +319,6 @@ function getLessonsByDate(callback) {
     var items = new Array();
     lpdb.transaction(function(tx) {
         tx.executeSql('SELECT * FROM lessonplans WHERE startdate >= "' + startDate + '" AND enddate <= "' + endDate +'"', [], function(tx, results) {
-            // alert(results.rows.length)
             var len = results.rows.length;
             for (var i=0; i<len; i++){
                 items.push({"id": results.rows.item(i).id , "teachername": results.rows.item(i).teachername , "school": results.rows.item(i).school , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "section": results.rows.item(i).section , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives , "indicators": results.rows.item(i).indicators , "resources": results.rows.item(i).resources , "notes": results.rows.item(i).notes, "sequence": results.rows.item(i).sequence })
@@ -338,8 +339,6 @@ function getLessonsByDate(callback) {
 //****
 //Update CURRICULUM db
 //****
-
-
 
 //Called on update. Backs up current form database to new table and then continues update process
 //The update process is continued even if there is an error in backing up the database
@@ -370,17 +369,14 @@ function createBackup(callback){
 //Helper method that compares the version of Curriculum vs curriculum_old
 //version is stored as a string in the first row and cell in each database
 function compareVersions(callback){
-    // alert("comparing")
     var curriculum_version= "";
     var old_curriculum_version = "";
 
     formdb.transaction(function(tx){
         tx.executeSql('SELECT SUBJECT FROM CURRICULUM ORDER BY ROWID ASC LIMIT 1', [], function(tx,result){
-             // alert("curriculum versionn: " + result.rows.item(0).subject)
             curriculum_version = result.rows.item(0).subject
         })
         tx.executeSql('SELECT SUBJECT FROM CURRICULUM_OLD ORDER BY ROWID ASC LIMIT 1', [], function(tx, result){
-            // alert("old curric version: " + result.rows.item(0).subject)
             old_curriculum_version = result.rows.item(0).subject
         })
 
@@ -398,7 +394,6 @@ function updateFormTable(results, tx){
         tx.executeSql(sql, params)
         myApp.hidePreloader()
         myApp.alert("Update Complete", "My Planner")
-
     }
 }
 
@@ -415,7 +410,6 @@ $$(document).on('click', '.rollbackData', function(e){
         myApp.showPreloader("Rollback to last update");
         formdb.transaction(function(tx){
             tx.executeSql('SELECT name FROM sqlite_master WHERE type="table" AND name = "CURRICULUM_OLD"', [], function(tx, res){
-                // alert("success! result: " + JSON.stringify(res))
                 if(res.rows.length == 1){
                     //delete curriculum and replace with old curriculum
                     formdb.transaction(function(tx){

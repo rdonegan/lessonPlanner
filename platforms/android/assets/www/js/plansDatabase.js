@@ -2,8 +2,6 @@
 //All code that directly modifies or affects plans.db
 //****
 
-
-
 //Insert a new record in lessonplans
 function insertLPDB(data){
    
@@ -24,25 +22,17 @@ function insertLPDB(data){
     var sequence = data.sequence
 
     lpdb.transaction(function(tx){
-        // alert("standards: " + standards + " subject: " + subject)
-        // alert("lpdb right now: " + JSON.stringify(lpdb))
         var executeQuery = "INSERT INTO lessonplans (teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjective, sequence) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-        // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
         tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
-            // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
-                // alert("lpdb after transaction: " + JSON.stringify(lpdb))
-                // alert("result after transaction: " + JSON.stringify(result))
                 myApp.formDeleteData('lessonForm')
                 mainView.router.loadPage('index.html');
                 myApp.addNotification({
                     message: 'Successfully created new lesson plan!'
                 });
-                // alert('saved actually')
-                
+ 
             },
             function(error){
-                // alert("Error occurred. Couldn't save lesson plan.")
                 myApp.alert("Error occurred. Couldn't save lesson plan.", "Lesson Planner")
             })
     })
@@ -67,11 +57,8 @@ function updateLPDB(id, data){
     var sequence = data.sequence
 
     lpdb.transaction(function(tx){
-        // alert("standards: " + standards + " subject: " + subject)
         var executeQuery = 'UPDATE lessonplans SET teachername = ?, school = ?, startdate = ?, enddate = ?, grade = ?, quarter = ?, section = ?, subject = ?, standards = ?, objectives = ?, indicators = ?, resources = ?, notes = ?, subobjective = ?, sequence = ? WHERE ID = "'+ id +'"'
-        // var executeQuery = "INSERT INTO lessonplans (subject) VALUES (?)"
         tx.executeSql(executeQuery, [teachername, school, startdate, enddate, grade, quarter, section, subject, standards, objectives, indicators, resources, notes, subobjectives, sequence],
-            // tx.executeSql("INSERT INTO lessonplans (subject, section, standards) VALUES (?, ?, ?)", [subject, section, standards],
             function(tx, result){
                 myApp.formDeleteData('lessonForm')
                 mainView.router.loadPage('index.html');

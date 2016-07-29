@@ -1,4 +1,3 @@
-// Initialize your app
 var myApp = new Framework7({
     init:false,
     material: true,
@@ -17,26 +16,29 @@ var formdb;
 var lpdb;
 var logOb; //file object
 
+// Wait for Cordova to load
+document.addEventListener("deviceready", onDeviceReady, false);
+
 // Cordova is ready
-  function onDeviceReady() {
-    //curriculum.db is only pre-populated if that database doesn't already exist (AKA on first run)
-    formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
-    //initialize lesson plan database 
-    lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
-        lpdb.transaction(function(tx){
-            tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text, sequence text)', [])
-        }, function(error){
-            myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
-        }, function(){
-            // testInsert() 
-        });
-    }, function (error){
-        alert('Open database ERROR: ' + JSON.stringify(error));
-    }); 
-    
-    myApp.init() //now you should be able to create databases from within because the deviceisready
-    initWelcomeScreen()
-  };
+function onDeviceReady() {
+  //curriculum.db is only pre-populated if that database doesn't already exist (AKA on first run)
+  formdb = window.sqlitePlugin.openDatabase({name: "curriculum.db", location: 'default', createFromLocation: 1});//, checkForUpdates);
+  //initialize lesson plan database 
+  lpdb = window.sqlitePlugin.openDatabase({name: "plans.db", location: 'default'}, function(lpdb){
+      lpdb.transaction(function(tx){
+          tx.executeSql('CREATE TABLE IF NOT EXISTS lessonplans (id integer primary key, teachername text, school text, startdate text, enddate text, grade integer, quarter integer, section text, subject text, standards text, objectives text, indicators text, resources text, notes text, subobjective text, sequence text)', [])
+      }, function(error){
+          myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
+      }, function(){
+          // testInsert() 
+      });
+  }, function (error){
+      alert('Open database ERROR: ' + JSON.stringify(error));
+  }); 
+  
+  myApp.init() //now you should be able to create databases from within because the deviceisready
+  initWelcomeScreen()
+};
 
   function initWelcomeScreen(){
     var options = {
@@ -93,9 +95,6 @@ var logOb; //file object
       welcomescreen.close();
     });
   }
-
-  // Wait for Cordova to load
-  document.addEventListener("deviceready", onDeviceReady, false);
 
 
   //for testing only DELETE ON PRODUCTION
