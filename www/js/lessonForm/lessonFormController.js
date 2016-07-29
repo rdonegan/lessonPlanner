@@ -70,7 +70,7 @@ myApp.onPageInit('lessonForm', function(page){
         updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
     })
 
-    //Update objectives if standard changes
+    //Update resources if standard changes
     $("#standards").on('change', function(){
         getSelectedStandardsIDs(getSelectedStandards(), getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), function(standardIDs){
             updateResourcesField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter() ,standardIDs)
@@ -78,7 +78,7 @@ myApp.onPageInit('lessonForm', function(page){
         })
     })
 
-    //update subobjectives and indicators
+    //update subobjectives and indicators of objectives change (not dependent on specific standard)
     $("#objectives").on('change', function(){
         getStandardsAndObjectivesIDs(getSelectedStandards(), getSelectedObjectives(), function(ids){
             updateIndicatorsField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), ids)
@@ -108,7 +108,7 @@ myApp.onPageInit('lessonForm', function(page){
             allObjectives = "'"+objectives.join()+"'"
         }
         formdb.transaction(function(tx){
-            tx.executeSql("SELECT STANDARDID, GRADEOBJID FROM CURRICULUM WHERE STANDARD IN (" + allStds + ") AND OBJECTIVE IN (" + allObjectives + ")", [], function(tx,res){
+            tx.executeSql("SELECT STANDARDID, GRADEOBJID FROM CURRICULUM WHERE OBJECTIVE IN (" + allObjectives + ")", [], function(tx,res){
                 var len = res.rows.length, i;
                 for (i = 0; i < len; i++){
                         IDs[0].push(res.rows.item(i).standardID)
@@ -122,27 +122,34 @@ myApp.onPageInit('lessonForm', function(page){
     //Used to update objectives when standards change
     //identifies checked standards and returns array of coresponding id's in database
     function getSelectedStandardsIDs(standards, subject, grade, quarter, callback){
-        
-        var standardIDs= [];
-        var allStds
-        if(standards.length>1){
-          allStds = "'"+standards.join("', '") +"'"
-        
+        if (standards.length > 0){ //if there aren't any standards, return an empty array
+            var standardIDs= [];
+            var allStds
+            if(standards.length>1){
+              allStds = "'"+standards.join("', '") +"'"
+            
+            }
+            else{
+                allStds = "'"+standards.join()+"'"
+            }
+            alert('all Stds: ' + JSON.stringify(allStds)) //it's getting all the empty standards, this wasn't a problem before because standards was always filled
+            formdb.transaction(function(tx) {
+                    tx.executeSql("SELECT STANDARDID FROM CURRICULUM WHERE SUBJECT = '"+ subject.toLowerCase() +"' AND GRADE = '" + grade + "' AND QUARTER = '" + quarter + "' AND STANDARD IN (" + allStds +")", [], function(tx, res) {
+                       var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
+                         
+                       for (i = 0; i < len; i++){
+                            standardIDs.push(res.rows.item(i).standardID)  
+                       }
+                       callback(standardIDs)
+                       alert(standardIDs.length)
+                    })
+            })
+
         }
         else{
-            allStds = "'"+standards.join()+"'"
+            return [];
         }
-
-        formdb.transaction(function(tx) {
-                tx.executeSql("SELECT STANDARDID FROM CURRICULUM WHERE SUBJECT = '"+ subject.toLowerCase() +"' AND GRADE = '" + grade + "' AND QUARTER = '" + quarter + "' AND STANDARD IN (" + allStds +")", [], function(tx, res) {
-                   var len = res.rows.length, i;   //ENGLISH will need to be changed to reflect the name of the table
-                     
-                   for (i = 0; i < len; i++){
-                        standardIDs.push(res.rows.item(i).standardID)  
-                   }
-                   callback(standardIDs)
-                })
-        })
+        
     }
 
     //Save data when 'save' clicked
@@ -187,6 +194,8 @@ myApp.onPageInit('lessonForm', function(page){
         {
             selectedStandards.push($(this).val())
         })
+
+            alert('selected standards length:' + selectedStandards.length)
             return selectedStandards;      
     };
 
