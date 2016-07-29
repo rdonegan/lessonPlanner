@@ -415,22 +415,22 @@ myApp.onPageInit('lessonForm', function(page){
             var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
             $('.endDateIn').val(today)
         }
-        if(data.standards){
-            updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
-            standards = JSON.parse(data.standards)
-            var len = standards.length;
-            for (var i=0; i<len; i++){
-                myApp.smartSelectAddOption('#standards', '<option value="'+standards[i]+'" selected>'+standards[i]+'</option>');
-            }
+        //update standards
+        updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
+        standards = JSON.parse(data.standards)
+        var len = standards.length;
+        for (var i=0; i<len; i++){
+            myApp.smartSelectAddOption('#standards', '<option value="'+standards[i]+'" selected>'+standards[i]+'</option>');
         }
-        if(data.objectives){
-            addObjectives(data.subject, data.grade, getSelectedQuarter())
-            objectives = JSON.parse(data.objectives)
-            var len = objectives.length;
-            for (var i=0; i<len; i++){
-                myApp.smartSelectAddOption('#objectives', '<option value="'+objectives[i]+'" selected>'+objectives[i]+'</option>');
-            }
+        
+        //update objectives
+        addObjectives(data.subject, data.grade, getSelectedQuarter())
+        objectives = JSON.parse(data.objectives)
+        var len = objectives.length;
+        for (var i=0; i<len; i++){
+            myApp.smartSelectAddOption('#objectives', '<option value="'+objectives[i]+'" selected>'+objectives[i]+'</option>');
         }
+        
 
         if(data.indicators){
             indicators = JSON.parse(data.indicators)
@@ -460,7 +460,6 @@ myApp.onPageInit('lessonForm', function(page){
     //used when updating from a prior record
     function addObjectives(subject, grade, quarter){
         //convert standards to usable form
-        
         var dup = ["", " "]
         formdb.transaction(function(tx) {
 
