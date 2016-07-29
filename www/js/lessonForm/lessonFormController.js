@@ -122,7 +122,9 @@ myApp.onPageInit('lessonForm', function(page){
     //Used to update objectives when standards change
     //identifies checked standards and returns array of coresponding id's in database
     function getSelectedStandardsIDs(standards, subject, grade, quarter, callback){
-        if (standards.length > 0){ //if there aren't any standards, return an empty array
+        alert('in selected standards ids')
+         //if there aren't any standards, return an empty array
+         if(standards.length > 0){
             var standardIDs= [];
             var allStds
             if(standards.length>1){
@@ -141,14 +143,18 @@ myApp.onPageInit('lessonForm', function(page){
                             standardIDs.push(res.rows.item(i).standardID)  
                        }
                        callback(standardIDs)
-                       alert(standardIDs.length)
+                       alert(JSON.parse(standardIDs))
                     })
             })
 
-        }
-        else{
-            return [];
-        }
+         }
+         else{
+            callback("none");
+         }
+            
+
+        
+        
         
     }
 
@@ -291,21 +297,29 @@ myApp.onPageInit('lessonForm', function(page){
     }
 
     function updateResourcesField(subject, grade, quarter, standards){
+        alert('in updating resource field')
         $("#resources").empty()
-        var dup = ["", " "]
-        formdb.transaction(function(tx) {
-            tx.executeSql("SELECT RESOURCES FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = "+ quarter +" AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
-                var len = res.rows.length, i;
-               for (i = 0; i < len; i++){
-                
-                    if($.inArray(res.rows.item(i).resources, dup)==-1){
-                        myApp.smartSelectAddOption('#resources', '<option value="'+res.rows.item(i).resources+'">'+res.rows.item(i).resources+'</option>');
-                        dup.push(res.rows.item(i).objective)
-                    }           
-               }
-               toggleVisibility()
+        if (standards != "none"){
+            alert('standards in resources: ' + JSON.stringify(standards))
+            var dup = ["", " "]
+            formdb.transaction(function(tx) {
+                tx.executeSql("SELECT RESOURCES FROM CURRICULUM WHERE GRADE = " + grade + " AND QUARTER = "+ quarter +" AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
+                    var len = res.rows.length, i;
+                   for (i = 0; i < len; i++){
+                    
+                        if($.inArray(res.rows.item(i).resources, dup)==-1){
+                            myApp.smartSelectAddOption('#resources', '<option value="'+res.rows.item(i).resources+'">'+res.rows.item(i).resources+'</option>');
+                            dup.push(res.rows.item(i).objective)
+                        }           
+                   }
+                   toggleVisibility()
+                })
             })
-        })
+        }
+        else{
+            toggleVisibility()
+        }
+        
     }
 
     //Iterate through all conditional fields and toggle disabled depending on if its populated
