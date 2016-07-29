@@ -16,6 +16,7 @@ myApp.onPageInit('lessonForm', function(page){
     else{
         state.isNew = true;
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter());
+        updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
         upDateStartAndEndDates()
     }
 
@@ -56,21 +57,24 @@ myApp.onPageInit('lessonForm', function(page){
     //****
     $(".subjIn").on('change', function(){
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
+        updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
     })
 
     $(".quarterIn").on('change', function(){
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
+        updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
     })
 
     $(".gradeIn").on('change', function(){
         updateStandardField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
+        updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
     })
 
     //Update objectives if standard changes
     $("#standards").on('change', function(){
         getSelectedStandardsIDs(getSelectedStandards(), getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), function(standardIDs){
             updateResourcesField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter() ,standardIDs)
-            updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter() ,standardIDs)
+            // updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
         })
     })
 
@@ -202,10 +206,10 @@ myApp.onPageInit('lessonForm', function(page){
     //****
     function updateStandardField(subject, grade, quarter){
         $("#standards").empty()
-        $("#objectives").empty()
-        $("#subObjectives").empty()
+        // $("#objectives").empty()
+        // $("#subObjectives").empty()
         $("#resources").empty()
-        $("#indicators").empty() 
+        // $("#indicators").empty() 
         var dup = ["", " "] // To check if duplicate strands have been added
 
         formdb.transaction(function(tx) {
@@ -223,14 +227,14 @@ myApp.onPageInit('lessonForm', function(page){
             })       
     };
 
-    function updateObjectiveField(subject, grade, quarter, standards){
+    function updateObjectiveField(subject, grade, quarter){
         $("#objectives").empty()
         $("#subObjectives").empty()
         $("#indicators").empty()
         var dup = ["", " "]
         formdb.transaction(function(tx) {
 
-            tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = '" + grade + "' AND QUARTER = '"+ quarter +"' AND SUBJECT= '" + subject.toLowerCase() +"' AND STANDARDID IN (" + standards +")", [], function(tx, res) {
+            tx.executeSql("SELECT OBJECTIVE FROM CURRICULUM WHERE GRADE = '" + grade + "' AND QUARTER = '"+ quarter +"' AND SUBJECT= '" + subject.toLowerCase() +"'", [], function(tx, res) {
                 var len = res.rows.length, i;
                for (i = 0; i < len; i++){
                     if($.inArray(res.rows.item(i).objective, dup)==-1){
