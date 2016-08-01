@@ -74,7 +74,6 @@ myApp.onPageInit('lessonForm', function(page){
     $("#standards").on('change', function(){
         getSelectedStandardsIDs(getSelectedStandards(), getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), function(standardIDs){
             updateResourcesField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter() ,standardIDs)
-            // updateObjectiveField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter())
         })
     })
 
@@ -153,12 +152,7 @@ myApp.onPageInit('lessonForm', function(page){
          }
          else{
             callback("none");
-         }
-            
-
-        
-        
-        
+         } 
     }
 
     //Save data when 'save' clicked
