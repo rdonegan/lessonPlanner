@@ -157,7 +157,7 @@ myApp.onPageInit('lessonList', function (page) {
             return "July"
         }
         else if (month=="08") {
-            return "August"
+            return "Aug"
         }
         else if (month=="09") {
             return "Sept"
