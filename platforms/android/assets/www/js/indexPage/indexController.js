@@ -24,7 +24,7 @@ myApp.onPageInit('index', function (page) {
                           '<div class="item-inner">' +
                             '<div class="item-title-row">' +
                               '<div class="item-title">' + item.subject.charAt(0).toUpperCase() + item.subject.slice(1) + '</div>' +
-                              '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + item.startdate.substr(0,4) + '</div>' +
+                              '<div class="item-after">'+toMonth((item.startdate.substr(5,5)).substr(0,2))+ ' ' + toDay((item.startdate.substr(5,5)).substr(3,4)) + ' - ' + toMonth((item.enddate.substr(5,5)).substr(0,2)) + ' ' + toDay((item.enddate.substr(5,5)).substr(3,4)) + '</div>' +
                             '</div>' +
                             '<div class="item-subtitle">Grade ' + item.grade +', Quarter '+ item.quarter + '</div>' +
                             '<div class="chip bg-teal"><div class="chip-label">Standards: '+JSON.parse(item.standards).length+'</div></div>'+
@@ -123,6 +123,16 @@ myApp.onPageInit('index', function (page) {
 
     }
 
+    //remove leading 0, if exists, and return
+    function toDay(date){
+        if(date.substr(0,1) == "0"){
+            return (date.substr(1))
+        }
+        else{
+            return date
+        }
+    }
+
     //****
     //Get Today's Plans - a callback
     //****
@@ -150,7 +160,7 @@ myApp.onPageInit('index', function (page) {
             tx.executeSql('SELECT * FROM lessonplans WHERE startdate <= "' + today + '" AND enddate >= "' + today +'" ORDER BY date(startdate)', [], function(tx, results) {
                 var len = results.rows.length;
                 for (var i=0; i<len; i++){
-                    items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives, "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence, "notes": results.rows.item(i).notes })
+                    items.push({"id": results.rows.item(i).id , "startdate": results.rows.item(i).startdate , "enddate": results.rows.item(i).enddate , "grade": results.rows.item(i).grade , "quarter": results.rows.item(i).quarter , "subject": results.rows.item(i).subject , "standards": results.rows.item(i).standards , "objectives": results.rows.item(i).objectives, "resources": results.rows.item(i).resources, "sequence": results.rows.item(i).sequence, "notes": results.rows.item(i).notes })
                 }
                 callback(items)
             });
