@@ -33,7 +33,8 @@ function onDeviceReady() {
           // testInsert() 
       });
   }, function (error){
-      alert('Open database ERROR: ' + JSON.stringify(error));
+      // myApp.alert('Open database ERROR: ' + JSON.stringify(error));
+      myApp.alert("This is awkward - we couldn't load your lesson plans. Try restarting the app.", "Lesson Planner")
   }); 
   
   myApp.init() //now you should be able to create databases from within because the deviceisready
