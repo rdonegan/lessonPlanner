@@ -79,7 +79,7 @@ myApp.onPageInit('lessonForm', function(page){
 
     //update subobjectives and indicators of objectives change (not dependent on specific standard)
     $("#objectives").on('change', function(){
-        getStandardsAndObjectivesIDs(getSelectedStandards(), getSelectedObjectives(), function(ids){
+        getStandardsAndObjectivesIDs(getSelectedObjectives(), function(ids){
             updateIndicatorsField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), ids)
             updateSubObjectivesField(getSelectedSubject(), getSelectedGrade(), getSelectedQuarter(), ids)
         })
@@ -87,17 +87,9 @@ myApp.onPageInit('lessonForm', function(page){
 
     //Used when objectives changes to update subobjectives and indicators
     //return array where items in array[0] are standards, and array[1] are objectives
-    function getStandardsAndObjectivesIDs(standards, objectives, callback){
+    function getStandardsAndObjectivesIDs(objectives, callback){
         if (standards.length > 0 && objectives.length > 0){
             var IDs= [[],[]];
-            var allStds
-            if(standards.length>1){
-              allStds = "'"+standards.join("', '") +"'"
-            
-            }
-            else{
-                allStds = "'"+standards.join()+"'"
-            }
 
             var allObjectives
             if(objectives.length>1){
@@ -216,10 +208,7 @@ myApp.onPageInit('lessonForm', function(page){
     //****
     function updateStandardField(subject, grade, quarter){
         $("#standards").empty()
-        // $("#objectives").empty()
-        // $("#subObjectives").empty()
         $("#resources").empty()
-        // $("#indicators").empty() 
         var dup = ["", " "] // To check if duplicate strands have been added
 
         formdb.transaction(function(tx) {
@@ -322,8 +311,7 @@ myApp.onPageInit('lessonForm', function(page){
         }
         else{
             toggleVisibility()
-        }
-        
+        } 
     }
 
     //Iterate through all conditional fields and toggle disabled depending on if its populated
