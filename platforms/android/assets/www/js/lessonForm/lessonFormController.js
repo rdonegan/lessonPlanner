@@ -208,10 +208,7 @@ myApp.onPageInit('lessonForm', function(page){
     //****
     function updateStandardField(subject, grade, quarter){
         $("#standards").empty()
-        // $("#objectives").empty()
-        // $("#subObjectives").empty()
         $("#resources").empty()
-        // $("#indicators").empty() 
         var dup = ["", " "] // To check if duplicate strands have been added
 
         formdb.transaction(function(tx) {
@@ -314,8 +311,7 @@ myApp.onPageInit('lessonForm', function(page){
         }
         else{
             toggleVisibility()
-        }
-        
+        } 
     }
 
     //Iterate through all conditional fields and toggle disabled depending on if its populated
