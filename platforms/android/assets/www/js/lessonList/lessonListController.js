@@ -45,7 +45,7 @@ myApp.onPageInit('lessonList', function (page) {
         var filterIndex = new Array();
         
         for (var i=0; i<l; i++){
-            if(lessonPlans[i].subject == "socialStudies"){
+            if(lessonPlans[i].subject == "socialstudies"){
                 filterIndex.push(i);
             }
         }
