@@ -49,11 +49,11 @@ myApp.onPageInit('index', function (page) {
                                     '</div>'+
                                     '<div class="row">'+
                                         '<div class="col-20"><div class="chip bg-deeppurple"><div class="chip-label">Resource Details</div></div></div>'+
-                                        '<div class="col-80"><ul class="itemList"><li>'+((item.sequence) ? item.sequence:"No additional resources. Tap edit to add more.")+'</li></ul></div>' +
+                                        '<div class="col-80"><ul class="itemList"><li>'+((item.notes) ? item.notes:"No additional resources. Tap edit to add more.")+'</li></ul></div>' +
                                     '</div>'+
                                     '<div class="row">'+
                                         '<div class="col-20"><div class="chip bg-deeppurple"><div class="chip-label">Notes</div></div></div>'+
-                                        '<div class="col-80"><ul class="itemList"><li>'+((item.notes) ? item.notes:"No notes. Tap edit to add more.")+'</li></ul></div>' +
+                                        '<div class="col-80"><ul class="itemList"><li>'+((item.sequence) ? item.sequence:"No notes. Tap edit to add more.")+'</li></ul></div>' +
                                     '</div>'+
                                     '<br>'+
                                     '<div class="row"><a href="lessonForm.html?id='+ item.id+'" class="col-20 button button-fill color-pink item-link" data-context=\'{"standards":' + item.standards +', "objectives": ' + item.objectives +' }\'>Edit</a></div>' +
